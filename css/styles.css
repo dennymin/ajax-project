@@ -1,0 +1,78 @@
+/* Background Image */
+.background-image {
+  background-image: url("../images/sky-background-default.jpg");
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Fonts */
+.white-font {
+  color: white;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.text-shadow {
+  text-shadow: 0 3px 2px black;
+}
+
+/* Modals */
+.data-modal {
+  margin: auto;
+  background-color: rgb(200, 200, 200, 0.3);
+  text-align: center;
+  width: 90vw;
+  border: 1px hidden;
+  border-radius: 5px;
+  position: relative;
+  top: 100px;
+}
+
+.data-search-question {
+  margin: 15px;
+  padding-top: 30px;
+}
+
+.search-area {
+  padding: 50px;
+  margin: 50px auto;
+}
+
+.search-bar {
+  border: 1px white solid;
+  border-radius: 10px;
+  background-color: rgb(0, 0, 0, 0);
+  height: 2rem;
+  outline-color: white;
+  font-size: 1.5rem;
+  width: 50%;
+}
+
+.search-bar::placeholder {
+  font-style: italic;
+}
+
+.submit-search {
+  font-style: italic;
+  border: 1px hidden;
+  border-radius: 10px;
+  background-color: rgb(0, 0, 0, 0);
+}
+
+.submit-search:active {
+  transform: translateY(1px);
+}
+
+.hidden {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .search-bar {
+    width: 30%;
+  }
+}
