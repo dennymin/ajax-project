@@ -2,8 +2,7 @@
 var data = {
   locations: [],
   view: 'entry-form',
-  nextEntryId: 1,
-  primary: null
+  nextEntryId: 1
 };
 
 var previousDataJSON = localStorage.getItem('weather-data');
