@@ -43,18 +43,18 @@ function queryLocation(event) {
 }
 
 function invalidLocationNotice() {
-  var invalidText = 'Please put a proper location!';
+  var invalidText = 'Please put an appropriate location!';
   var $invalidTextElement = document.createElement('p');
   $invalidTextElement.textContent = invalidText;
-  $invalidTextElement.className = 'italics red-font text-shadow-none';
+  $invalidTextElement.className = 'italics red-font text-shadow-none top-bottom-margins-none';
   return $invalidTextElement;
 }
 
 function createWeatherQuestion() {
-  $weatherChoicesQuestion.textContent = 'Weather Information for:';
+  $weatherChoicesQuestion.textContent = 'Weather in:';
   var $weatherChoicesLocation = document.createElement('h1');
   $weatherChoicesLocation.textContent = data.editing;
-  $weatherChoicesLocation.className = 'italics set-margins font-size-1rem';
+  $weatherChoicesLocation.className = 'italics set-margins font-size-2rem';
   $weatherChoicesQuestion.appendChild($weatherChoicesLocation);
 }
 
@@ -64,11 +64,9 @@ function alternateIcon(event) {
     if (circleOrCheck === 'far fa-circle') {
       event.target.children[0].className = 'far fa-check-circle';
       locationWeatherInformation[weatherOptions[event.target.value]] = true;
-      // console.log(locationWeatherInformation[weatherOptions[event.target.value]]);
     } else if (circleOrCheck === 'far fa-check-circle') {
       event.target.children[0].className = 'far fa-circle';
       locationWeatherInformation[weatherOptions[event.target.value]] = false;
-      // console.log(locationWeatherInformation[weatherOptions[event.target.value]]);
     }
   }
 }
