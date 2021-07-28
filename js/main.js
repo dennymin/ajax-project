@@ -1,25 +1,6 @@
 var $searchBar = document.querySelector('.search-bar');
+var $locationForm = document.querySelector('.location-form');
 var $searchSubmitButton = document.querySelector('.submit-search');
-function queryLocation(event) {
-  if ($searchBar.value !== '') {
-    event.preventDefault();
-    data.editing = $searchBar.value;
-    $locationAsker.classList.toggle('hidden');
-    $weatherInformationChoices.classList.toggle('hidden');
-    locationWeatherInformation.location = data.editing;
-    createWeatherQuestion();
-  }
-}
-$searchSubmitButton.addEventListener('click', queryLocation);
-
-function createWeatherQuestion() {
-  $weatherChoicesQuestion.textContent = 'Weather Information for:';
-  var $weatherChoicesLocation = document.createElement('h1');
-  $weatherChoicesLocation.textContent = data.editing;
-  $weatherChoicesLocation.className = 'italics set-margins font-size-1rem';
-  $weatherChoicesQuestion.appendChild($weatherChoicesLocation);
-}
-
 var $weatherInformationChoices = document.querySelector('.weather-information-choices');
 var $weatherChoicesQuestion = document.querySelector('.weather-information-choices-question');
 var $locationAsker = document.querySelector('.location-asker');
@@ -28,6 +9,53 @@ var weatherOptions = ['Main', 'Temperature', 'High', 'Low', 'Wind', 'Humidity', 
 var locationWeatherInformation = {};
 for (var optionIndex = 0; optionIndex < weatherOptions.length; optionIndex++) {
   locationWeatherInformation[weatherOptions[optionIndex]] = false;
+}
+var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
+
+$searchSubmitButton.addEventListener('click', queryLocation);
+$weatherOptionsSubmitButton.addEventListener('click', appendLocationsList);
+
+function queryLocation(event) {
+  event.preventDefault();
+  var xhr = new XMLHttpRequest();
+  var firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  var locationURL = $searchBar.value;
+  var latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
+  var fullLink = firstPartLink + locationURL + latterPartLink;
+  xhr.open('GET', fullLink);
+  xhr.responseType = 'json';
+  xhr.send();
+  xhr.addEventListener('load', function () {
+    if ($searchBar.value !== '' && xhr.status === 200) {
+      data.editing = $searchBar.value;
+      $locationAsker.classList.toggle('hidden');
+      $weatherInformationChoices.classList.toggle('hidden');
+      locationWeatherInformation.location = data.editing;
+      createWeatherQuestion();
+    } else {
+      if ($locationAsker.children[2] !== undefined) {
+        $locationAsker.children[2].remove();
+      }
+      $locationAsker.appendChild(invalidLocationNotice());
+      $locationForm.reset();
+    }
+  });
+}
+
+function invalidLocationNotice() {
+  var invalidText = 'Please put a proper location!';
+  var $invalidTextElement = document.createElement('p');
+  $invalidTextElement.textContent = invalidText;
+  $invalidTextElement.className = 'italics red-font text-shadow-none';
+  return $invalidTextElement;
+}
+
+function createWeatherQuestion() {
+  $weatherChoicesQuestion.textContent = 'Weather Information for:';
+  var $weatherChoicesLocation = document.createElement('h1');
+  $weatherChoicesLocation.textContent = data.editing;
+  $weatherChoicesLocation.className = 'italics set-margins font-size-1rem';
+  $weatherChoicesQuestion.appendChild($weatherChoicesLocation);
 }
 
 function alternateIcon(event) {
@@ -57,6 +85,3 @@ function resetOptions() {
     locationWeatherInformation[weatherOptions[optionIndex]] = false;
   }
 }
-
-var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
-$weatherOptionsSubmitButton.addEventListener('click', appendLocationsList);

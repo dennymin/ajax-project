@@ -8,16 +8,28 @@
 }
 
 /* Fonts */
-.white-font {
-  color: white;
-}
-
 body {
   font-family: sans-serif;
 }
 
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.white-font {
+  color: white;
+}
+
+.red-font {
+  color: red;
+}
+
 .text-shadow {
   text-shadow: 0 3px 2px black;
+}
+
+.text-shadow-none {
+  text-shadow: none;
 }
 
 .italics {
@@ -114,10 +126,6 @@ body {
 /* Tools */
 .text-left-align {
   text-align: left;
-}
-
-.text-decoration-none {
-  text-decoration: none;
 }
 
 .hidden {
