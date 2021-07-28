@@ -6,11 +6,11 @@ var $weatherChoicesQuestion = document.querySelector('.weather-information-choic
 var $locationAsker = document.querySelector('.location-asker');
 var $weatherChoicesList = document.querySelector('.list-of-weather-choices');
 var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
-var $weatherDisplayPrimary = document.querySelector('.weather-display-primary');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherOptionsSubmitButton.addEventListener('click', appendLocationsList);
 $weatherChoicesList.addEventListener('click', alternateIcon);
+$weatherOptionsSubmitButton.addEventListener('click', showWeatherDataObject);
 
 function queryLocation(event) {
   event.preventDefault();
@@ -76,7 +76,7 @@ function appendLocationsList(event) {
   data.locations.push(data.template);
   resetDataTemplate();
   toggleHidden($weatherInformationChoices);
-  toggleHidden($weatherDisplayPrimary);
+  toggleHidden($weatherDisplayPrimaryList);
 }
 
 function resetDataTemplate() {
@@ -85,4 +85,63 @@ function resetDataTemplate() {
   }
   data.template.location = null;
   data.editing = null;
+}
+
+var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primary');
+var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
+
+function showWeatherDataObject(location) {
+  var xhr = new XMLHttpRequest();
+  var firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  var locationURL = location.location;
+  var latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
+  var fullLink = firstPartLink + locationURL + latterPartLink;
+  xhr.open('GET', fullLink);
+  xhr.responseType = 'json';
+  xhr.send();
+  xhr.addEventListener('load', function () {
+    if (location.main === true) {
+      $displayPrimaryWeatherItemList[0].textContent = xhr.response.weather[0].main;
+    } else if (location.main !== false) {
+      $displayPrimaryWeatherItemList[0].remove();
+    }
+    if (location.temperature === true) {
+      $displayPrimaryWeatherItemList[1].textContent += ' ' + xhr.response.main.temp + '° F';
+    }
+    if (location.high === true) {
+      $displayPrimaryWeatherItemList[2].textContent += ' ' + xhr.response.main.temp_max + '° F';
+    }
+    if (location.low === true) {
+      $displayPrimaryWeatherItemList[3].textContent += ' ' + xhr.response.main.temp_min + '° F';
+    }
+    if (location.wind === true) {
+      $displayPrimaryWeatherItemList[4].textContent += ' ' + xhr.response.wind.speed + ' mph';
+    }
+    if (location.humidity === true) {
+      $displayPrimaryWeatherItemList[5].textContent += ' ' + xhr.response.main.humidity + '%';
+    }
+    if (location.sunsetSunrise === true) {
+      $displayPrimaryWeatherItemList[6].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunrise) + ' / ' + convertUnixTimeStamp(xhr.response.sys.sunset);
+    }
+    for (var displayIndex = 0; displayIndex < $displayPrimaryWeatherItemList.length; displayIndex++) {
+      if (location[data.weatherOptions[displayIndex]] === false) {
+        $displayPrimaryWeatherItemList[displayIndex].remove();
+      }
+    }
+  });
+}
+
+function convertUnixTimeStamp(unix) {
+  var time = new Date(unix * 1000);
+  var pastNoon = null;
+  var hours = time.getHours();
+  if (hours > 12) {
+    pastNoon = ' PM';
+    hours -= 12;
+  } else {
+    pastNoon = ' AM';
+  }
+  var minutes = '0' + time.getMinutes();
+  var formattedTime = hours + ':' + minutes.substr(-2) + pastNoon;
+  return formattedTime;
 }
