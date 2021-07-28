@@ -6,6 +6,7 @@ var $weatherChoicesQuestion = document.querySelector('.weather-information-choic
 var $locationAsker = document.querySelector('.location-asker');
 var $weatherChoicesList = document.querySelector('.list-of-weather-choices');
 var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
+var $weatherDisplayPrimary = document.querySelector('.weather-display-primary');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherOptionsSubmitButton.addEventListener('click', appendLocationsList);
@@ -24,8 +25,8 @@ function queryLocation(event) {
   xhr.addEventListener('load', function () {
     if ($searchBar.value !== '' && xhr.status === 200) {
       data.editing = $searchBar.value;
-      $locationAsker.classList.toggle('hidden');
-      $weatherInformationChoices.classList.toggle('hidden');
+      toggleHidden($locationAsker);
+      toggleHidden($weatherInformationChoices);
       data.template.location = data.editing;
       createWeatherQuestion();
     } else {
@@ -67,9 +68,15 @@ function alternateIcon(event) {
   }
 }
 
+function toggleHidden(elementClass) {
+  elementClass.classList.toggle('hidden');
+}
+
 function appendLocationsList(event) {
   data.locations.push(data.template);
   resetDataTemplate();
+  toggleHidden($weatherInformationChoices);
+  toggleHidden($weatherDisplayPrimary);
 }
 
 function resetDataTemplate() {

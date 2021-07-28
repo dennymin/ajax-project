@@ -90,12 +90,15 @@ body {
 }
 
 /* Weather Choices Modal */
-.list-of-weather-choices {
+.unordered-list-no-bullets {
   list-style-type: none;
 }
 
-.weather-information-list-choice {
+.list-choice-no-shadow {
   text-shadow: none;
+}
+
+.list-choice-3rem-line-height {
   line-height: 3rem;
 }
 
@@ -147,7 +150,7 @@ body {
     width: 30%;
   }
 
-  .weather-information-list-choice {
+  .text-one-half-rem {
     font-size: 1.5rem;
   }
 

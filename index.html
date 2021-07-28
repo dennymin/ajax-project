@@ -17,7 +17,7 @@
   </header>
   <main>
     <div class="white-font data-modal text-shadow">
-      <div class="location-asker">
+      <div class="location-asker hidden">
         <h1 class="data-search-question">Where would you like to check today?</h1>
         <form class="location-form">
           <div class="search-area justify-content-center">
@@ -29,30 +29,45 @@
 
       <div class="weather-information-choices hidden">
         <h1 class="weather-information-choices-question"></h1>
-        <ul class="list-of-weather-choices text-left-align">
-          <li class="weather-information-list-choice text-decoration-none" value="0">
+        <ul class="list-of-weather-choices text-left-align unordered-list-no-bullets">
+          <li class="weather-information-list-choice text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="0">
             <i class="far fa-circle"></i>
             Main</li>
-          <li class="weather-information-list-choice text-decoration-none" value="1">
+          <li class="weather-information-list-choice text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="1">
             <i class="far fa-circle"></i>
             Temperature</li>
-          <li class="weather-information-list-choice text-decoration-none" value="2">
+          <li class="weather-information-list-choice text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="2">
             <i class="far fa-circle"></i>
             High</li>
-          <li class="weather-information-list-choice text-decoration-none" value="3">
+          <li class="weather-information-list-choice text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="3">
             <i class="far fa-circle"></i>
             Low</li>
-          <li class="weather-information-list-choice text-decoration-none" value="4">
+          <li class="weather-information-list-choice text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="4">
             <i class="far fa-circle"></i>
             Wind</li>
-          <li class="weather-information-list-choice text-decoration-none" value="5">
+          <li class="weather-information-list-choice text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="5">
             <i class="far fa-circle"></i>
             Humidity</li>
-          <li class="weather-information-list-choice text-decoration-none" value="6">
+          <li class="weather-information-list-choice text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="6">
             <i class="far fa-circle"></i>
             Sunset/Sunrise</li>
         </ul>
         <button class="submit-choices white-font text-shadow">Submit</button>
+      </div>
+
+      <div class="weather-display-primary white-font text-left-align">
+        <div class="time-and-location"><h1>8:26 PM in Lake Forest</h1></div>
+        <div class=>
+          <ul class="display-primary-weather unordered-list-no-bullets">
+            <li class="text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem">Cloudy</li>
+            <li class="text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem">Current Temperature: </li>
+            <li class="text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem">High Today:</li>
+            <li class="text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem">Low Today:</li>
+            <li class="text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem">Wind:</li>
+            <li class="text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem">Humidity:</li>
+            <li class="text-decoration-none list-choice-no-shadow list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem">Sunrise/Sunset</li>
+          </ul>
+        </div>
       </div>
     </div>
   </main>
