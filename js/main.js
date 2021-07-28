@@ -37,11 +37,9 @@ function alternateIcon(event) {
     if (circleOrCheck === 'far fa-circle') {
       event.target.children[0].className = 'far fa-check-circle';
       data.locations[0][weatherOptions[optionChosen]] = true;
-      console.log(data.locations[0][weatherOptions[optionChosen]]);
     } else if (circleOrCheck === 'far fa-check-circle') {
       event.target.children[0].className = 'far fa-circle';
       data.locations[0][weatherOptions[optionChosen]] = false;
-      console.log(data.locations[0][weatherOptions[optionChosen]]);
     }
   }
 }
