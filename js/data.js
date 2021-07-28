@@ -4,16 +4,16 @@ var data = {
   view: 'entry-form',
   editing: null,
   template: {
-    Location: null,
-    Main: false,
-    Temperature: false,
-    High: false,
-    Low: false,
-    Wind: false,
-    Humidity: false,
-    SunsetSunrise: false
+    location: null,
+    main: false,
+    temperature: false,
+    high: false,
+    low: false,
+    wind: false,
+    humidity: false,
+    sunsetSunrise: false
   },
-  weatherOptions: ['Main', 'Temperature', 'High', 'Low', 'Wind', 'Humidity', 'SunsetSunrise']
+  weatherOptions: ['main', 'temperature', 'high', 'low', 'wind', 'humidity', 'sunsetSunrise']
 };
 
 var previousDataJSON = localStorage.getItem('weather-data');

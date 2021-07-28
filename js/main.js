@@ -26,7 +26,7 @@ function queryLocation(event) {
       data.editing = $searchBar.value;
       $locationAsker.classList.toggle('hidden');
       $weatherInformationChoices.classList.toggle('hidden');
-      data.template.Location = data.editing;
+      data.template.location = data.editing;
       createWeatherQuestion();
     } else {
       if ($locationAsker.children[2] !== undefined) {
@@ -76,6 +76,6 @@ function resetDataTemplate() {
   for (var optionIndex = 0; optionIndex < data.weatherOptions.length; optionIndex++) {
     data.template[data.weatherOptions[optionIndex]] = false;
   }
-  data.template.Location = null;
+  data.template.location = null;
   data.editing = null;
 }
