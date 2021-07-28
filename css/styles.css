@@ -20,9 +20,18 @@ body {
   text-shadow: 0 3px 2px black;
 }
 
+.italics {
+  font-style: italic;
+}
+
+.font-size-1rem {
+  font-size: 2rem;
+}
+
 /* Modals */
 .data-modal {
   margin: auto;
+  padding: 30px;
   background-color: rgb(200, 200, 200, 0.3);
   text-align: center;
   width: 90vw;
@@ -34,11 +43,10 @@ body {
 
 .data-search-question {
   margin: 15px;
-  padding-top: 30px;
 }
 
 .search-area {
-  padding: 50px;
+  padding: 20px;
   margin: 50px auto;
 }
 
@@ -61,18 +69,56 @@ body {
   border: 1px hidden;
   border-radius: 10px;
   background-color: rgb(0, 0, 0, 0);
+  font-size: 1.2rem;
 }
 
 .submit-search:active {
   transform: translateY(1px);
 }
 
+/* Weather Choices Modal */
+.list-of-weather-choices {
+  list-style-type: none;
+}
+
+.weather-information-list-choice {
+  text-shadow: none;
+  line-height: 3rem;
+}
+
+.weather-information-list-choice > i {
+  font-size: 0.7rem;
+  margin-right: 15px;
+}
+
+/* Tools */
+.text-left-align {
+  text-align: left;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
 .hidden {
   display: none;
+}
+
+.set-margins {
+  margin-top: 10;
+  margin-bottom: 30px;
 }
 
 @media screen and (min-width: 768px) {
   .search-bar {
     width: 30%;
+  }
+
+  .weather-information-list-choice {
+    font-size: 1.5rem;
+  }
+
+  .weather-information-list-choice > i {
+    font-size: 1.2rem;
   }
 }
