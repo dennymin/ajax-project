@@ -2,7 +2,18 @@
 var data = {
   locations: [],
   view: 'entry-form',
-  nextEntryId: 1
+  editing: null,
+  template: {
+    location: null,
+    main: false,
+    temperature: false,
+    high: false,
+    low: false,
+    wind: false,
+    humidity: false,
+    sunsetSunrise: false
+  },
+  weatherOptions: ['main', 'temperature', 'high', 'low', 'wind', 'humidity', 'sunsetSunrise']
 };
 
 var previousDataJSON = localStorage.getItem('weather-data');
