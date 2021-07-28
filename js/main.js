@@ -5,15 +5,11 @@ var $weatherInformationChoices = document.querySelector('.weather-information-ch
 var $weatherChoicesQuestion = document.querySelector('.weather-information-choices-question');
 var $locationAsker = document.querySelector('.location-asker');
 var $weatherChoicesList = document.querySelector('.list-of-weather-choices');
-var weatherOptions = ['Main', 'Temperature', 'High', 'Low', 'Wind', 'Humidity', 'SunsetSunrise'];
-var locationWeatherInformation = {};
-for (var optionIndex = 0; optionIndex < weatherOptions.length; optionIndex++) {
-  locationWeatherInformation[weatherOptions[optionIndex]] = false;
-}
 var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherOptionsSubmitButton.addEventListener('click', appendLocationsList);
+$weatherChoicesList.addEventListener('click', alternateIcon);
 
 function queryLocation(event) {
   event.preventDefault();
@@ -30,7 +26,7 @@ function queryLocation(event) {
       data.editing = $searchBar.value;
       $locationAsker.classList.toggle('hidden');
       $weatherInformationChoices.classList.toggle('hidden');
-      locationWeatherInformation.location = data.editing;
+      data.template.Location = data.editing;
       createWeatherQuestion();
     } else {
       if ($locationAsker.children[2] !== undefined) {
@@ -63,23 +59,23 @@ function alternateIcon(event) {
   if (event.target && event.target.nodeName === 'LI') {
     if (circleOrCheck === 'far fa-circle') {
       event.target.children[0].className = 'far fa-check-circle';
-      locationWeatherInformation[weatherOptions[event.target.value]] = true;
+      data.template[data.weatherOptions[event.target.value]] = true;
     } else if (circleOrCheck === 'far fa-check-circle') {
       event.target.children[0].className = 'far fa-circle';
-      locationWeatherInformation[weatherOptions[event.target.value]] = false;
+      data.template[data.weatherOptions[event.target.value]] = false;
     }
   }
 }
-$weatherChoicesList.addEventListener('click', alternateIcon);
 
 function appendLocationsList(event) {
-  data.locations.push(locationWeatherInformation);
-  resetOptions();
+  data.locations.push(data.template);
+  resetDataTemplate();
 }
 
-function resetOptions() {
-  locationWeatherInformation = {};
-  for (var optionIndex = 0; optionIndex < weatherOptions.length; optionIndex++) {
-    locationWeatherInformation[weatherOptions[optionIndex]] = false;
+function resetDataTemplate() {
+  for (var optionIndex = 0; optionIndex < data.weatherOptions.length; optionIndex++) {
+    data.template[data.weatherOptions[optionIndex]] = false;
   }
+  data.template.Location = null;
+  data.editing = null;
 }
