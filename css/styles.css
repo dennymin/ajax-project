@@ -86,9 +86,29 @@ body {
   line-height: 3rem;
 }
 
+.weather-information-list-choice:hover {
+  cursor: default;
+}
+
+.weather-information-list-choice:active {
+  transform: translateY(1px);
+}
+
 .weather-information-list-choice > i {
   font-size: 0.7rem;
   margin-right: 15px;
+}
+
+.submit-choices {
+  font-style: italic;
+  border: 1px hidden;
+  border-radius: 10px;
+  background-color: rgb(0, 0, 0, 0);
+  font-size: 1.2rem;
+}
+
+.submit-choices:active {
+  transform: translateY(1px);
 }
 
 /* Tools */
