@@ -100,7 +100,8 @@ function showWeatherDataObject(location) {
   xhr.send();
   xhr.addEventListener('load', function () {
     var currentTime = new Date().getTime() / 1000;
-    $displayTimeLocation.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone) + ' in ' + xhr.response.name;
+    $displayTimeLocation.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, true) + ' in ' + xhr.response.name + ', ' + xhr.response.sys.country;
+    console.log(xhr.response);
     if (location.main === true) {
       $displayPrimaryWeatherItemList[0].textContent = xhr.response.weather[0].main;
     } else if (location.main !== false) {
@@ -122,7 +123,7 @@ function showWeatherDataObject(location) {
       $displayPrimaryWeatherItemList[5].textContent += ' ' + xhr.response.main.humidity + '%';
     }
     if (location.sunsetSunrise === true) {
-      $displayPrimaryWeatherItemList[6].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunrise, xhr.response.timezone) + ' / ' + convertUnixTimeStamp(xhr.response.sys.sunset, xhr.response.timezone);
+      $displayPrimaryWeatherItemList[6].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunrise, xhr.response.timezone, false) + ' / ' + convertUnixTimeStamp(xhr.response.sys.sunset, xhr.response.timezone, false);
     }
     for (var displayIndex = 0; displayIndex < $displayPrimaryWeatherItemList.length; displayIndex++) {
       if (location[data.weatherOptions[displayIndex]] === false) {
@@ -133,11 +134,15 @@ function showWeatherDataObject(location) {
   });
 }
 
-function convertUnixTimeStamp(unix, timezone) {
-  var localOffset = 420 * 60;
+function convertUnixTimeStamp(unix, timezone, full) {
+  var localOffset = new Date().getTimezoneOffset() * 60;
   var stamp = (unix + (localOffset + timezone)) * 1000;
-  var formattedTime = new Date(stamp).toLocaleTimeString();
-  return formattedTime;
+  var formattedTime = new Date(stamp);
+  if (full === false) {
+    return formattedTime.toLocaleTimeString();
+  } else if (full === true) {
+    return formattedTime.toLocaleString();
+  }
 }
 
 function showPrimary(event) {
@@ -149,6 +154,10 @@ function showPrimary(event) {
   }
 }
 
-// function changeBackground(time, weather) {
-
-// }
+function changeBackground(currentTime, weather) {
+  var timeStamp = new Date(currentTime);
+  var hourMark = timeStamp.getHours();
+  if (hourMark > 6 && hourMark < 18) {
+    console.log('hi');
+  }
+}
