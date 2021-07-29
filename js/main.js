@@ -10,10 +10,10 @@ var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primar
 var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
 var $displayTimeLocation = document.querySelector('.time-and-location>h1');
 var $displayTimeLocationDiv = document.querySelector('.time-and-location');
+var $backgroundImage = document.querySelector('.background-image-dimensions');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
-$weatherOptionsSubmitButton.addEventListener('click', appendLocationsList);
 $weatherOptionsSubmitButton.addEventListener('click', showPrimary);
 
 function queryLocation(event) {
@@ -44,14 +44,6 @@ function queryLocation(event) {
   });
 }
 
-function invalidLocationNotice() {
-  var invalidText = 'Please put an appropriate location!';
-  var $invalidTextElement = document.createElement('p');
-  $invalidTextElement.textContent = invalidText;
-  $invalidTextElement.className = 'italics red-font text-shadow-none top-bottom-margins-none';
-  return $invalidTextElement;
-}
-
 function createWeatherQuestion() {
   $weatherChoicesQuestion.textContent = 'Weather in:';
   var $weatherChoicesLocation = document.createElement('h1');
@@ -73,12 +65,9 @@ function alternateIcon(event) {
   }
 }
 
-function toggleHidden(elementClass) {
-  elementClass.classList.toggle('hidden');
-}
-
-function appendLocationsList(event) {
-  data.locations.push(data.template);
+function appendLocationsList() {
+  var dataWeatherEntryObject = Object.assign({}, data.template);
+  data.locations.push(dataWeatherEntryObject);
   toggleHidden($weatherInformationChoices);
 }
 
@@ -137,7 +126,10 @@ function showWeatherDataObject(location) {
         $displayPrimaryWeatherItemList[displayIndex].remove();
       }
     }
-    considerSetting(currentTime, xhr.response.timezone, xhr.response.weather[0].main);
+    if (location[data.weatherOptions[6]] === false) {
+      $displayPrimaryWeatherItemList[7].remove();
+    }
+    considerSetting(currentTime, xhr.response.timezone, xhr.response.weather[0].main, xhr.response.sys.sunrise, xhr.response.sys.sunset);
     resetDataTemplate();
   });
 }
@@ -155,6 +147,7 @@ function convertUnixTimeStamp(unix, timezone, date) {
 
 function showPrimary(event) {
   toggleHidden($weatherDisplayPrimaryList);
+  appendLocationsList();
   for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
     if (data.locations[dataLIndex].location === data.primary) {
       showWeatherDataObject(data.locations[dataLIndex]);
@@ -162,23 +155,37 @@ function showPrimary(event) {
   }
 }
 
-var $backgroundImage = document.querySelector('.background-image-dimensions');
-
 function changeBackground(image) {
   var dimensions = 'background-image-dimensions ';
   $backgroundImage.className = dimensions + image;
 }
 
-function considerSetting(unix, timezone, weather) {
+function considerSetting(unix, timezone, weather, sunrise, sunset) {
   var localOffset = new Date().getTimezoneOffset() * 60;
   var stamp = (unix + (localOffset + timezone)) * 1000;
   var formattedTime = new Date(stamp);
-  var hourMark = formattedTime.getHours();
+  var sunTime = formattedTime.getHours() + (formattedTime.getMinutes() / 60);
+  var sunRiseUnixConvertedHours = new Date((sunrise + (localOffset + timezone)) * 1000);
+  var sunRiseTotal = sunRiseUnixConvertedHours.getHours() + (sunRiseUnixConvertedHours.getMinutes() / 60);
+  var sunSetUnixConvertedHours = new Date((sunset + (localOffset + timezone)) * 1000);
+  var sunSetTotal = sunSetUnixConvertedHours.getHours() + (sunSetUnixConvertedHours.getMinutes() / 60);
   if (weather === 'Rain') {
     changeBackground('background-image-rainy');
-  } else if (hourMark >= 6 && hourMark <= 18) {
+  } else if (sunTime >= sunRiseTotal && sunTime <= sunSetTotal) {
     changeBackground('background-image-sunny');
-  } else if (hourMark > 18 || hourMark < 6) {
+  } else if ((sunTime > sunSetTotal && sunTime < 25) || (sunTime < sunRiseTotal && sunTime >= 0)) {
     changeBackground('background-image-night');
   }
+}
+
+function invalidLocationNotice() {
+  var invalidText = 'Please put an appropriate location!';
+  var $invalidTextElement = document.createElement('p');
+  $invalidTextElement.textContent = invalidText;
+  $invalidTextElement.className = 'italics red-font text-shadow-none top-bottom-margins-none';
+  return $invalidTextElement;
+}
+
+function toggleHidden(elementClass) {
+  elementClass.classList.toggle('hidden');
 }
