@@ -1,10 +1,21 @@
 /* Background Image */
-.background-image {
-  background-image: url("../images/sky-background-default.jpg");
+.background-image-dimensions {
   min-height: 100vh;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+.background-image-sunny {
+  background-image: url("../images/sky-background-default.jpg");
+}
+
+.background-image-night {
+  background-image: url("../images/night-time-in-city.jpg");
+}
+
+.background-image-rainy {
+  background-image: url("../images/rain-wallpaper.jpg");
 }
 
 /* Fonts */
@@ -28,6 +39,10 @@ body {
   text-shadow: 0 3px 2px black;
 }
 
+.text-shadow-small {
+  text-shadow: 0 2px 3px black;
+}
+
 .text-shadow-none {
   text-shadow: none;
 }
@@ -44,7 +59,7 @@ body {
 .data-modal {
   margin: auto;
   padding: 30px;
-  background-color: rgb(200, 200, 200, 0.3);
+  background-color: rgba(182, 182, 182, 0.2);
   text-align: center;
   width: 90vw;
   border: 1px hidden;
@@ -90,12 +105,11 @@ body {
 }
 
 /* Weather Choices Modal */
-.list-of-weather-choices {
+.unordered-list-no-bullets {
   list-style-type: none;
 }
 
-.weather-information-list-choice {
-  text-shadow: none;
+.list-choice-3rem-line-height {
   line-height: 3rem;
 }
 
@@ -124,9 +138,19 @@ body {
   transform: translateY(1px);
 }
 
+/* Main Display */
+.time-and-location > h1 {
+  font-size: 1.6rem;
+  margin: 5px auto;
+}
+
 /* Tools */
 .text-left-align {
   text-align: left;
+}
+
+.mobile-center-to-left {
+  text-align: center;
 }
 
 .hidden {
@@ -142,16 +166,36 @@ body {
   margin: 0 auto;
 }
 
+.right-shift-10px {
+  position: relative;
+  right: 10px;
+}
+
 @media screen and (min-width: 768px) {
   .search-bar {
     width: 30%;
   }
 
-  .weather-information-list-choice {
+  .text-one-half-rem {
     font-size: 1.5rem;
   }
 
   .weather-information-list-choice > i {
     font-size: 1.2rem;
+  }
+
+  .time-and-location > h1 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 376px) {
+  .mobile-center-to-left {
+    text-align: left;
+  }
+
+  .time-and-location > h1 {
+    position: relative;
+    left: 30px;
   }
 }

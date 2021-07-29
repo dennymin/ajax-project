@@ -6,10 +6,15 @@ var $weatherChoicesQuestion = document.querySelector('.weather-information-choic
 var $locationAsker = document.querySelector('.location-asker');
 var $weatherChoicesList = document.querySelector('.list-of-weather-choices');
 var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
+var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primary');
+var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
+var $displayTimeLocation = document.querySelector('.time-and-location>h1');
+var $displayTimeLocationDiv = document.querySelector('.time-and-location');
+var $backgroundImage = document.querySelector('.background-image-dimensions');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
-$weatherOptionsSubmitButton.addEventListener('click', appendLocationsList);
 $weatherChoicesList.addEventListener('click', alternateIcon);
+$weatherOptionsSubmitButton.addEventListener('click', showPrimary);
 
 function queryLocation(event) {
   event.preventDefault();
@@ -24,9 +29,10 @@ function queryLocation(event) {
   xhr.addEventListener('load', function () {
     if ($searchBar.value !== '' && xhr.status === 200) {
       data.editing = $searchBar.value;
-      $locationAsker.classList.toggle('hidden');
-      $weatherInformationChoices.classList.toggle('hidden');
       data.template.location = data.editing;
+      data.primary = data.editing;
+      toggleHidden($locationAsker);
+      toggleHidden($weatherInformationChoices);
       createWeatherQuestion();
     } else {
       if ($locationAsker.children[2] !== undefined) {
@@ -36,14 +42,6 @@ function queryLocation(event) {
       $locationForm.reset();
     }
   });
-}
-
-function invalidLocationNotice() {
-  var invalidText = 'Please put an appropriate location!';
-  var $invalidTextElement = document.createElement('p');
-  $invalidTextElement.textContent = invalidText;
-  $invalidTextElement.className = 'italics red-font text-shadow-none top-bottom-margins-none';
-  return $invalidTextElement;
 }
 
 function createWeatherQuestion() {
@@ -67,15 +65,127 @@ function alternateIcon(event) {
   }
 }
 
-function appendLocationsList(event) {
-  data.locations.push(data.template);
-  resetDataTemplate();
+function appendLocationsList() {
+  var dataWeatherEntryObject = Object.assign({}, data.template);
+  data.locations.push(dataWeatherEntryObject);
+  toggleHidden($weatherInformationChoices);
 }
 
 function resetDataTemplate() {
   for (var optionIndex = 0; optionIndex < data.weatherOptions.length; optionIndex++) {
-    data.template[data.weatherOptions[optionIndex]] = false;
+    data.template[data.weatherOptions[optionIndex]] = true;
   }
   data.template.location = null;
   data.editing = null;
+}
+
+function showWeatherDataObject(location) {
+  var xhr = new XMLHttpRequest();
+  var firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  var locationURL = location.location;
+  var latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
+  var fullLink = firstPartLink + locationURL + latterPartLink;
+  xhr.open('GET', fullLink);
+  xhr.responseType = 'json';
+  xhr.send();
+  xhr.addEventListener('load', function () {
+    var currentTime = new Date().getTime() / 1000;
+    $displayTimeLocation.textContent = xhr.response.name + ', ' + xhr.response.sys.country;
+    var $timeDisplay = document.createElement('h1');
+    $displayTimeLocationDiv.appendChild($timeDisplay);
+    $timeDisplay.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, false);
+    var $dateDisplay = document.createElement('h1');
+    $dateDisplay.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, true);
+    $displayTimeLocationDiv.appendChild($dateDisplay);
+    if (location.main === true) {
+      $displayPrimaryWeatherItemList[0].textContent = 'Weather: ' + xhr.response.weather[0].main;
+    } else if (location.main !== false) {
+      $displayPrimaryWeatherItemList[0].remove();
+    }
+    if (location.temperature === true) {
+      $displayPrimaryWeatherItemList[1].textContent += ' ' + xhr.response.main.temp + '° F';
+    }
+    if (location.high === true) {
+      $displayPrimaryWeatherItemList[2].textContent += ' ' + xhr.response.main.temp_max + '° F';
+    }
+    if (location.low === true) {
+      $displayPrimaryWeatherItemList[3].textContent += ' ' + xhr.response.main.temp_min + '° F';
+    }
+    if (location.wind === true) {
+      $displayPrimaryWeatherItemList[4].textContent += ' ' + xhr.response.wind.speed + ' mph';
+    }
+    if (location.humidity === true) {
+      $displayPrimaryWeatherItemList[5].textContent += ' ' + xhr.response.main.humidity + '%';
+    }
+    if (location.sunsetSunrise === true) {
+      $displayPrimaryWeatherItemList[6].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunrise, xhr.response.timezone, false);
+      $displayPrimaryWeatherItemList[7].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunset, xhr.response.timezone, false);
+    }
+    for (var displayIndex = 0; displayIndex < $displayPrimaryWeatherItemList.length; displayIndex++) {
+      if (location[data.weatherOptions[displayIndex]] === false) {
+        $displayPrimaryWeatherItemList[displayIndex].remove();
+      }
+    }
+    if (location[data.weatherOptions[6]] === false) {
+      $displayPrimaryWeatherItemList[7].remove();
+    }
+    considerSetting(currentTime, xhr.response.timezone, xhr.response.weather[0].main, xhr.response.sys.sunrise, xhr.response.sys.sunset);
+    resetDataTemplate();
+  });
+}
+
+function convertUnixTimeStamp(unix, timezone, date) {
+  var localOffset = new Date().getTimezoneOffset() * 60;
+  var stamp = (unix + (localOffset + timezone)) * 1000;
+  var formattedTime = new Date(stamp);
+  if (date === false) {
+    return formattedTime.toLocaleTimeString().substr(0, formattedTime.toLocaleTimeString().lastIndexOf(':')) + ' ' + formattedTime.toLocaleTimeString().substr(-2);
+  } else if (date === true) {
+    return formattedTime.toLocaleDateString();
+  }
+}
+
+function showPrimary(event) {
+  toggleHidden($weatherDisplayPrimaryList);
+  appendLocationsList();
+  for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
+    if (data.locations[dataLIndex].location === data.primary) {
+      showWeatherDataObject(data.locations[dataLIndex]);
+    }
+  }
+}
+
+function changeBackground(image) {
+  var dimensions = 'background-image-dimensions ';
+  $backgroundImage.className = dimensions + image;
+}
+
+function considerSetting(unix, timezone, weather, sunrise, sunset) {
+  var localOffset = new Date().getTimezoneOffset() * 60;
+  var stamp = (unix + (localOffset + timezone)) * 1000;
+  var formattedTime = new Date(stamp);
+  var sunTime = formattedTime.getHours() + (formattedTime.getMinutes() / 60);
+  var sunRiseUnixConvertedHours = new Date((sunrise + (localOffset + timezone)) * 1000);
+  var sunRiseTotal = sunRiseUnixConvertedHours.getHours() + (sunRiseUnixConvertedHours.getMinutes() / 60);
+  var sunSetUnixConvertedHours = new Date((sunset + (localOffset + timezone)) * 1000);
+  var sunSetTotal = sunSetUnixConvertedHours.getHours() + (sunSetUnixConvertedHours.getMinutes() / 60);
+  if (weather === 'Rain') {
+    changeBackground('background-image-rainy');
+  } else if (sunTime >= sunRiseTotal && sunTime <= sunSetTotal) {
+    changeBackground('background-image-sunny');
+  } else if ((sunTime > sunSetTotal && sunTime < 25) || (sunTime < sunRiseTotal && sunTime >= 0)) {
+    changeBackground('background-image-night');
+  }
+}
+
+function invalidLocationNotice() {
+  var invalidText = 'Please put an appropriate location!';
+  var $invalidTextElement = document.createElement('p');
+  $invalidTextElement.textContent = invalidText;
+  $invalidTextElement.className = 'italics red-font text-shadow-none top-bottom-margins-none';
+  return $invalidTextElement;
+}
+
+function toggleHidden(elementClass) {
+  elementClass.classList.toggle('hidden');
 }
