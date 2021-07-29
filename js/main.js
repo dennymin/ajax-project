@@ -99,8 +99,8 @@ function showWeatherDataObject(location) {
   xhr.responseType = 'json';
   xhr.send();
   xhr.addEventListener('load', function () {
-    console.log(xhr.response);
-    $displayTimeLocation.textContent = convertUnixTimeStamp(xhr.response.dt, xhr.response.timezone) + ' in ' + xhr.response.name;
+    var currentTime = new Date().getTime() / 1000;
+    $displayTimeLocation.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone) + ' in ' + xhr.response.name;
     if (location.main === true) {
       $displayPrimaryWeatherItemList[0].textContent = xhr.response.weather[0].main;
     } else if (location.main !== false) {
@@ -134,8 +134,9 @@ function showWeatherDataObject(location) {
 }
 
 function convertUnixTimeStamp(unix, timezone) {
-  var formattedTime = new Date(unix);
-  formattedTime = formattedTime.toLocaleTimeString('en-US');
+  var localOffset = 420 * 60;
+  var stamp = (unix + (localOffset + timezone)) * 1000;
+  var formattedTime = new Date(stamp).toLocaleTimeString();
   return formattedTime;
 }
 
@@ -151,7 +152,3 @@ function showPrimary(event) {
 // function changeBackground(time, weather) {
 
 // }
-function timeZone(time) {
-  var newTime = new Date(time - 1620000000).toLocaleTimeString();
-  return newTime;
-}
