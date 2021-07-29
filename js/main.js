@@ -6,11 +6,14 @@ var $weatherChoicesQuestion = document.querySelector('.weather-information-choic
 var $locationAsker = document.querySelector('.location-asker');
 var $weatherChoicesList = document.querySelector('.list-of-weather-choices');
 var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
+var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primary');
+var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
+var $displayTimeLocation = document.querySelector('.time-and-location>h1');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
-$weatherOptionsSubmitButton.addEventListener('click', appendLocationsList);
 $weatherChoicesList.addEventListener('click', alternateIcon);
-$weatherOptionsSubmitButton.addEventListener('click', showWeatherDataObject);
+$weatherOptionsSubmitButton.addEventListener('click', appendLocationsList);
+$weatherOptionsSubmitButton.addEventListener('click', showPrimary);
 
 function queryLocation(event) {
   event.preventDefault();
@@ -25,9 +28,10 @@ function queryLocation(event) {
   xhr.addEventListener('load', function () {
     if ($searchBar.value !== '' && xhr.status === 200) {
       data.editing = $searchBar.value;
+      data.template.location = data.editing;
+      data.primary = data.editing;
       toggleHidden($locationAsker);
       toggleHidden($weatherInformationChoices);
-      data.template.location = data.editing;
       createWeatherQuestion();
     } else {
       if ($locationAsker.children[2] !== undefined) {
@@ -74,9 +78,7 @@ function toggleHidden(elementClass) {
 
 function appendLocationsList(event) {
   data.locations.push(data.template);
-  resetDataTemplate();
   toggleHidden($weatherInformationChoices);
-  toggleHidden($weatherDisplayPrimaryList);
 }
 
 function resetDataTemplate() {
@@ -86,9 +88,6 @@ function resetDataTemplate() {
   data.template.location = null;
   data.editing = null;
 }
-
-var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primary');
-var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
 
 function showWeatherDataObject(location) {
   var xhr = new XMLHttpRequest();
@@ -100,6 +99,8 @@ function showWeatherDataObject(location) {
   xhr.responseType = 'json';
   xhr.send();
   xhr.addEventListener('load', function () {
+    console.log(xhr.response);
+    $displayTimeLocation.textContent = convertUnixTimeStamp(xhr.response.dt, xhr.response.timezone) + ' in ' + xhr.response.name;
     if (location.main === true) {
       $displayPrimaryWeatherItemList[0].textContent = xhr.response.weather[0].main;
     } else if (location.main !== false) {
@@ -121,27 +122,36 @@ function showWeatherDataObject(location) {
       $displayPrimaryWeatherItemList[5].textContent += ' ' + xhr.response.main.humidity + '%';
     }
     if (location.sunsetSunrise === true) {
-      $displayPrimaryWeatherItemList[6].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunrise) + ' / ' + convertUnixTimeStamp(xhr.response.sys.sunset);
+      $displayPrimaryWeatherItemList[6].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunrise, xhr.response.timezone) + ' / ' + convertUnixTimeStamp(xhr.response.sys.sunset, xhr.response.timezone);
     }
     for (var displayIndex = 0; displayIndex < $displayPrimaryWeatherItemList.length; displayIndex++) {
       if (location[data.weatherOptions[displayIndex]] === false) {
         $displayPrimaryWeatherItemList[displayIndex].remove();
       }
     }
+    resetDataTemplate();
   });
 }
 
-function convertUnixTimeStamp(unix) {
-  var time = new Date(unix * 1000);
-  var pastNoon = null;
-  var hours = time.getHours();
-  if (hours > 12) {
-    pastNoon = ' PM';
-    hours -= 12;
-  } else {
-    pastNoon = ' AM';
-  }
-  var minutes = '0' + time.getMinutes();
-  var formattedTime = hours + ':' + minutes.substr(-2) + pastNoon;
+function convertUnixTimeStamp(unix, timezone) {
+  var formattedTime = new Date(unix);
+  formattedTime = formattedTime.toLocaleTimeString('en-US');
   return formattedTime;
+}
+
+function showPrimary(event) {
+  toggleHidden($weatherDisplayPrimaryList);
+  for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
+    if (data.locations[dataLIndex].location === data.primary) {
+      showWeatherDataObject(data.locations[dataLIndex]);
+    }
+  }
+}
+
+// function changeBackground(time, weather) {
+
+// }
+function timeZone(time) {
+  var newTime = new Date(time - 1620000000).toLocaleTimeString();
+  return newTime;
 }

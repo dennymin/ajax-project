@@ -3,6 +3,7 @@ var data = {
   locations: [],
   view: 'entry-form',
   editing: null,
+  primary: null,
   template: {
     location: null,
     main: false,
