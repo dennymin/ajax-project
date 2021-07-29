@@ -39,6 +39,10 @@ body {
   text-shadow: 0 3px 2px black;
 }
 
+.text-shadow-small {
+  text-shadow: 0 2px 3px black;
+}
+
 .text-shadow-none {
   text-shadow: none;
 }
@@ -55,7 +59,7 @@ body {
 .data-modal {
   margin: auto;
   padding: 30px;
-  background-color: rgb(200, 200, 200, 0.3);
+  background-color: rgba(182, 182, 182, 0.5);
   text-align: center;
   width: 90vw;
   border: 1px hidden;
@@ -105,10 +109,6 @@ body {
   list-style-type: none;
 }
 
-.list-choice-no-shadow {
-  text-shadow: none;
-}
-
 .list-choice-3rem-line-height {
   line-height: 3rem;
 }
@@ -138,9 +138,19 @@ body {
   transform: translateY(1px);
 }
 
+/* Main Display */
+.time-and-location > h1 {
+  font-size: 1.6rem;
+  margin: 5px auto;
+}
+
 /* Tools */
 .text-left-align {
   text-align: left;
+}
+
+.mobile-center-to-left {
+  text-align: center;
 }
 
 .hidden {
@@ -156,6 +166,11 @@ body {
   margin: 0 auto;
 }
 
+.right-shift-20px {
+  position: relative;
+  right: 20px;
+}
+
 @media screen and (min-width: 768px) {
   .search-bar {
     width: 30%;
@@ -167,5 +182,15 @@ body {
 
   .weather-information-list-choice > i {
     font-size: 1.2rem;
+  }
+
+  .time-and-location > h1 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 376px) {
+  .mobile-center-to-left {
+    text-align: left;
   }
 }

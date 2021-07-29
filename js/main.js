@@ -9,6 +9,7 @@ var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
 var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primary');
 var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
 var $displayTimeLocation = document.querySelector('.time-and-location>h1');
+var $displayTimeLocationDiv = document.querySelector('.time-and-location');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
@@ -83,7 +84,7 @@ function appendLocationsList(event) {
 
 function resetDataTemplate() {
   for (var optionIndex = 0; optionIndex < data.weatherOptions.length; optionIndex++) {
-    data.template[data.weatherOptions[optionIndex]] = false;
+    data.template[data.weatherOptions[optionIndex]] = true;
   }
   data.template.location = null;
   data.editing = null;
@@ -100,10 +101,15 @@ function showWeatherDataObject(location) {
   xhr.send();
   xhr.addEventListener('load', function () {
     var currentTime = new Date().getTime() / 1000;
-    $displayTimeLocation.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, true) + ' in ' + xhr.response.name + ', ' + xhr.response.sys.country;
-    considerSetting(currentTime, xhr.response.weather[0].main);
+    $displayTimeLocation.textContent = xhr.response.name + ', ' + xhr.response.sys.country;
+    var $timeDisplay = document.createElement('h1');
+    $displayTimeLocationDiv.appendChild($timeDisplay);
+    $timeDisplay.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, false);
+    var $dateDisplay = document.createElement('h1');
+    $dateDisplay.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, true);
+    $displayTimeLocationDiv.appendChild($dateDisplay);
     if (location.main === true) {
-      $displayPrimaryWeatherItemList[0].textContent = xhr.response.weather[0].main;
+      $displayPrimaryWeatherItemList[0].textContent = 'Weather: ' + xhr.response.weather[0].main;
     } else if (location.main !== false) {
       $displayPrimaryWeatherItemList[0].remove();
     }
@@ -123,25 +129,27 @@ function showWeatherDataObject(location) {
       $displayPrimaryWeatherItemList[5].textContent += ' ' + xhr.response.main.humidity + '%';
     }
     if (location.sunsetSunrise === true) {
-      $displayPrimaryWeatherItemList[6].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunrise, xhr.response.timezone, false) + ' / ' + convertUnixTimeStamp(xhr.response.sys.sunset, xhr.response.timezone, false);
+      $displayPrimaryWeatherItemList[6].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunrise, xhr.response.timezone, false);
+      $displayPrimaryWeatherItemList[7].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunset, xhr.response.timezone, false);
     }
     for (var displayIndex = 0; displayIndex < $displayPrimaryWeatherItemList.length; displayIndex++) {
       if (location[data.weatherOptions[displayIndex]] === false) {
         $displayPrimaryWeatherItemList[displayIndex].remove();
       }
     }
+    considerSetting(currentTime, xhr.response.timezone, xhr.response.weather[0].main);
     resetDataTemplate();
   });
 }
 
-function convertUnixTimeStamp(unix, timezone, full) {
+function convertUnixTimeStamp(unix, timezone, date) {
   var localOffset = new Date().getTimezoneOffset() * 60;
   var stamp = (unix + (localOffset + timezone)) * 1000;
   var formattedTime = new Date(stamp);
-  if (full === false) {
-    return formattedTime.toLocaleTimeString();
-  } else if (full === true) {
-    return formattedTime.toLocaleString();
+  if (date === false) {
+    return formattedTime.toLocaleTimeString().substr(0, formattedTime.toLocaleTimeString().lastIndexOf(':')) + ' ' + formattedTime.toLocaleTimeString().substr(-2);
+  } else if (date === true) {
+    return formattedTime.toLocaleDateString();
   }
 }
 
@@ -161,9 +169,11 @@ function changeBackground(image) {
   $backgroundImage.className = dimensions + image;
 }
 
-function considerSetting(currentTime, weather) {
-  var timeStamp = new Date(currentTime);
-  var hourMark = timeStamp.getHours();
+function considerSetting(unix, timezone, weather) {
+  var localOffset = new Date().getTimezoneOffset() * 60;
+  var stamp = (unix + (localOffset + timezone)) * 1000;
+  var formattedTime = new Date(stamp);
+  var hourMark = formattedTime.getHours();
   if (weather === 'Rain') {
     changeBackground('background-image-rainy');
   } else if (hourMark >= 6 && hourMark <= 18) {

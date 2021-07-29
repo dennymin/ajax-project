@@ -6,13 +6,13 @@ var data = {
   primary: null,
   template: {
     location: null,
-    main: false,
-    temperature: false,
-    high: false,
-    low: false,
-    wind: false,
-    humidity: false,
-    sunsetSunrise: false
+    main: true,
+    temperature: true,
+    high: true,
+    low: true,
+    wind: true,
+    humidity: true,
+    sunsetSunrise: true
   },
   weatherOptions: ['main', 'temperature', 'high', 'low', 'wind', 'humidity', 'sunsetSunrise']
 };
