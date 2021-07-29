@@ -101,7 +101,7 @@ function showWeatherDataObject(location) {
   xhr.addEventListener('load', function () {
     var currentTime = new Date().getTime() / 1000;
     $displayTimeLocation.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, true) + ' in ' + xhr.response.name + ', ' + xhr.response.sys.country;
-    console.log(xhr.response);
+    considerSetting(currentTime, xhr.response.weather[0].main);
     if (location.main === true) {
       $displayPrimaryWeatherItemList[0].textContent = xhr.response.weather[0].main;
     } else if (location.main !== false) {
@@ -154,10 +154,21 @@ function showPrimary(event) {
   }
 }
 
-function changeBackground(currentTime, weather) {
+var $backgroundImage = document.querySelector('.background-image-dimensions');
+
+function changeBackground(image) {
+  var dimensions = 'background-image-dimensions ';
+  $backgroundImage.className = dimensions + image;
+}
+
+function considerSetting(currentTime, weather) {
   var timeStamp = new Date(currentTime);
   var hourMark = timeStamp.getHours();
-  if (hourMark > 6 && hourMark < 18) {
-    console.log('hi');
+  if (weather === 'Rain') {
+    changeBackground('background-image-rainy');
+  } else if (hourMark >= 6 && hourMark <= 18) {
+    changeBackground('background-image-sunny');
+  } else if (hourMark > 18 || hourMark < 6) {
+    changeBackground('background-image-night');
   }
 }

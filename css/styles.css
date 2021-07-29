@@ -1,10 +1,21 @@
 /* Background Image */
-.background-image {
-  background-image: url("../images/sky-background-default.jpg");
+.background-image-dimensions {
   min-height: 100vh;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+.background-image-sunny {
+  background-image: url("../images/sky-background-default.jpg");
+}
+
+.background-image-night {
+  background-image: url("../images/night-time-in-city.jpg");
+}
+
+.background-image-rainy {
+  background-image: url("../images/rain-wallpaper.jpg");
 }
 
 /* Fonts */
