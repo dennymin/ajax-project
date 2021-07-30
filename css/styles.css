@@ -59,6 +59,8 @@ body {
 .hamburger-menu-icon {
   color: rgba(182, 182, 182);
   font-size: 2rem;
+  position: relative;
+  left: 25px;
 }
 
 .header-banner-dimensions {
@@ -115,15 +117,15 @@ body {
   padding-left: 0;
 }
 
-.elm-preview-list > li {
-  border: 1px solid black;
-  border-radius: 20px;
+.elm-preview-list > li > div {
   width: auto;
   margin-top: 10px;
   padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 20px;
 }
 
-.elm-preview-list > li > * {
+.elm-preview-list > li > div > * {
   margin: auto 10px;
 }
 
@@ -311,5 +313,9 @@ body {
 
   .header-links > h4 {
     margin-right: 50px;
+  }
+
+  .hamburger-menu-icon {
+    left: 50px;
   }
 }

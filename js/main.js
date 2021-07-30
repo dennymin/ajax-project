@@ -190,8 +190,26 @@ function toggleHidden(elementClass) {
 var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
 var $headerBanner = document.querySelector('.header-banner');
 var $headerLinks = document.querySelector('.header-links');
-function showHeader(event) {
+function hamburgerClick(event) {
   $headerBanner.classList.toggle('header-banner-active-background');
-  $headerLinks.classList.toggle('hidden');
+  toggleHidden($headerLinks);
+  if (viewingLocationsModal === true) {
+    toggleHidden($editModal);
+    viewingLocationsModal = false;
+  }
 }
-$headerHamburgerMenuIcon.addEventListener('click', showHeader);
+$headerHamburgerMenuIcon.addEventListener('click', hamburgerClick);
+
+var viewingLocationsModal = false;
+var $locationLink = document.querySelector('.header-locations-link');
+var $editModal = document.querySelector('.edit-modal');
+function showMenu(event) {
+  toggleHidden($editModal);
+  if (viewingLocationsModal === false) {
+    viewingLocationsModal = true;
+  } else {
+    viewingLocationsModal = false;
+  }
+}
+
+$locationLink.addEventListener('click', showMenu);

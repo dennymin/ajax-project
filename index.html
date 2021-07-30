@@ -15,24 +15,21 @@
 <body class="background-image-dimensions background-image-sunny">
   <header>
     <div class="header-banner header-banner-dimensions align-items-center">
-      <button class="default-button flex-basis-15"><i class="hamburger-menu-icon fas fa-bars"></i></button>
+      <i class="hamburger-menu-icon fas fa-bars flex-basis-15"></i>
       <div class="header-links justify-content-end flex-basis-85 hidden">
-        <h4>Edit Locations</h4>
-        <h4>Profile</h4>
+        <h4 class="header-locations-link">Locations</h4>
+        <h4 class="header-profile-link">Profile</h4>
       </div>
     </div>
   </header>
   <main>
-    <div class="edit-locations-modal edit-locations-modal-dimensions tint position-fixed justify-content-center z-index-1 hidden">
+    <div class="edit-modal edit-locations-modal-dimensions tint position-fixed justify-content-center z-index-1 hidden">
       <div class="edit-location-modal-content elm-content-dimensions">
         <ul class="elm-preview-list unordered-list-no-bullets">
-          <li><i class="fas fa-star"></i>Lake Forest<i class="far fa-trash-alt"></i><i class="fas fa-pencil-alt"></i></li>
-          <li><i class="far fa-star"></i>Seoul<i class="far fa-trash-alt"></i><i class="fas fa-pencil-alt"></i></li>
-          <li><i class="far fa-plus-square"></i>New</li>
+          <li><div><i class="fas fa-star"></i>Lake Forest<i class="far fa-trash-alt"></i><i class="fas fa-pencil-alt"></i></div></li>
+          <li><div><i class="far fa-star"></i>Seoul<i class="far fa-trash-alt"></i><i class="fas fa-pencil-alt"></i></div></li>
+          <li><div><i class="far fa-plus-square"></i>New</div></li>
         </ul>
-        <div class="justify-content-center">
-          <button class="done-button default-button text-center-align">Done</button>
-        </div>
       </div>
     </div>
 
