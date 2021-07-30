@@ -16,12 +16,26 @@
   <header>
     <div class="header-banner-dimensions header-banner-active-background align-items-center">
       <button class="default-button flex-basis-15"><i class="hamburger-menu-icon fas fa-bars"></i></button>
-      <div class="flex-basis-85 justify-content-end">
-        <h3>test</h3><h3>test</h3>
+      <div class="links justify-content-end flex-basis-85">
+        <h4>Edit Locations</h4>
+        <h4>Profile</h4>
       </div>
     </div>
   </header>
   <main>
+    <div class="edit-locations-modal edit-locations-modal-dimensions tint position-fixed justify-content-center z-index-1">
+      <div class="edit-location-modal-content elm-content-dimensions">
+        <ul class="elm-preview-list unordered-list-no-bullets">
+          <li><i class="fas fa-star"></i>Lake Forest<i class="far fa-trash-alt"></i><i class="fas fa-pencil-alt"></i></li>
+          <li><i class="far fa-star"></i>Seoul<i class="far fa-trash-alt"></i><i class="fas fa-pencil-alt"></i></li>
+          <li><i class="far fa-plus-square"></i>New</li>
+        </ul>
+        <div class="justify-content-center">
+          <button class="done-button default-button text-center-align">Done</button>
+        </div>
+      </div>
+    </div>
+
     <div class="white-font data-modal text-shadow">
       <div class="location-asker">
         <h1 class="data-search-question">Where would you like to check today?</h1>
