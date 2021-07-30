@@ -216,3 +216,18 @@ function showMenu(event) {
 }
 
 $locationLink.addEventListener('click', showMenu);
+var differentPages = [$weatherDisplayPrimaryList, $weatherInformationChoices, $locationAsker];
+var $newEntryListItem = document.querySelector('.new-entry-list-item');
+function newEntryClicked(event) {
+  hamburgerClick();
+  for (var pageIndex = 0; pageIndex < differentPages.length; pageIndex++) {
+    var currentPageClass = differentPages[pageIndex].className;
+    if (differentPages[pageIndex] !== $locationAsker && !currentPageClass.includes('hidden')) {
+      toggleHidden(differentPages[pageIndex]);
+    }
+  }
+  if ($locationAsker.className.includes('hidden')) {
+    toggleHidden($locationAsker);
+  }
+}
+$newEntryListItem.addEventListener('click', newEntryClicked);
