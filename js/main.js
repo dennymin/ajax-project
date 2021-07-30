@@ -280,3 +280,17 @@ function generateLocationsTree(event) {
   }
 }
 document.addEventListener('DOMContentLoaded', generateLocationsTree);
+
+function trashPressed(event) {
+  if (event.target && event.target.className === 'far fa-trash-alt') {
+    var $elmEntry = event.target.closest('li');
+    for (var j = 0; j < data.locations.length; j++) {
+      if (data.locations[j].location === $elmEntry.children[0].textContent) {
+        data.locations.splice(j, 1);
+      }
+    }
+    $elmEntry.remove();
+  }
+}
+
+$elmPreviewList.addEventListener('click', trashPressed);
