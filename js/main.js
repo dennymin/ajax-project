@@ -196,6 +196,7 @@ function hamburgerClick(event) {
   if (viewingLocationsModal === true) {
     toggleHidden($editModal);
     viewingLocationsModal = false;
+    $locationLink.classList.toggle('transform-up');
   }
 }
 $headerHamburgerMenuIcon.addEventListener('click', hamburgerClick);
@@ -207,8 +208,10 @@ function showMenu(event) {
   toggleHidden($editModal);
   if (viewingLocationsModal === false) {
     viewingLocationsModal = true;
+    $locationLink.classList.toggle('transform-up');
   } else {
     viewingLocationsModal = false;
+    $locationLink.classList.toggle('transform-up');
   }
 }
 
