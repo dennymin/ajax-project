@@ -186,3 +186,12 @@ function invalidLocationNotice() {
 function toggleHidden(elementClass) {
   elementClass.classList.toggle('hidden');
 }
+
+var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
+var $headerBanner = document.querySelector('.header-banner');
+var $headerLinks = document.querySelector('.header-links');
+function showHeader(event) {
+  $headerBanner.classList.toggle('header-banner-active-background');
+  $headerLinks.classList.toggle('hidden');
+}
+$headerHamburgerMenuIcon.addEventListener('click', showHeader);

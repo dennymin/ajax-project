@@ -66,10 +66,10 @@ body {
 }
 
 .header-banner-active-background {
-  background-color: seashell;
+  background-color: rgb(255, 255, 255);
 }
 
-.links > h4 {
+.header-links > h4 {
   margin-right: 20px;
 }
 
@@ -309,7 +309,7 @@ body {
     left: 30px;
   }
 
-  .links > h4 {
+  .header-links > h4 {
     margin-right: 50px;
   }
 }
