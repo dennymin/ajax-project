@@ -30,8 +30,7 @@ function queryLocation(event) {
       data.editing = $searchBar.value;
       data.template.location = data.editing;
       data.primary = data.editing;
-      toggleHidden($locationAsker);
-      toggleHidden($weatherInformationChoices);
+      switchView($weatherInformationChoices);
       createWeatherQuestion();
     } else {
       if ($locationAsker.children[2] !== undefined) {
@@ -66,8 +65,16 @@ function alternateIcon(event) {
 
 function appendLocationsList() {
   var dataWeatherEntryObject = Object.assign({}, data.template);
-  data.locations.push(dataWeatherEntryObject);
-  toggleHidden($weatherInformationChoices);
+  var locationAlreadySaved = false;
+  for (var dataLocationsIndex = 0; dataLocationsIndex < data.locations.length; dataLocationsIndex++) {
+    if (data.locations[dataLocationsIndex].location.toUpperCase() === dataWeatherEntryObject.location.toUpperCase()) {
+      locationAlreadySaved = true;
+    }
+  }
+  if (locationAlreadySaved === false) {
+    $elmPreviewList.prepend(generateLocationsListItem(dataWeatherEntryObject.location));
+    data.locations.unshift(dataWeatherEntryObject);
+  }
 }
 
 function resetDataTemplate() {
@@ -143,7 +150,7 @@ function convertUnixTimeStamp(unix, timezone, date) {
 }
 
 function showPrimary(event) {
-  toggleHidden($weatherDisplayPrimaryList);
+  switchView($weatherDisplayPrimaryList);
   appendLocationsList();
   for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
     if (data.locations[dataLIndex].location === data.primary) {
@@ -187,6 +194,18 @@ function toggleHidden(elementClass) {
   elementClass.classList.toggle('hidden');
 }
 
+function switchView(destinationView) {
+  for (var pageIndex = 0; pageIndex < differentPages.length; pageIndex++) {
+    var currentPageClass = differentPages[pageIndex].className;
+    if (differentPages[pageIndex] !== destinationView && !currentPageClass.includes('hidden')) {
+      toggleHidden(differentPages[pageIndex]);
+    }
+    if (differentPages[pageIndex] === destinationView && currentPageClass.includes('hidden')) {
+      toggleHidden(differentPages[pageIndex]);
+    }
+  }
+}
+
 var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
 var $headerBanner = document.querySelector('.header-banner');
 var $headerLinks = document.querySelector('.header-links');
@@ -204,6 +223,7 @@ $headerHamburgerMenuIcon.addEventListener('click', hamburgerClick);
 var viewingLocationsModal = false;
 var $locationLink = document.querySelector('.header-locations-link');
 var $editModal = document.querySelector('.edit-modal');
+var $elmPreviewList = document.querySelector('.elm-preview-list');
 function showMenu(event) {
   toggleHidden($editModal);
   if (viewingLocationsModal === false) {
@@ -213,6 +233,13 @@ function showMenu(event) {
     viewingLocationsModal = false;
     $locationLink.classList.toggle('transform-up');
   }
+  for (var i = 0; i < $elmPreviewList.children.length; i++) {
+    if (data.primary === $elmPreviewList.children[i].children[0].textContent) {
+      $elmPreviewList.children[i].children[0].children[0].className = 'fas fa-star';
+    } else {
+      $elmPreviewList.children[i].children[0].children[0].className = 'far fa-star';
+    }
+  }
 }
 
 $locationLink.addEventListener('click', showMenu);
@@ -220,14 +247,36 @@ var differentPages = [$weatherDisplayPrimaryList, $weatherInformationChoices, $l
 var $newEntryListItem = document.querySelector('.new-entry-list-item');
 function newEntryClicked(event) {
   hamburgerClick();
-  for (var pageIndex = 0; pageIndex < differentPages.length; pageIndex++) {
-    var currentPageClass = differentPages[pageIndex].className;
-    if (differentPages[pageIndex] !== $locationAsker && !currentPageClass.includes('hidden')) {
-      toggleHidden(differentPages[pageIndex]);
-    }
-  }
-  if ($locationAsker.className.includes('hidden')) {
-    toggleHidden($locationAsker);
-  }
+  $locationForm.reset();
+  switchView($locationAsker);
 }
 $newEntryListItem.addEventListener('click', newEntryClicked);
+
+function generateLocationsListItem(locationName) {
+  var $newListItem = document.createElement('li');
+  var $newListItemSpan = document.createElement('span');
+  var $primaryIcon = document.createElement('i');
+  if (data.primary === locationName) {
+    $primaryIcon.className = 'fas fa-star';
+  } else {
+    $primaryIcon.className = 'far fa-star';
+  }
+  $newListItemSpan.appendChild($primaryIcon);
+  var $newListItemSpanTextContent = document.createTextNode(locationName);
+  $newListItemSpan.appendChild($newListItemSpanTextContent);
+  var $trashIcon = document.createElement('i');
+  $trashIcon.className = 'far fa-trash-alt';
+  $newListItemSpan.appendChild($trashIcon);
+  var $editIcon = document.createElement('i');
+  $editIcon.className = 'fas fa-pencil-alt';
+  $newListItemSpan.appendChild($editIcon);
+  $newListItem.appendChild($newListItemSpan);
+  return $newListItem;
+}
+
+function generateLocationsTree(event) {
+  for (var DOMmenuIndex = 0; DOMmenuIndex < data.locations.length; DOMmenuIndex++) {
+    $elmPreviewList.insertBefore(generateLocationsListItem(data.locations[DOMmenuIndex].location), $newEntryListItem);
+  }
+}
+document.addEventListener('DOMContentLoaded', generateLocationsTree);
