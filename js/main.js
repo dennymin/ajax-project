@@ -9,7 +9,6 @@ var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
 var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primary');
 var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
 var $displayTimeLocation = document.querySelector('.time-and-location>h1');
-var $displayTimeLocationDiv = document.querySelector('.time-and-location');
 var $backgroundImage = document.querySelector('.background-image-dimensions');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
@@ -91,35 +90,33 @@ function showWeatherDataObject(location) {
   xhr.addEventListener('load', function () {
     var currentTime = new Date().getTime() / 1000;
     $displayTimeLocation.textContent = xhr.response.name + ', ' + xhr.response.sys.country;
-    var $timeDisplay = document.createElement('h1');
-    $displayTimeLocationDiv.appendChild($timeDisplay);
+    var $timeDisplay = document.querySelector('.display-time-of-day');
     $timeDisplay.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, false);
-    var $dateDisplay = document.createElement('h1');
+    var $dateDisplay = document.querySelector('.display-date');
     $dateDisplay.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, true);
-    $displayTimeLocationDiv.appendChild($dateDisplay);
     if (location.main === true) {
       $displayPrimaryWeatherItemList[0].textContent = 'Weather: ' + xhr.response.weather[0].main;
     } else if (location.main !== false) {
       $displayPrimaryWeatherItemList[0].remove();
     }
     if (location.temperature === true) {
-      $displayPrimaryWeatherItemList[1].textContent += ' ' + xhr.response.main.temp + '° F';
+      $displayPrimaryWeatherItemList[1].textContent = 'Current Temperature: ' + xhr.response.main.temp + '° F';
     }
     if (location.high === true) {
-      $displayPrimaryWeatherItemList[2].textContent += ' ' + xhr.response.main.temp_max + '° F';
+      $displayPrimaryWeatherItemList[2].textContent = 'High Today: ' + xhr.response.main.temp_max + '° F';
     }
     if (location.low === true) {
-      $displayPrimaryWeatherItemList[3].textContent += ' ' + xhr.response.main.temp_min + '° F';
+      $displayPrimaryWeatherItemList[3].textContent = 'Low Today: ' + xhr.response.main.temp_min + '° F';
     }
     if (location.wind === true) {
-      $displayPrimaryWeatherItemList[4].textContent += ' ' + xhr.response.wind.speed + ' mph';
+      $displayPrimaryWeatherItemList[4].textContent = 'Wind Speed: ' + xhr.response.wind.speed + ' mph';
     }
     if (location.humidity === true) {
-      $displayPrimaryWeatherItemList[5].textContent += ' ' + xhr.response.main.humidity + '%';
+      $displayPrimaryWeatherItemList[5].textContent = 'Humidity: ' + xhr.response.main.humidity + '%';
     }
     if (location.sunsetSunrise === true) {
-      $displayPrimaryWeatherItemList[6].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunrise, xhr.response.timezone, false);
-      $displayPrimaryWeatherItemList[7].textContent += ' ' + convertUnixTimeStamp(xhr.response.sys.sunset, xhr.response.timezone, false);
+      $displayPrimaryWeatherItemList[6].textContent = 'Sunrise: ' + convertUnixTimeStamp(xhr.response.sys.sunrise, xhr.response.timezone, false);
+      $displayPrimaryWeatherItemList[7].textContent = 'Sunset: ' + convertUnixTimeStamp(xhr.response.sys.sunset, xhr.response.timezone, false);
     }
     for (var displayIndex = 0; displayIndex < $displayPrimaryWeatherItemList.length; displayIndex++) {
       if (location[data.weatherOptions[displayIndex]] === false) {
