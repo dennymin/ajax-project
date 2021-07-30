@@ -55,6 +55,20 @@ body {
   font-size: 2rem;
 }
 
+/* Header Menu */
+.hamburger-menu-icon {
+  color: rgba(182, 182, 182);
+  font-size: 2rem;
+}
+
+.header-banner-dimensions {
+  height: 3rem;
+}
+
+.header-banner-active-background {
+  background-color: seashell;
+}
+
 /* Modals */
 .data-modal {
   margin: auto;
@@ -128,6 +142,26 @@ body {
 .time-and-location > h1 {
   font-size: 1.6rem;
   margin: 5px auto;
+}
+
+/* Flexbox */
+.align-items-center {
+  display: flex;
+  align-items: center;
+}
+
+.justify-content-end {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+
+.flex-basis-15 {
+  flex-basis: 15%;
+}
+
+.felx-basis-85 {
+  flex-basis: 85%;
 }
 
 /* Tools */
