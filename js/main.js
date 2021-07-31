@@ -2,7 +2,6 @@ var $searchBar = document.querySelector('.search-bar');
 var $locationForm = document.querySelector('.location-form');
 var $searchSubmitButton = document.querySelector('.submit-search');
 var $weatherInformationChoices = document.querySelector('.weather-information-choices');
-var $weatherChoicesQuestion = document.querySelector('.weather-information-choices-question');
 var $locationAsker = document.querySelector('.location-asker');
 var $weatherChoicesList = document.querySelector('.list-of-weather-choices');
 var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
@@ -10,6 +9,7 @@ var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primar
 var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
 var $displayTimeLocation = document.querySelector('.time-and-location>h1');
 var $backgroundImage = document.querySelector('.background-image-dimensions');
+var $weatherChoicesLocation = document.querySelector('.weather-location-editing');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
@@ -29,9 +29,11 @@ function queryLocation(event) {
     if ($searchBar.value !== '' && xhr.status === 200) {
       data.editing = $searchBar.value;
       data.template.location = data.editing;
-      data.primary = data.editing;
+      if (data.locations.length === 0) {
+        data.primary = data.editing;
+      }
       switchView($weatherInformationChoices);
-      createWeatherQuestion();
+      setWeatherLocation(data.editing);
     } else {
       if ($locationAsker.children[2] !== undefined) {
         $locationAsker.children[2].remove();
@@ -42,12 +44,8 @@ function queryLocation(event) {
   });
 }
 
-function createWeatherQuestion() {
-  $weatherChoicesQuestion.textContent = 'Weather in:';
-  var $weatherChoicesLocation = document.createElement('h1');
-  $weatherChoicesLocation.textContent = data.editing;
-  $weatherChoicesLocation.className = 'italics set-margins font-size-2rem';
-  $weatherChoicesQuestion.appendChild($weatherChoicesLocation);
+function setWeatherLocation(location) {
+  $weatherChoicesLocation.textContent = location;
 }
 
 function alternateIcon(event) {
@@ -65,15 +63,17 @@ function alternateIcon(event) {
 
 function appendLocationsList() {
   var dataWeatherEntryObject = Object.assign({}, data.template);
-  var locationAlreadySaved = false;
+  var locationAlreadySaved = [false, null];
   for (var dataLocationsIndex = 0; dataLocationsIndex < data.locations.length; dataLocationsIndex++) {
     if (data.locations[dataLocationsIndex].location.toUpperCase() === dataWeatherEntryObject.location.toUpperCase()) {
-      locationAlreadySaved = true;
+      locationAlreadySaved = [true, dataLocationsIndex];
     }
   }
-  if (locationAlreadySaved === false) {
+  if (locationAlreadySaved[0] === false) {
     $elmPreviewList.prepend(generateLocationsListItem(dataWeatherEntryObject.location));
     data.locations.unshift(dataWeatherEntryObject);
+  } else if (locationAlreadySaved[0] === true) {
+    data.locations.splice(locationAlreadySaved[1], 1, dataWeatherEntryObject);
   }
 }
 
@@ -209,7 +209,7 @@ function switchView(destinationView) {
 var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
 var $headerBanner = document.querySelector('.header-banner');
 var $headerLinks = document.querySelector('.header-links');
-function hamburgerClick(event) {
+function headerToggle(event) {
   $headerBanner.classList.toggle('header-banner-active-background');
   toggleHidden($headerLinks);
   if (viewingLocationsModal === true) {
@@ -218,7 +218,7 @@ function hamburgerClick(event) {
     $locationLink.classList.toggle('transform-up');
   }
 }
-$headerHamburgerMenuIcon.addEventListener('click', hamburgerClick);
+$headerHamburgerMenuIcon.addEventListener('click', headerToggle);
 
 var viewingLocationsModal = false;
 var $locationLink = document.querySelector('.header-locations-link');
@@ -246,7 +246,7 @@ $locationLink.addEventListener('click', showMenu);
 var differentPages = [$weatherDisplayPrimaryList, $weatherInformationChoices, $locationAsker];
 var $newEntryListItem = document.querySelector('.new-entry-list-item');
 function newEntryClicked(event) {
-  hamburgerClick();
+  headerToggle();
   $locationForm.reset();
   switchView($locationAsker);
 }
@@ -281,8 +281,8 @@ function generateLocationsTree(event) {
 }
 document.addEventListener('DOMContentLoaded', generateLocationsTree);
 
-function trashPressed(event) {
-  if (event.target && event.target.className === 'far fa-trash-alt') {
+function trashClicked(event) {
+  if (event.target && event.target.nodeName === 'I' && event.target.className === 'far fa-trash-alt') {
     var $elmEntry = event.target.closest('li');
     for (var j = 0; j < data.locations.length; j++) {
       if (data.locations[j].location === $elmEntry.children[0].textContent) {
@@ -293,4 +293,31 @@ function trashPressed(event) {
   }
 }
 
-$elmPreviewList.addEventListener('click', trashPressed);
+$elmPreviewList.addEventListener('click', trashClicked);
+
+function editClicked(event) {
+  if (event.target && event.target.nodeName === 'I' && event.target.className === 'fas fa-pencil-alt') {
+    var $elmEntry = event.target.closest('li');
+    headerToggle();
+    switchView($weatherInformationChoices);
+    data.editing = $elmEntry.children[0].textContent;
+    setWeatherLocation(data.editing);
+    for (var x = 0; x < data.locations.length; x++) {
+      if ($elmEntry.children[0].textContent === data.locations[x].location) {
+        data.template = data.locations[x];
+      }
+    }
+    editingChoices();
+  }
+}
+$elmPreviewList.addEventListener('click', editClicked);
+
+function editingChoices() {
+  for (var k = 0; k < data.weatherOptions.length; k++) {
+    if (data.template[data.weatherOptions[k]] === true) {
+      $weatherChoicesList.children[k].children[0].className = 'far fa-check-circle';
+    } else if (data.template[data.weatherOptions[k]] === false) {
+      $weatherChoicesList.children[k].children[0].className = 'far fa-circle';
+    }
+  }
+}
