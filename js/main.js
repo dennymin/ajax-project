@@ -233,7 +233,7 @@ function showMenu(event) {
     viewingLocationsModal = false;
     $locationLink.classList.toggle('transform-up');
   }
-  for (var i = 0; i < $elmPreviewList.children.length; i++) {
+  for (var i = 0; i < $elmPreviewList.children.length - 1; i++) {
     if (data.primary === $elmPreviewList.children[i].children[0].textContent) {
       $elmPreviewList.children[i].children[0].children[0].className = 'fas fa-star';
     } else {
@@ -321,3 +321,24 @@ function editingChoices() {
     }
   }
 }
+
+function primaryClicked(event) {
+  if (event.target && event.target.nodeName === 'I' && (event.target.className === 'fas fa-star' || event.target.className === 'far fa-star')) {
+    var $elmEntry = event.target.closest('li');
+    if (event.target.className === 'far fa-star') {
+      for (var priLoop = 0; priLoop < $elmPreviewList.children.length - 1; priLoop++) {
+        $elmPreviewList.children[priLoop].children[0].children[0].className = 'far fa-star';
+      }
+      event.target.className = 'fas fa-star';
+    }
+    data.primary = $elmEntry.children[0].textContent;
+    switchView($weatherDisplayPrimaryList);
+    for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
+      if (data.locations[dataLIndex].location === data.primary) {
+        showWeatherDataObject(data.locations[dataLIndex]);
+      }
+    }
+  }
+}
+
+$elmPreviewList.addEventListener('click', primaryClicked);
