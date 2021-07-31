@@ -49,12 +49,11 @@ function setWeatherLocation(location) {
 }
 
 function alternateIcon(event) {
-  var circleOrCheck = event.target.children[0].className;
   if (event.target && event.target.nodeName === 'LI') {
-    if (circleOrCheck === 'far fa-circle') {
+    if (event.target.children[0].className === 'far fa-circle') {
       event.target.children[0].className = 'far fa-check-circle';
       data.template[data.weatherOptions[event.target.value]] = true;
-    } else if (circleOrCheck === 'far fa-check-circle') {
+    } else if (event.target.children[0].className === 'far fa-check-circle') {
       event.target.children[0].className = 'far fa-circle';
       data.template[data.weatherOptions[event.target.value]] = false;
     }
@@ -338,6 +337,7 @@ function primaryClicked(event) {
         showWeatherDataObject(data.locations[dataLIndex]);
       }
     }
+    headerToggle();
   }
 }
 
