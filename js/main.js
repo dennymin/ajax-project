@@ -102,8 +102,6 @@ function showWeatherDataObject(location) {
     $dateDisplay.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, true);
     if (location.main === true) {
       $displayPrimaryWeatherItemList[0].textContent = 'Weather: ' + xhr.response.weather[0].main;
-    } else if (location.main !== false) {
-      $displayPrimaryWeatherItemList[0].remove();
     }
     if (location.temperature === true) {
       $displayPrimaryWeatherItemList[1].textContent = 'Current Temperature: ' + xhr.response.main.temp + '° F';
@@ -125,12 +123,16 @@ function showWeatherDataObject(location) {
       $displayPrimaryWeatherItemList[7].textContent = 'Sunset: ' + convertUnixTimeStamp(xhr.response.sys.sunset, xhr.response.timezone, false);
     }
     for (var displayIndex = 0; displayIndex < $displayPrimaryWeatherItemList.length; displayIndex++) {
-      if (location[data.weatherOptions[displayIndex]] === false) {
-        $displayPrimaryWeatherItemList[displayIndex].remove();
+      if (location[data.weatherOptions[displayIndex]] === false && !($displayPrimaryWeatherItemList[displayIndex].className.includes('hidden'))) {
+        toggleHidden($displayPrimaryWeatherItemList[displayIndex]);
+      } else if (location[data.weatherOptions[displayIndex]] === true && $displayPrimaryWeatherItemList[displayIndex].className.includes('hidden')) {
+        toggleHidden($displayPrimaryWeatherItemList[displayIndex]);
       }
     }
-    if (location[data.weatherOptions[6]] === false) {
-      $displayPrimaryWeatherItemList[7].remove();
+    if (location[data.weatherOptions[6]] === false && !$displayPrimaryWeatherItemList[7].className.includes('hidden')) {
+      toggleHidden($displayPrimaryWeatherItemList[7]);
+    } else if (location[data.weatherOptions[6]] === true && $displayPrimaryWeatherItemList[7].className.includes('hidden')) {
+      toggleHidden($displayPrimaryWeatherItemList[7]);
     }
     considerSetting(currentTime, xhr.response.timezone, xhr.response.weather[0].main, xhr.response.sys.sunrise, xhr.response.sys.sunset);
     resetDataTemplate();
@@ -247,6 +249,9 @@ var $newEntryListItem = document.querySelector('.new-entry-list-item');
 function newEntryClicked(event) {
   headerToggle();
   $locationForm.reset();
+  for (var resetIndex = 0; resetIndex < $weatherChoicesList.children.length; resetIndex++) {
+    $weatherChoicesList.children[resetIndex].children[0].className = 'far fa-check-circle';
+  }
   switchView($locationAsker);
 }
 $newEntryListItem.addEventListener('click', newEntryClicked);
