@@ -10,6 +10,7 @@ var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary
 var $displayTimeLocation = document.querySelector('.time-and-location>h1');
 var $backgroundImage = document.querySelector('.background-image-dimensions');
 var $weatherChoicesLocation = document.querySelector('.weather-location-editing');
+var $previews = document.querySelector('.previews');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
@@ -139,16 +140,65 @@ function showWeatherDataObject(location) {
   });
 }
 
-function convertUnixTimeStamp(unix, timezone, date) {
-  var localOffset = new Date().getTimezoneOffset() * 60;
-  var stamp = (unix + (localOffset + timezone)) * 1000;
-  var formattedTime = new Date(stamp);
-  if (date === false) {
-    return formattedTime.toLocaleTimeString().substr(0, formattedTime.toLocaleTimeString().lastIndexOf(':')) + ' ' + formattedTime.toLocaleTimeString().substr(-2);
-  } else if (date === true) {
-    return formattedTime.toLocaleDateString();
+function showPreviewsOfData(location) {
+  var xhr2 = new XMLHttpRequest();
+  var firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  var locationURL = location.location;
+  var latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
+  var fullLink = firstPartLink + locationURL + latterPartLink;
+  var currentTime = new Date().getTime() / 1000;
+  xhr2.open('GET', fullLink);
+  xhr2.responseType = 'json';
+  xhr2.send();
+  xhr2.addEventListener('load', function () {
+    var $previewName = document.createElement('div');
+    var timePreview = ' ' + convertUnixTimeStamp(currentTime, xhr2.response.timezone, false);
+    var mainPreview = ' ' + xhr2.response.weather[0].main;
+    var currentTempPreview = ' ' + 'Now: ' + xhr2.response.main.temp + '° F';
+    var maxPreview = ' ' + 'High: ' + xhr2.response.main.temp_max + '° F';
+    var minPreview = ' ' + 'Low: ' + xhr2.response.main.temp_min + '° F';
+    // var windPreview = ' ' + xhr2.response.wind.speed + ' mph';
+    // var humidityPreview = ' ' + xhr2.response.main.humidity + '%';
+    // var sunrisePreview = ' ' + 'Sunrise: ' + convertUnixTimeStamp(xhr2.response.sys.sunrise, xhr2.response.timezone, false);
+    // var sunsetPreview = ' ' + 'Sunset: ' + convertUnixTimeStamp(xhr2.response.sys.sunset, xhr2.response.timezone, false);
+    if (location.main === false) {
+      mainPreview = '';
+    }
+    if (location.temperature === false) {
+      currentTempPreview = '';
+    }
+    if (location.high === false) {
+      maxPreview = '';
+    }
+    if (location.low === false) {
+      minPreview = '';
+    }
+    // if (location.wind === false) {
+    //   windPreview = '';
+    // }
+    // if (location.humidity === false) {
+    //   humidityPreview = '';
+    // }
+    // if (location.sunsetSunrise === false) {
+    //   sunrisePreview = '';
+    //   sunsetPreview = '';
+    // }
+    $previewName.textContent = location.location + timePreview + mainPreview + currentTempPreview + maxPreview + minPreview;
+    $previews.appendChild($previewName);
+    $previewName.className = 'previews + list-choice-3rem-line-height';
+  });
+}
+
+function generatePreviews(event) {
+  if (!$weatherDisplayPrimaryList.className.includes('hidden')) {
+    for (var previewsIndex = 0; previewsIndex < data.locations.length; previewsIndex++) {
+      if (data.primary !== data.locations[previewsIndex].location) {
+        showPreviewsOfData(data.locations[previewsIndex].location);
+      }
+    }
   }
 }
+document.addEventListener('DOMContentLoaded', generatePreviews);
 
 function showPrimary(event) {
   switchView($weatherDisplayPrimaryList);
@@ -157,6 +207,17 @@ function showPrimary(event) {
     if (data.locations[dataLIndex].location === data.primary) {
       showWeatherDataObject(data.locations[dataLIndex]);
     }
+  }
+}
+
+function convertUnixTimeStamp(unix, timezone, date) {
+  var localOffset = new Date().getTimezoneOffset() * 60;
+  var stamp = (unix + (localOffset + timezone)) * 1000;
+  var formattedTime = new Date(stamp);
+  if (date === false) {
+    return formattedTime.toLocaleTimeString().substr(0, formattedTime.toLocaleTimeString().lastIndexOf(':')) + ' ' + formattedTime.toLocaleTimeString().substr(-2);
+  } else if (date === true) {
+    return formattedTime.toLocaleDateString();
   }
 }
 
