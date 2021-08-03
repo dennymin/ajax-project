@@ -2,3 +2,13 @@
   display: flex;
   justify-content: center;
 }
+
+.column-half {
+  width: 100%;
+}
+
+@media screen and (min-width: 376px) {
+  .column-half {
+    width: 50%;
+  }
+}
