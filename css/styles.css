@@ -4,6 +4,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 .background-image-sunny {
@@ -142,13 +143,10 @@ body {
 .data-modal {
   margin: auto;
   padding: 30px;
-  background-color: rgba(182, 182, 182, 0.2);
   text-align: center;
   width: 90vw;
   border: 1px hidden;
   border-radius: 5px;
-  position: relative;
-  top: 100px;
   min-height: 380px;
 }
 
@@ -189,6 +187,10 @@ body {
   line-height: 3rem;
 }
 
+.list-choice-2rem-line-height {
+  line-height: 2rem;
+}
+
 .weather-information-list-choice:hover {
   cursor: default;
 }
@@ -207,10 +209,30 @@ body {
   font-size: 1.2rem;
 }
 
+/* Previews */
+.previews > div {
+  border: 1px solid white;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  background-color: rgba(129, 129, 129, 0.5);
+}
+
 /* Main Display */
 .time-and-location > h1 {
   font-size: 1.6rem;
   margin: 5px auto;
+}
+
+.primary {
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: rgba(129, 129, 129, 0.5);
+  max-height: 550px;
 }
 
 /* Flexbox */
@@ -331,5 +353,9 @@ body {
 
   .hamburger-menu-icon {
     left: 50px;
+  }
+
+  .primary {
+    margin: 10px 0;
   }
 }

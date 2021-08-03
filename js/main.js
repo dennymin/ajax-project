@@ -105,7 +105,7 @@ function showWeatherDataObject(location) {
       $displayPrimaryWeatherItemList[0].textContent = 'Weather: ' + xhr.response.weather[0].main;
     }
     if (location.temperature === true) {
-      $displayPrimaryWeatherItemList[1].textContent = 'Current Temperature: ' + xhr.response.main.temp + '° F';
+      $displayPrimaryWeatherItemList[1].textContent = 'Current Temp: ' + xhr.response.main.temp + '° F';
     }
     if (location.high === true) {
       $displayPrimaryWeatherItemList[2].textContent = 'High Today: ' + xhr.response.main.temp_max + '° F';
@@ -153,14 +153,14 @@ function showPreviewsOfData(location) {
   xhr2.addEventListener('load', function () {
     var $previewName = document.createElement('div');
     var timePreview = ' ' + convertUnixTimeStamp(currentTime, xhr2.response.timezone, false);
-    var mainPreview = ' ' + xhr2.response.weather[0].main;
-    var currentTempPreview = ' ' + 'Now: ' + xhr2.response.main.temp + '° F';
-    var maxPreview = ' ' + 'High: ' + xhr2.response.main.temp_max + '° F';
-    var minPreview = ' ' + 'Low: ' + xhr2.response.main.temp_min + '° F';
-    // var windPreview = ' ' + xhr2.response.wind.speed + ' mph';
-    // var humidityPreview = ' ' + xhr2.response.main.humidity + '%';
-    // var sunrisePreview = ' ' + 'Sunrise: ' + convertUnixTimeStamp(xhr2.response.sys.sunrise, xhr2.response.timezone, false);
-    // var sunsetPreview = ' ' + 'Sunset: ' + convertUnixTimeStamp(xhr2.response.sys.sunset, xhr2.response.timezone, false);
+    var mainPreview = ' ' + xhr2.response.weather[0].main + '| ';
+    var currentTempPreview = ' ' + 'Now: ' + xhr2.response.main.temp + '° F | ';
+    var maxPreview = ' ' + 'High: ' + xhr2.response.main.temp_max + '° F | ';
+    var minPreview = ' ' + 'Low: ' + xhr2.response.main.temp_min + '° F | ';
+    var windPreview = ' ' + xhr2.response.wind.speed + ' mph | ';
+    var humidityPreview = ' ' + 'Humidity: ' + xhr2.response.main.humidity + '% | ';
+    var sunrisePreview = ' ' + 'Sunrise: ' + convertUnixTimeStamp(xhr2.response.sys.sunrise, xhr2.response.timezone, false) + ' | ';
+    var sunsetPreview = ' ' + 'Sunset: ' + convertUnixTimeStamp(xhr2.response.sys.sunset, xhr2.response.timezone, false);
     if (location.main === false) {
       mainPreview = '';
     }
@@ -173,32 +173,21 @@ function showPreviewsOfData(location) {
     if (location.low === false) {
       minPreview = '';
     }
-    // if (location.wind === false) {
-    //   windPreview = '';
-    // }
-    // if (location.humidity === false) {
-    //   humidityPreview = '';
-    // }
-    // if (location.sunsetSunrise === false) {
-    //   sunrisePreview = '';
-    //   sunsetPreview = '';
-    // }
-    $previewName.textContent = location.location + timePreview + mainPreview + currentTempPreview + maxPreview + minPreview;
+    if (location.wind === false) {
+      windPreview = '';
+    }
+    if (location.humidity === false) {
+      humidityPreview = '';
+    }
+    if (location.sunsetSunrise === false) {
+      sunrisePreview = '';
+      sunsetPreview = '';
+    }
+    $previewName.textContent = location.location + timePreview + mainPreview + currentTempPreview + maxPreview + minPreview + windPreview + humidityPreview + sunrisePreview + sunsetPreview;
     $previews.appendChild($previewName);
-    $previewName.className = 'previews + list-choice-3rem-line-height';
+    $previewName.className = 'text-shadow-small list-choice-2rem-line-height';
   });
 }
-
-function generatePreviews(event) {
-  if (!$weatherDisplayPrimaryList.className.includes('hidden')) {
-    for (var previewsIndex = 0; previewsIndex < data.locations.length; previewsIndex++) {
-      if (data.primary !== data.locations[previewsIndex].location) {
-        showPreviewsOfData(data.locations[previewsIndex].location);
-      }
-    }
-  }
-}
-document.addEventListener('DOMContentLoaded', generatePreviews);
 
 function showPrimary(event) {
   switchView($weatherDisplayPrimaryList);
@@ -206,6 +195,13 @@ function showPrimary(event) {
   for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
     if (data.locations[dataLIndex].location === data.primary) {
       showWeatherDataObject(data.locations[dataLIndex]);
+    } else if (data.locations[dataLIndex].location !== data.primary) {
+      showPreviewsOfData(data.locations[dataLIndex]);
+      for (var previewsIndex = 0; previewsIndex < $previews.children.length; previewsIndex++) {
+        if ($previews.children[previewsIndex].textContent.includes(data.locations[dataLIndex].location)) {
+          $previews.children[previewsIndex].remove();
+        }
+      }
     }
   }
 }
@@ -354,6 +350,11 @@ function trashClicked(event) {
         data.locations.splice(j, 1);
       }
     }
+    for (var previewsIndex3 = 0; previewsIndex3 < $previews.children.length; previewsIndex3++) {
+      if ($previews.children[previewsIndex3].textContent.includes($elmEntry.children[0].textContent)) {
+        $previews.children[previewsIndex3].remove();
+      }
+    }
     $elmEntry.remove();
   }
 }
@@ -401,6 +402,18 @@ function primaryClicked(event) {
     for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
       if (data.locations[dataLIndex].location === data.primary) {
         showWeatherDataObject(data.locations[dataLIndex]);
+      } else if (data.locations[dataLIndex].location !== data.primary) {
+        showPreviewsOfData(data.locations[dataLIndex]);
+        for (var previewsIndex = 0; previewsIndex < $previews.children.length; previewsIndex++) {
+          if ($previews.children[previewsIndex].textContent.includes(data.locations[dataLIndex].location)) {
+            $previews.children[previewsIndex].remove();
+          }
+        }
+      }
+    }
+    for (var previewsIndex2 = 0; previewsIndex2 < $previews.children.length; previewsIndex2++) {
+      if ($previews.children[previewsIndex2].textContent.includes(data.primary)) {
+        $previews.children[previewsIndex2].remove();
       }
     }
     headerToggle();
