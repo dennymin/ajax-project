@@ -153,14 +153,14 @@ function showPreviewsOfData(location) {
   xhr2.addEventListener('load', function () {
     var $previewName = document.createElement('div');
     var timePreview = ' ' + convertUnixTimeStamp(currentTime, xhr2.response.timezone, false);
-    var mainPreview = ' ' + xhr2.response.weather[0].main + '| ';
-    var currentTempPreview = ' ' + 'Now: ' + xhr2.response.main.temp + '° F | ';
-    var maxPreview = ' ' + 'High: ' + xhr2.response.main.temp_max + '° F | ';
-    var minPreview = ' ' + 'Low: ' + xhr2.response.main.temp_min + '° F | ';
-    var windPreview = ' ' + xhr2.response.wind.speed + ' mph | ';
-    var humidityPreview = ' ' + 'Humidity: ' + xhr2.response.main.humidity + '% | ';
-    var sunrisePreview = ' ' + 'Sunrise: ' + convertUnixTimeStamp(xhr2.response.sys.sunrise, xhr2.response.timezone, false) + ' | ';
-    var sunsetPreview = ' ' + 'Sunset: ' + convertUnixTimeStamp(xhr2.response.sys.sunset, xhr2.response.timezone, false);
+    var mainPreview = ' ' + xhr2.response.weather[0].main;
+    var currentTempPreview = ' | ' + 'Now: ' + xhr2.response.main.temp + '° F';
+    var maxPreview = ' | ' + 'High: ' + xhr2.response.main.temp_max + '° F';
+    var minPreview = ' | ' + 'Low: ' + xhr2.response.main.temp_min + '° F';
+    var windPreview = ' | ' + xhr2.response.wind.speed + ' mph';
+    var humidityPreview = ' | ' + 'Humidity: ' + xhr2.response.main.humidity + '%';
+    var sunrisePreview = ' | ' + 'Sunrise: ' + convertUnixTimeStamp(xhr2.response.sys.sunrise, xhr2.response.timezone, false);
+    var sunsetPreview = ' | ' + 'Sunset: ' + convertUnixTimeStamp(xhr2.response.sys.sunset, xhr2.response.timezone, false);
     if (location.main === false) {
       mainPreview = '';
     }
