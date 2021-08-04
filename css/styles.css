@@ -353,20 +353,9 @@ body {
   transform: translateY(1px);
 }
 
-.default-button-no-active {
-  border-radius: 10px;
-  background-color: rgb(0, 0, 0, 0);
-}
-
-.new-entry-list-item > span > button {
+.new-entry-list-item > span > a {
   margin: 0;
-  padding: 3px;
   font-size: 1rem;
-  max-height: 18px;
-}
-
-.new-entry-list-item {
-  max-height: 18px;
 }
 
 @media screen and (min-width: 768px) {
