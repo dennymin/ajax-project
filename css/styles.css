@@ -282,6 +282,10 @@ body {
   max-height: 700px;
 }
 
+.greeting {
+  max-width: 10rem;
+}
+
 /* Flexbox */
 .flex-wrap {
   display: flex;
@@ -417,5 +421,14 @@ body {
 
   .primary {
     margin: 10px 0;
+  }
+
+  .greeting {
+    max-width: 100%;
+  }
+
+  .time-and-location {
+    position: relative;
+    right: 10px;
   }
 }

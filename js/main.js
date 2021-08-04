@@ -17,7 +17,6 @@ var $profileSubmitButton = document.querySelector('.profile-submit-button');
 var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
 var $headerBanner = document.querySelector('.header-banner');
 var $headerLinks = document.querySelector('.header-links');
-var $locationLink = document.querySelector('.header-locations-link');
 var $editModal = document.querySelector('.edit-modal');
 var $elmPreviewList = document.querySelector('.elm-preview-list');
 var $editLocationModalContent = document.querySelector('.edit-location-modal-content');
@@ -241,24 +240,25 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
   var sunRiseTotal = sunRiseUnixConvertedHours.getHours() + (sunRiseUnixConvertedHours.getMinutes() / 60);
   var sunSetUnixConvertedHours = new Date((sunset + (localOffset + timezone)) * 1000);
   var sunSetTotal = sunSetUnixConvertedHours.getHours() + (sunSetUnixConvertedHours.getMinutes() / 60);
+  var greetingMessage = null;
 
   if (formattedTime.getHours() < 12 && formattedTime.getHours() >= 5) {
-    $greeting.textContent = data.greetings[0];
+    greetingMessage = data.greetings[0];
   }
   if (formattedTime.getHours() >= 12 && formattedTime.getHours() < 14 && weather !== 'Rain') {
-    $greeting.textContent = data.greetings[1];
+    greetingMessage = data.greetings[1];
     $recommendation.textContent = data.responses.sunny[getRandomInt(data.responses.sunny.length)];
   }
   if (formattedTime.getHours() >= 14 && formattedTime.getHours() < 17) {
-    $greeting.textContent = data.greetings[2];
+    greetingMessage = data.greetings[2];
     $recommendation.textContent = data.responses.afternoon[getRandomInt(data.responses.afternoon.length)];
   }
   if (formattedTime.getHours() >= 17 && formattedTime.getHours() > 21) {
-    $greeting.textContent = data.greetings[3];
+    greetingMessage = data.greetings[3];
     $recommendation.textContent = data.responses.night[getRandomInt(data.responses.night.length)];
   }
   if (formattedTime.getHours() >= 21 || formattedTime.getHours() < 5) {
-    $greeting.textContent = data.greetings[4];
+    greetingMessage = data.greetings[4];
     $recommendation.textContent = data.responses.night[getRandomInt(data.responses.night.length)];
   }
   if (weather !== 'Rain' && formattedTime.getHours() < 15 && formattedTime.getHours() > 5) {
@@ -272,6 +272,9 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
     changeBackground('background-image-sunny');
   } else if ((sunTime > sunSetTotal && sunTime < 25) || (sunTime < sunRiseTotal && sunTime >= 0)) {
     changeBackground('background-image-night');
+  }
+  if (data.profile.name !== null) {
+    $greeting.textContent = greetingMessage + data.profile.name;
   }
 }
 
@@ -426,6 +429,7 @@ $elmPreviewList.addEventListener('click', primaryClicked);
 
 var $profileEdit = document.querySelector('.profile-edit');
 function saveProfile(event) {
+  event.preventDefault();
   data.profile.name = $profileEdit.elements.name.value;
   data.profile.birthday = $profileEdit.elements.birthday.value;
   data.profile.email = $profileEdit.elements.email.value;
@@ -440,7 +444,6 @@ function headerToggle(event) {
   $headerBanner.classList.toggle('header-banner-active-background');
   toggleHidden($headerLinks);
   toggleHidden($editModal);
-  $locationLink.classList.toggle('transform-up');
 }
 
 function showLocations(event) {
