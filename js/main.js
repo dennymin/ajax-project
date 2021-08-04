@@ -13,6 +13,14 @@ var $weatherChoicesLocation = document.querySelector('.weather-location-editing'
 var $previews = document.querySelector('.previews');
 var $greeting = document.querySelector('.greeting');
 var $recommendation = document.querySelector('.recommendation');
+var $profileSubmitButton = document.querySelector('.profile-submit-button');
+var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
+var $headerBanner = document.querySelector('.header-banner');
+var $headerLinks = document.querySelector('.header-links');
+var $locationLink = document.querySelector('.header-locations-link');
+var $editModal = document.querySelector('.edit-modal');
+var $elmPreviewList = document.querySelector('.elm-preview-list');
+var $editLocationModalContent = document.querySelector('.edit-location-modal-content');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
@@ -295,41 +303,6 @@ function switchView(destinationView) {
   }
 }
 
-var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
-var $headerBanner = document.querySelector('.header-banner');
-var $headerLinks = document.querySelector('.header-links');
-function headerToggle(event) {
-  $headerBanner.classList.toggle('header-banner-active-background');
-  toggleHidden($headerLinks);
-  toggleHidden($editModal);
-  $locationLink.classList.toggle('transform-up');
-  if (viewingLocationsModal === true) {
-    toggleHidden($editModal);
-    viewingLocationsModal = false;
-    $locationLink.classList.toggle('transform-up');
-  }
-}
-$headerHamburgerMenuIcon.addEventListener('click', headerToggle);
-
-var viewingLocationsModal = false;
-var $locationLink = document.querySelector('.header-locations-link');
-var $editModal = document.querySelector('.edit-modal');
-var $elmPreviewList = document.querySelector('.elm-preview-list');
-function showLocations(event) {
-  if (viewingLocationsModal === false) {
-    viewingLocationsModal = true;
-    $locationLink.classList.toggle('transform-up');
-  }
-  for (var i = 0; i < $elmPreviewList.children.length - 1; i++) {
-    if (data.primary === $elmPreviewList.children[i].children[0].textContent) {
-      $elmPreviewList.children[i].children[0].children[0].className = 'fas fa-star';
-    } else {
-      $elmPreviewList.children[i].children[0].children[0].className = 'far fa-star';
-    }
-  }
-}
-
-$locationLink.addEventListener('click', showLocations);
 var differentPages = [$weatherDisplayPrimaryList, $weatherInformationChoices, $locationAsker];
 var $newEntryListItem = document.querySelector('.new-entry-list-item');
 function newEntryClicked(event) {
@@ -452,24 +425,25 @@ function primaryClicked(event) {
 $elmPreviewList.addEventListener('click', primaryClicked);
 
 var $profileEdit = document.querySelector('.profile-edit');
-var $profileLink = document.querySelector('.header-profile-links');
 function saveProfile(event) {
   data.profile.name = $profileEdit.elements.name.value;
   data.profile.birthday = $profileEdit.elements.birthday.value;
   data.profile.email = $profileEdit.elements.email.value;
   $profileEdit.reset();
 }
-var $profileSubmitButton = document.querySelector('.profile-submit-button');
+
+$headerHamburgerMenuIcon.addEventListener('click', headerToggle);
+document.addEventListener('click', showLocations);
 $profileSubmitButton.addEventListener('click', saveProfile);
 
-function showProfile(event) {
-  if (viewingLocationsModal === false) {
-    viewingLocationsModal = true;
-    $locationLink.classList.toggle('transform-up');
-  } else {
-    viewingLocationsModal = false;
-    $locationLink.classList.toggle('transform-up');
-  }
+function headerToggle(event) {
+  $headerBanner.classList.toggle('header-banner-active-background');
+  toggleHidden($headerLinks);
+  toggleHidden($editModal);
+  $locationLink.classList.toggle('transform-up');
+}
+
+function showLocations(event) {
   for (var i = 0; i < $elmPreviewList.children.length - 1; i++) {
     if (data.primary === $elmPreviewList.children[i].children[0].textContent) {
       $elmPreviewList.children[i].children[0].children[0].className = 'fas fa-star';
@@ -478,3 +452,35 @@ function showProfile(event) {
     }
   }
 }
+
+function clickHeaderLink(event) {
+  if (event.target.nodeName === 'H4' && !event.target.className.includes('active')) {
+    for (var menuIndex = 0; menuIndex < $headerLinks.children.length; menuIndex++) {
+      if ($headerLinks.children[menuIndex].className.includes('transform-up')) {
+        $headerLinks.children[menuIndex].classList.toggle('transform-up');
+      }
+      if ($headerLinks.children[menuIndex].className.includes('active')) {
+        $headerLinks.children[menuIndex].classList.toggle('active');
+      }
+    }
+    event.target.classList.toggle('transform-up');
+    event.target.classList.toggle('active');
+    switchMenu();
+  }
+}
+
+function switchMenu(event) {
+  for (var headerIndex = 0; headerIndex < $headerLinks.children.length; headerIndex++) {
+    if ($headerLinks.children[headerIndex].className.includes('active')) {
+      for (var modalIndex = 0; modalIndex < $editLocationModalContent.children.length; modalIndex++) {
+        if ($headerLinks.children[headerIndex].textContent === $editLocationModalContent.children[modalIndex].getAttribute('name') && $editLocationModalContent.children[modalIndex].className.includes('hidden')) {
+          toggleHidden($editLocationModalContent.children[modalIndex]);
+        } else if (!$editLocationModalContent.children[modalIndex].className.includes('hidden')) {
+          toggleHidden($editLocationModalContent.children[modalIndex]);
+        }
+      }
+    }
+  }
+}
+
+$headerLinks.addEventListener('click', clickHeaderLink);

@@ -17,7 +17,7 @@
     <div class="header-banner header-banner-dimensions align-items-center">
       <i class="hamburger-menu-icon fas fa-bars flex-basis-15"></i>
       <div class="header-links justify-content-end flex-basis-85 hidden">
-        <h4 class="header-locations-link">Locations</h4>
+        <h4 class="header-locations-link active">Locations</h4>
         <h4 class="header-profile-link">Profile</h4>
       </div>
     </div>
@@ -27,20 +27,20 @@
 
     <div class="edit-modal edit-locations-modal-dimensions tint position-fixed justify-content-center z-index-1 hidden">
       <div class="edit-location-modal-content elm-content-dimensions">
-        <ul class="elm-preview-list unordered-list-no-bullets">
+        <ul class="elm-preview-list unordered-list-no-bullets" name="Locations">
           <li class="new-entry-list-item"><span><i class="far fa-plus-square"></i>New</span></li>
         </ul>
-          <form class="profile-edit flex-wrap">
-            <label for="name">Name</label>
-            <input type="text" id="name">
-            <label for="birthday">Birthday</label>
-            <input type="text" id="birthday">
-            <label for="email">Email</label>
-            <input type="text" id="email">
-            <div class="justify-content-center list-choice-1and7rem-line-height flex-basis-100">
-              <button class="default-button profile-submit-button">Done</button>
-            </div>
-          </form>
+        <form class="profile-edit flex-wrap hidden" name="Profile">
+          <label for="name">Name</label>
+          <input type="text" id="name">
+          <label for="birthday">Birthday</label>
+          <input type="text" id="birthday">
+          <label for="email">Email</label>
+          <input type="text" id="email">
+          <div class="justify-content-center list-choice-1and7rem-line-height flex-basis-100">
+            <button class="default-button profile-submit-button">Done</button>
+          </div>
+        </form>
       </div>
     </div>
 
