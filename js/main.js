@@ -1,6 +1,5 @@
 var $searchBar = document.querySelector('.search-bar');
 var $locationForm = document.querySelector('.location-form');
-var $searchSubmitButton = document.querySelector('.submit-search');
 var $weatherInformationChoices = document.querySelector('.weather-information-choices');
 var $locationAsker = document.querySelector('.location-asker');
 var $weatherChoicesList = document.querySelector('.list-of-weather-choices');
@@ -13,7 +12,6 @@ var $weatherChoicesLocation = document.querySelector('.weather-location-editing'
 var $previews = document.querySelector('.previews');
 var $greeting = document.querySelector('.greeting');
 var $recommendation = document.querySelector('.recommendation');
-var $profileSubmitButton = document.querySelector('.profile-submit-button');
 var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
 var $headerBanner = document.querySelector('.header-banner');
 var $headerLinks = document.querySelector('.header-links');
@@ -21,7 +19,7 @@ var $editModal = document.querySelector('.edit-modal');
 var $elmPreviewList = document.querySelector('.elm-preview-list');
 var $editLocationModalContent = document.querySelector('.edit-location-modal-content');
 
-$searchSubmitButton.addEventListener('click', queryLocation);
+$locationForm.addEventListener('submit', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
 $weatherOptionsSubmitButton.addEventListener('click', submitClicked);
 
@@ -456,7 +454,7 @@ function saveProfile(event) {
 
 $headerHamburgerMenuIcon.addEventListener('click', headerToggle);
 document.addEventListener('click', showLocations);
-$profileSubmitButton.addEventListener('click', saveProfile);
+$profileEdit.addEventListener('submit', saveProfile);
 
 function headerToggle(event) {
   $headerBanner.classList.toggle('header-banner-active-background');
