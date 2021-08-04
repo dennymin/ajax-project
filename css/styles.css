@@ -164,15 +164,21 @@ body {
   padding: 3px;
   left: 1px;
   border-radius: 10px;
+  border: 2px solid (75, 75, 75);
   outline-color: black;
   color: rgba(75, 75, 75);
 }
 
-.profile-edit > input:active {
+.profile-edit > input:active,
+.profile-edit > input:focus {
   color: black;
+  font-weight: bold;
+  border-color: black;
 }
 
 .profile-submit-button {
+  padding: 5px 10px;
+  font-size: 1.2rem;
   margin: 20px;
 }
 
@@ -355,8 +361,11 @@ body {
   right: 10px;
 }
 
-.default-button {
+.hidden-border {
   border: 1px hidden;
+}
+
+.default-button {
   border-radius: 10px;
   background-color: rgb(0, 0, 0, 0);
 }
