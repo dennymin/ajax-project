@@ -23,7 +23,7 @@ var $editLocationModalContent = document.querySelector('.edit-location-modal-con
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
-$weatherOptionsSubmitButton.addEventListener('click', showPrimary);
+$weatherOptionsSubmitButton.addEventListener('click', submitClicked);
 
 function queryLocation(event) {
   event.preventDefault();
@@ -198,9 +198,25 @@ function showPreviewsOfData(location) {
   });
 }
 
-function showPrimary(event) {
+function submitClicked(event) {
   switchView($weatherDisplayPrimaryList);
   appendLocationsList();
+  for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
+    if (data.locations[dataLIndex].location === data.primary) {
+      showWeatherDataObject(data.locations[dataLIndex]);
+    } else if (data.locations[dataLIndex].location !== data.primary) {
+      showPreviewsOfData(data.locations[dataLIndex]);
+      for (var previewsIndex = 0; previewsIndex < $previews.children.length; previewsIndex++) {
+        if ($previews.children[previewsIndex].textContent.includes(data.locations[dataLIndex].location)) {
+          $previews.children[previewsIndex].remove();
+        }
+      }
+    }
+  }
+}
+
+function showPrimary(event) {
+  switchView($weatherDisplayPrimaryList);
   for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
     if (data.locations[dataLIndex].location === data.primary) {
       showWeatherDataObject(data.locations[dataLIndex]);
@@ -434,6 +450,8 @@ function saveProfile(event) {
   data.profile.birthday = $profileEdit.elements.birthday.value;
   data.profile.email = $profileEdit.elements.email.value;
   $profileEdit.reset();
+  showPrimary();
+  headerToggle();
 }
 
 $headerHamburgerMenuIcon.addEventListener('click', headerToggle);
