@@ -7,14 +7,23 @@ var $weatherChoicesList = document.querySelector('.list-of-weather-choices');
 var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
 var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primary');
 var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
-var $displayTimeLocation = document.querySelector('.time-and-location>h1');
+var $displayTimeLocation = document.querySelector('.display-location');
 var $backgroundImage = document.querySelector('.background-image-dimensions');
 var $weatherChoicesLocation = document.querySelector('.weather-location-editing');
 var $previews = document.querySelector('.previews');
+var $greeting = document.querySelector('.greeting');
+var $recommendation = document.querySelector('.recommendation');
+var $profileSubmitButton = document.querySelector('.profile-submit-button');
+var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
+var $headerBanner = document.querySelector('.header-banner');
+var $headerLinks = document.querySelector('.header-links');
+var $editModal = document.querySelector('.edit-modal');
+var $elmPreviewList = document.querySelector('.elm-preview-list');
+var $editLocationModalContent = document.querySelector('.edit-location-modal-content');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
-$weatherOptionsSubmitButton.addEventListener('click', showPrimary);
+$weatherOptionsSubmitButton.addEventListener('click', submitClicked);
 
 function queryLocation(event) {
   event.preventDefault();
@@ -189,9 +198,25 @@ function showPreviewsOfData(location) {
   });
 }
 
-function showPrimary(event) {
+function submitClicked(event) {
   switchView($weatherDisplayPrimaryList);
   appendLocationsList();
+  for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
+    if (data.locations[dataLIndex].location === data.primary) {
+      showWeatherDataObject(data.locations[dataLIndex]);
+    } else if (data.locations[dataLIndex].location !== data.primary) {
+      showPreviewsOfData(data.locations[dataLIndex]);
+      for (var previewsIndex = 0; previewsIndex < $previews.children.length; previewsIndex++) {
+        if ($previews.children[previewsIndex].textContent.includes(data.locations[dataLIndex].location)) {
+          $previews.children[previewsIndex].remove();
+        }
+      }
+    }
+  }
+}
+
+function showPrimary(event) {
+  switchView($weatherDisplayPrimaryList);
   for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
     if (data.locations[dataLIndex].location === data.primary) {
       showWeatherDataObject(data.locations[dataLIndex]);
@@ -231,13 +256,46 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
   var sunRiseTotal = sunRiseUnixConvertedHours.getHours() + (sunRiseUnixConvertedHours.getMinutes() / 60);
   var sunSetUnixConvertedHours = new Date((sunset + (localOffset + timezone)) * 1000);
   var sunSetTotal = sunSetUnixConvertedHours.getHours() + (sunSetUnixConvertedHours.getMinutes() / 60);
+  var greetingMessage = null;
+
+  if (formattedTime.getHours() < 12 && formattedTime.getHours() >= 5) {
+    greetingMessage = data.greetings[0];
+  }
+  if (formattedTime.getHours() >= 12 && formattedTime.getHours() < 14 && weather !== 'Rain') {
+    greetingMessage = data.greetings[1];
+    $recommendation.textContent = data.responses.sunny[getRandomInt(data.responses.sunny.length)];
+  }
+  if (formattedTime.getHours() >= 14 && formattedTime.getHours() < 17) {
+    greetingMessage = data.greetings[2];
+    $recommendation.textContent = data.responses.afternoon[getRandomInt(data.responses.afternoon.length)];
+  }
+  if (formattedTime.getHours() >= 17 && formattedTime.getHours() > 21) {
+    greetingMessage = data.greetings[3];
+    $recommendation.textContent = data.responses.night[getRandomInt(data.responses.night.length)];
+  }
+  if (formattedTime.getHours() >= 21 || formattedTime.getHours() < 5) {
+    greetingMessage = data.greetings[4];
+    $recommendation.textContent = data.responses.night[getRandomInt(data.responses.night.length)];
+  }
+  if (weather !== 'Rain' && formattedTime.getHours() < 15 && formattedTime.getHours() > 5) {
+    changeBackground('background-image-sunny');
+    $recommendation.textContent = data.responses.sunny[getRandomInt(data.responses.sunny.length)];
+  }
   if (weather === 'Rain') {
     changeBackground('background-image-rainy');
+    $recommendation.textContent = data.responses.rainy[getRandomInt(data.responses.rainy.length)];
   } else if (sunTime >= sunRiseTotal && sunTime <= sunSetTotal) {
     changeBackground('background-image-sunny');
   } else if ((sunTime > sunSetTotal && sunTime < 25) || (sunTime < sunRiseTotal && sunTime >= 0)) {
     changeBackground('background-image-night');
   }
+  if (data.profile.name !== null) {
+    $greeting.textContent = greetingMessage + data.profile.name;
+  }
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
 
 function invalidLocationNotice() {
@@ -264,43 +322,6 @@ function switchView(destinationView) {
   }
 }
 
-var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
-var $headerBanner = document.querySelector('.header-banner');
-var $headerLinks = document.querySelector('.header-links');
-function headerToggle(event) {
-  $headerBanner.classList.toggle('header-banner-active-background');
-  toggleHidden($headerLinks);
-  if (viewingLocationsModal === true) {
-    toggleHidden($editModal);
-    viewingLocationsModal = false;
-    $locationLink.classList.toggle('transform-up');
-  }
-}
-$headerHamburgerMenuIcon.addEventListener('click', headerToggle);
-
-var viewingLocationsModal = false;
-var $locationLink = document.querySelector('.header-locations-link');
-var $editModal = document.querySelector('.edit-modal');
-var $elmPreviewList = document.querySelector('.elm-preview-list');
-function showMenu(event) {
-  toggleHidden($editModal);
-  if (viewingLocationsModal === false) {
-    viewingLocationsModal = true;
-    $locationLink.classList.toggle('transform-up');
-  } else {
-    viewingLocationsModal = false;
-    $locationLink.classList.toggle('transform-up');
-  }
-  for (var i = 0; i < $elmPreviewList.children.length - 1; i++) {
-    if (data.primary === $elmPreviewList.children[i].children[0].textContent) {
-      $elmPreviewList.children[i].children[0].children[0].className = 'fas fa-star';
-    } else {
-      $elmPreviewList.children[i].children[0].children[0].className = 'far fa-star';
-    }
-  }
-}
-
-$locationLink.addEventListener('click', showMenu);
 var differentPages = [$weatherDisplayPrimaryList, $weatherInformationChoices, $locationAsker];
 var $newEntryListItem = document.querySelector('.new-entry-list-item');
 function newEntryClicked(event) {
@@ -421,3 +442,66 @@ function primaryClicked(event) {
 }
 
 $elmPreviewList.addEventListener('click', primaryClicked);
+
+var $profileEdit = document.querySelector('.profile-edit');
+function saveProfile(event) {
+  event.preventDefault();
+  data.profile.name = $profileEdit.elements.name.value;
+  data.profile.birthday = $profileEdit.elements.birthday.value;
+  data.profile.email = $profileEdit.elements.email.value;
+  $profileEdit.reset();
+  showPrimary();
+  headerToggle();
+}
+
+$headerHamburgerMenuIcon.addEventListener('click', headerToggle);
+document.addEventListener('click', showLocations);
+$profileSubmitButton.addEventListener('click', saveProfile);
+
+function headerToggle(event) {
+  $headerBanner.classList.toggle('header-banner-active-background');
+  toggleHidden($headerLinks);
+  toggleHidden($editModal);
+}
+
+function showLocations(event) {
+  for (var i = 0; i < $elmPreviewList.children.length - 1; i++) {
+    if (data.primary === $elmPreviewList.children[i].children[0].textContent) {
+      $elmPreviewList.children[i].children[0].children[0].className = 'fas fa-star';
+    } else {
+      $elmPreviewList.children[i].children[0].children[0].className = 'far fa-star';
+    }
+  }
+}
+
+function clickHeaderLink(event) {
+  if (event.target.nodeName === 'H4' && !event.target.className.includes('active')) {
+    for (var menuIndex = 0; menuIndex < $headerLinks.children.length; menuIndex++) {
+      if ($headerLinks.children[menuIndex].className.includes('transform-up')) {
+        $headerLinks.children[menuIndex].classList.toggle('transform-up');
+      }
+      if ($headerLinks.children[menuIndex].className.includes('active')) {
+        $headerLinks.children[menuIndex].classList.toggle('active');
+      }
+    }
+    event.target.classList.toggle('transform-up');
+    event.target.classList.toggle('active');
+    switchMenu();
+  }
+}
+
+function switchMenu(event) {
+  for (var headerIndex = 0; headerIndex < $headerLinks.children.length; headerIndex++) {
+    if ($headerLinks.children[headerIndex].className.includes('active')) {
+      for (var modalIndex = 0; modalIndex < $editLocationModalContent.children.length; modalIndex++) {
+        if ($headerLinks.children[headerIndex].textContent === $editLocationModalContent.children[modalIndex].getAttribute('name') && $editLocationModalContent.children[modalIndex].className.includes('hidden')) {
+          toggleHidden($editLocationModalContent.children[modalIndex]);
+        } else if (!$editLocationModalContent.children[modalIndex].className.includes('hidden')) {
+          toggleHidden($editLocationModalContent.children[modalIndex]);
+        }
+      }
+    }
+  }
+}
+
+$headerLinks.addEventListener('click', clickHeaderLink);

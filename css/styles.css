@@ -96,6 +96,7 @@ body {
 
 .tint {
   background-color: rgb(0, 0, 0, 0.4);
+  background-attachment: fixed;
 }
 
 .position-fixed {
@@ -145,6 +146,40 @@ body {
 
 .elm-preview-list > li > span > * {
   margin: auto 10px;
+}
+
+.profile-edit > label,
+.profile-edit > input {
+  flex-basis: 100%;
+}
+
+.profile-edit > label {
+  margin-top: 10px;
+  margin-bottom: 3px;
+}
+
+.profile-edit > input {
+  margin-bottom: 10px;
+  position: relative;
+  padding: 3px;
+  left: 1px;
+  border-radius: 10px;
+  border: 2px solid (75, 75, 75);
+  outline-color: black;
+  color: rgba(75, 75, 75);
+}
+
+.profile-edit > input:active,
+.profile-edit > input:focus {
+  color: black;
+  font-weight: bold;
+  border-color: black;
+}
+
+.profile-submit-button {
+  padding: 5px 10px;
+  font-size: 1.2rem;
+  margin: 20px;
 }
 
 /* Data Modal */
@@ -233,6 +268,10 @@ body {
   margin: 5px auto;
 }
 
+.time-and-location > h3 {
+  margin: 20px auto;
+}
+
 .primary {
   box-sizing: border-box;
   padding: 10px;
@@ -240,7 +279,11 @@ body {
   border: 1px solid white;
   border-radius: 10px;
   background-color: rgba(129, 129, 129, 0.5);
-  max-height: 550px;
+  max-height: 700px;
+}
+
+.greeting {
+  max-width: 10rem;
 }
 
 /* Flexbox */
@@ -252,6 +295,11 @@ body {
 .align-items-center {
   display: flex;
   align-items: center;
+}
+
+.justify-content-center {
+  display: flex;
+  justify-content: center;
 }
 
 .justify-content-end {
@@ -317,8 +365,11 @@ body {
   right: 10px;
 }
 
-.default-button {
+.hidden-border {
   border: 1px hidden;
+}
+
+.default-button {
   border-radius: 10px;
   background-color: rgb(0, 0, 0, 0);
 }
@@ -355,6 +406,11 @@ body {
     left: 30px;
   }
 
+  .time-and-location > h3 {
+    position: relative;
+    left: 30px;
+  }
+
   .header-links > h4 {
     margin-right: 50px;
   }
@@ -365,5 +421,14 @@ body {
 
   .primary {
     margin: 10px 0;
+  }
+
+  .greeting {
+    max-width: 100%;
+  }
+
+  .time-and-location {
+    position: relative;
+    right: 10px;
   }
 }

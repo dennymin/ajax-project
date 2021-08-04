@@ -17,17 +17,30 @@
     <div class="header-banner header-banner-dimensions align-items-center">
       <i class="hamburger-menu-icon fas fa-bars flex-basis-15"></i>
       <div class="header-links justify-content-end flex-basis-85 hidden">
-        <h4 class="header-locations-link">Locations</h4>
+        <h4 class="header-locations-link transform-up active">Locations</h4>
         <h4 class="header-profile-link">Profile</h4>
       </div>
     </div>
   </header>
+
   <main>
+
     <div class="edit-modal edit-locations-modal-dimensions tint position-fixed justify-content-center z-index-1 hidden">
       <div class="edit-location-modal-content elm-content-dimensions">
-        <ul class="elm-preview-list unordered-list-no-bullets">
+        <ul class="elm-preview-list unordered-list-no-bullets" name="Locations">
           <li class="new-entry-list-item"><span><i class="far fa-plus-square"></i>New</span></li>
         </ul>
+        <form class="profile-edit flex-wrap hidden" name="Profile">
+          <label for="name">Name</label>
+          <input type="text" id="name">
+          <label for="birthday">Birthday</label>
+          <input type="text" id="birthday">
+          <label for="email">Email</label>
+          <input type="text" id="email">
+          <div class="justify-content-center list-choice-1and7rem-line-height flex-basis-100">
+            <button class="default-button profile-submit-button">Done</button>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -37,7 +50,7 @@
         <form class="location-form">
           <div class="search-area justify-content-center">
             <input class="search-bar white-font" type="text" placeholder="Where to?">
-            <button class="submit-search default-button white-font text-shadow">Submit</button>
+            <button class="submit-search default-button hidden-border white-font text-shadow">Submit</button>
           </div>
         </form>
       </div>
@@ -67,16 +80,18 @@
             <i class="far fa-check-circle"></i>
             Sunset/Sunrise</li>
         </ul>
-        <button class="submit-choices default-button white-font text-shadow">Submit</button>
+        <button class="submit-choices default-button hidden-border white-font text-shadow">Submit</button>
       </div>
 
       <div class="weather-display-primary white-font text-left-align hidden mobile-center-to-left flex-wrap">
         <div class="primary column-half">
           <div>
-            <div class="time-and-location right-shift-10px">
+            <div class="time-and-location">
+              <h3 class="greeting"></h3>
               <h1 class="display-location"></h1>
               <h1 class="display-time-of-day"></h1>
               <h1 class="display-date"></h1>
+              <h3 class="recommendation"></h3>
             </div>
             <ul class="display-primary-weather unordered-list-no-bullets right-shift-10px">
               <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="0">Sunny</li>
