@@ -17,8 +17,8 @@
     <div class="header-banner header-banner-dimensions align-items-center">
       <i class="hamburger-menu-icon fas fa-bars flex-basis-15"></i>
       <div class="header-links justify-content-end flex-basis-85 hidden">
-        <h4 class="header-locations-link transform-up active">Locations</h4>
-        <h4 class="header-profile-link">Profile</h4>
+        <h4 class="header-locations-link"><a class="transform-up active">Locations</a></h4>
+        <h4 class="header-profile-link"><a>Profile</a></h4>
       </div>
     </div>
   </header>
@@ -28,7 +28,7 @@
     <div class="edit-modal edit-locations-modal-dimensions tint position-fixed justify-content-center z-index-1 hidden">
       <div class="edit-location-modal-content elm-content-dimensions">
         <ul class="elm-preview-list unordered-list-no-bullets" name="Locations">
-          <li class="new-entry-list-item"><span><i class="far fa-plus-square"></i>New</span></li>
+          <li class="new-entry-list-item"><span><i class="far fa-plus-square"></i><button class="default-button-no-active hidden-border">New</button></span></li>
         </ul>
         <form class="profile-edit flex-wrap hidden" name="Profile">
           <label for="name">Name</label>

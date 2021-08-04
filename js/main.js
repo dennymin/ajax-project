@@ -475,13 +475,13 @@ function showLocations(event) {
 }
 
 function clickHeaderLink(event) {
-  if (event.target.nodeName === 'H4' && !event.target.className.includes('active')) {
+  if (event.target.nodeName === 'A' && !event.target.className.includes('active')) {
     for (var menuIndex = 0; menuIndex < $headerLinks.children.length; menuIndex++) {
-      if ($headerLinks.children[menuIndex].className.includes('transform-up')) {
-        $headerLinks.children[menuIndex].classList.toggle('transform-up');
+      if ($headerLinks.children[menuIndex].children[0].className.includes('transform-up')) {
+        $headerLinks.children[menuIndex].children[0].classList.toggle('transform-up');
       }
-      if ($headerLinks.children[menuIndex].className.includes('active')) {
-        $headerLinks.children[menuIndex].classList.toggle('active');
+      if ($headerLinks.children[menuIndex].children[0].className.includes('active')) {
+        $headerLinks.children[menuIndex].children[0].classList.toggle('active');
       }
     }
     event.target.classList.toggle('transform-up');
@@ -492,9 +492,9 @@ function clickHeaderLink(event) {
 
 function switchMenu(event) {
   for (var headerIndex = 0; headerIndex < $headerLinks.children.length; headerIndex++) {
-    if ($headerLinks.children[headerIndex].className.includes('active')) {
+    if ($headerLinks.children[headerIndex].children[0].className.includes('active')) {
       for (var modalIndex = 0; modalIndex < $editLocationModalContent.children.length; modalIndex++) {
-        if ($headerLinks.children[headerIndex].textContent === $editLocationModalContent.children[modalIndex].getAttribute('name') && $editLocationModalContent.children[modalIndex].className.includes('hidden')) {
+        if ($headerLinks.children[headerIndex].children[0].textContent === $editLocationModalContent.children[modalIndex].getAttribute('name') && $editLocationModalContent.children[modalIndex].className.includes('hidden')) {
           toggleHidden($editLocationModalContent.children[modalIndex]);
         } else if (!$editLocationModalContent.children[modalIndex].className.includes('hidden')) {
           toggleHidden($editLocationModalContent.children[modalIndex]);

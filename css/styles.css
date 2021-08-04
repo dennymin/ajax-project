@@ -116,10 +116,6 @@ body {
   bottom: 200px;
 }
 
-.done-button {
-  margin: auto;
-}
-
 .elm-preview-list {
   list-style: none;
   padding-left: 0;
@@ -307,21 +303,6 @@ body {
   justify-content: flex-end;
 }
 
-.justify-content-space-evenly {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.justify-content-space-between {
-  display: flex;
-  justify-content: space-between;
-}
-
-.justify-content-space-around {
-  display: flex;
-  justify-content: space-around;
-}
-
 .flex-basis-15 {
   flex-basis: 15%;
 }
@@ -337,10 +318,6 @@ body {
 /* Tools */
 .text-left-align {
   text-align: left;
-}
-
-.text-center-align {
-  text-align: center;
 }
 
 .mobile-center-to-left {
@@ -376,6 +353,22 @@ body {
 
 .default-button:active {
   transform: translateY(1px);
+}
+
+.default-button-no-active {
+  border-radius: 10px;
+  background-color: rgb(0, 0, 0, 0);
+}
+
+.new-entry-list-item > span > button {
+  margin: 0;
+  padding: 3px;
+  font-size: 1rem;
+  max-height: 18px;
+}
+
+.new-entry-list-item {
+  max-height: 18px;
 }
 
 @media screen and (min-width: 768px) {
