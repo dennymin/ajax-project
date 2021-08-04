@@ -1,7 +1,6 @@
 /* exported data */
 var data = {
   locations: [],
-  view: 'entry-form',
   editing: null,
   primary: null,
   template: {
@@ -14,7 +13,14 @@ var data = {
     humidity: true,
     sunsetSunrise: true
   },
-  weatherOptions: ['main', 'temperature', 'high', 'low', 'wind', 'humidity', 'sunsetSunrise']
+  weatherOptions: ['main', 'temperature', 'high', 'low', 'wind', 'humidity', 'sunsetSunrise'],
+  greetings: ['Good Morning ', 'Hello ', 'Good Afternoon ', 'Good Evening ', 'Sleep Tight '],
+  responses: {
+    sunny: ['Great day for a picnic', 'Have fun outside!'],
+    rainy: ['Maybe stay indoors today', 'Don\'t forget to bring an umbrella!'],
+    night: ['Time to wind down!', 'Don\'t stay up too late!'],
+    afternoon: ['Hope your day was good!', 'How are you?']
+  }
 };
 
 var previousDataJSON = localStorage.getItem('weather-data');

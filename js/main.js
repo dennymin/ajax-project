@@ -7,10 +7,12 @@ var $weatherChoicesList = document.querySelector('.list-of-weather-choices');
 var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
 var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primary');
 var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
-var $displayTimeLocation = document.querySelector('.time-and-location>h1');
+var $displayTimeLocation = document.querySelector('.display-location');
 var $backgroundImage = document.querySelector('.background-image-dimensions');
 var $weatherChoicesLocation = document.querySelector('.weather-location-editing');
 var $previews = document.querySelector('.previews');
+var $greeting = document.querySelector('.greeting');
+var $recommendation = document.querySelector('.recommendation');
 
 $searchSubmitButton.addEventListener('click', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
@@ -231,13 +233,42 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
   var sunRiseTotal = sunRiseUnixConvertedHours.getHours() + (sunRiseUnixConvertedHours.getMinutes() / 60);
   var sunSetUnixConvertedHours = new Date((sunset + (localOffset + timezone)) * 1000);
   var sunSetTotal = sunSetUnixConvertedHours.getHours() + (sunSetUnixConvertedHours.getMinutes() / 60);
+
+  if (formattedTime.getHours() < 12 && formattedTime.getHours() >= 5) {
+    $greeting.textContent = data.greetings[0];
+  }
+  if (formattedTime.getHours() >= 12 && formattedTime.getHours() < 14 && weather !== 'Rain') {
+    $greeting.textContent = data.greetings[1];
+    $recommendation.textContent = data.responses.sunny[getRandomInt(data.responses.sunny.length)];
+  }
+  if (formattedTime.getHours() >= 14 && formattedTime.getHours() < 17) {
+    $greeting.textContent = data.greetings[2];
+    $recommendation.textContent = data.responses.afternoon[getRandomInt(data.responses.afternoon.length)];
+  }
+  if (formattedTime.getHours() >= 17 && formattedTime.getHours() > 21) {
+    $greeting.textContent = data.greetings[3];
+    $recommendation.textContent = data.responses.night[getRandomInt(data.responses.night.length)];
+  }
+  if (formattedTime.getHours() >= 21 || formattedTime.getHours() < 5) {
+    $greeting.textContent = data.greetings[4];
+    $recommendation.textContent = data.responses.night[getRandomInt(data.responses.night.length)];
+  }
+  if (weather !== 'Rain' && formattedTime.getHours() < 15 && formattedTime.getHours() > 5) {
+    changeBackground('background-image-sunny');
+    $recommendation.textContent = data.responses.sunny[getRandomInt(data.responses.sunny.length)];
+  }
   if (weather === 'Rain') {
     changeBackground('background-image-rainy');
+    $recommendation.textContent = data.responses.rainy[getRandomInt(data.responses.rainy.length)];
   } else if (sunTime >= sunRiseTotal && sunTime <= sunSetTotal) {
     changeBackground('background-image-sunny');
   } else if ((sunTime > sunSetTotal && sunTime < 25) || (sunTime < sunRiseTotal && sunTime >= 0)) {
     changeBackground('background-image-night');
   }
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
 
 function invalidLocationNotice() {

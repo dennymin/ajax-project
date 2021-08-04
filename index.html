@@ -25,9 +25,20 @@
   <main>
     <div class="edit-modal edit-locations-modal-dimensions tint position-fixed justify-content-center z-index-1 hidden">
       <div class="edit-location-modal-content elm-content-dimensions">
-        <ul class="elm-preview-list unordered-list-no-bullets">
+        <ul class="elm-preview-list unordered-list-no-bullets hidden">
           <li class="new-entry-list-item"><span><i class="far fa-plus-square"></i>New</span></li>
         </ul>
+          <form class="profile-edit flex-wrap">
+            <label for="name">Name</label>
+            <input type="text" id="name">
+            <label for="birthday">Birthday</label>
+            <input type="text" id="birthday">
+            <label for="email">Email</label>
+            <input type="text" id="email">
+          </form>
+          <div class="justify-content-center list-choice-1and7rem-line-height">
+            <button class="default-button profile-submit-button">Done</button>
+          </div>
       </div>
     </div>
 
@@ -74,9 +85,11 @@
         <div class="primary column-half">
           <div>
             <div class="time-and-location right-shift-10px">
+              <h3 class="greeting"></h3>
               <h1 class="display-location"></h1>
               <h1 class="display-time-of-day"></h1>
               <h1 class="display-date"></h1>
+              <h3 class="recommendation"></h3>
             </div>
             <ul class="display-primary-weather unordered-list-no-bullets right-shift-10px">
               <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="0">Sunny</li>

@@ -96,6 +96,7 @@ body {
 
 .tint {
   background-color: rgb(0, 0, 0, 0.4);
+  background-attachment: fixed;
 }
 
 .position-fixed {
@@ -145,6 +146,34 @@ body {
 
 .elm-preview-list > li > span > * {
   margin: auto 10px;
+}
+
+.profile-edit > label,
+.profile-edit > input {
+  flex-basis: 100%;
+}
+
+.profile-edit > label {
+  margin-top: 10px;
+  margin-bottom: 3px;
+}
+
+.profile-edit > input {
+  margin-bottom: 10px;
+  position: relative;
+  padding: 3px;
+  left: 1px;
+  border-radius: 10px;
+  outline-color: black;
+  color: rgba(75, 75, 75);
+}
+
+.profile-edit > input:active {
+  color: black;
+}
+
+.profile-submit-button {
+  margin: 20px;
 }
 
 /* Data Modal */
@@ -233,6 +262,10 @@ body {
   margin: 5px auto;
 }
 
+.time-and-location > h3 {
+  margin: 20px auto;
+}
+
 .primary {
   box-sizing: border-box;
   padding: 10px;
@@ -240,7 +273,7 @@ body {
   border: 1px solid white;
   border-radius: 10px;
   background-color: rgba(129, 129, 129, 0.5);
-  max-height: 550px;
+  max-height: 700px;
 }
 
 /* Flexbox */
@@ -252,6 +285,11 @@ body {
 .align-items-center {
   display: flex;
   align-items: center;
+}
+
+.justify-content-center {
+  display: flex;
+  justify-content: center;
 }
 
 .justify-content-end {
@@ -351,6 +389,11 @@ body {
   }
 
   .time-and-location > h1 {
+    position: relative;
+    left: 30px;
+  }
+
+  .time-and-location > h3 {
     position: relative;
     left: 30px;
   }
