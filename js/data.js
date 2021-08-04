@@ -20,6 +20,11 @@ var data = {
     rainy: ['Maybe stay indoors today', 'Don\'t forget to bring an umbrella!'],
     night: ['Time to wind down!', 'Don\'t stay up too late!'],
     afternoon: ['Hope your day was good!', 'How are you?']
+  },
+  profile: {
+    name: null,
+    birthday: null,
+    email: null
   }
 };
 

@@ -301,6 +301,8 @@ var $headerLinks = document.querySelector('.header-links');
 function headerToggle(event) {
   $headerBanner.classList.toggle('header-banner-active-background');
   toggleHidden($headerLinks);
+  toggleHidden($editModal);
+  $locationLink.classList.toggle('transform-up');
   if (viewingLocationsModal === true) {
     toggleHidden($editModal);
     viewingLocationsModal = false;
@@ -313,13 +315,9 @@ var viewingLocationsModal = false;
 var $locationLink = document.querySelector('.header-locations-link');
 var $editModal = document.querySelector('.edit-modal');
 var $elmPreviewList = document.querySelector('.elm-preview-list');
-function showMenu(event) {
-  toggleHidden($editModal);
+function showLocations(event) {
   if (viewingLocationsModal === false) {
     viewingLocationsModal = true;
-    $locationLink.classList.toggle('transform-up');
-  } else {
-    viewingLocationsModal = false;
     $locationLink.classList.toggle('transform-up');
   }
   for (var i = 0; i < $elmPreviewList.children.length - 1; i++) {
@@ -331,7 +329,7 @@ function showMenu(event) {
   }
 }
 
-$locationLink.addEventListener('click', showMenu);
+$locationLink.addEventListener('click', showLocations);
 var differentPages = [$weatherDisplayPrimaryList, $weatherInformationChoices, $locationAsker];
 var $newEntryListItem = document.querySelector('.new-entry-list-item');
 function newEntryClicked(event) {
@@ -452,3 +450,31 @@ function primaryClicked(event) {
 }
 
 $elmPreviewList.addEventListener('click', primaryClicked);
+
+var $profileEdit = document.querySelector('.profile-edit');
+var $profileLink = document.querySelector('.header-profile-links');
+function saveProfile(event) {
+  data.profile.name = $profileEdit.elements.name.value;
+  data.profile.birthday = $profileEdit.elements.birthday.value;
+  data.profile.email = $profileEdit.elements.email.value;
+  $profileEdit.reset();
+}
+var $profileSubmitButton = document.querySelector('.profile-submit-button');
+$profileSubmitButton.addEventListener('click', saveProfile);
+
+function showProfile(event) {
+  if (viewingLocationsModal === false) {
+    viewingLocationsModal = true;
+    $locationLink.classList.toggle('transform-up');
+  } else {
+    viewingLocationsModal = false;
+    $locationLink.classList.toggle('transform-up');
+  }
+  for (var i = 0; i < $elmPreviewList.children.length - 1; i++) {
+    if (data.primary === $elmPreviewList.children[i].children[0].textContent) {
+      $elmPreviewList.children[i].children[0].children[0].className = 'fas fa-star';
+    } else {
+      $elmPreviewList.children[i].children[0].children[0].className = 'far fa-star';
+    }
+  }
+}
