@@ -58,7 +58,7 @@ body {
 
 .transform-up {
   transform: translateY(-2px);
-  text-shadow: 0 1px 1px;
+  text-decoration: underline;
 }
 
 /* Header Menu */
@@ -79,7 +79,7 @@ body {
 
 .header-links > h4 {
   margin-right: 20px;
-  cursor: default;
+  cursor: pointer;
 }
 
 /* Locations Modal */
@@ -119,8 +119,9 @@ body {
   padding-left: 0;
 }
 
-.elm-preview-list:hover {
-  cursor: default;
+button,
+li {
+  cursor: pointer;
 }
 
 .elm-preview-list > li {
@@ -229,7 +230,7 @@ body {
 }
 
 .weather-information-list-choice:hover {
-  cursor: default;
+  cursor: pointer;
 }
 
 .weather-information-list-choice:active {
@@ -266,6 +267,19 @@ body {
   margin: 20px auto;
 }
 
+.transparent-background-color {
+  background-color: rgba(129, 129, 129, 0.5);
+}
+
+.rounded-corners {
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.padding-bottom-20px {
+  padding-bottom: 20px;
+}
+
 .primary {
   box-sizing: border-box;
   padding: 10px;
@@ -289,6 +303,10 @@ body {
 .align-items-center {
   display: flex;
   align-items: center;
+}
+
+.position-relative-60px-top {
+  top: 60px;
 }
 
 .justify-content-center {
@@ -397,6 +415,7 @@ body {
 
   .hamburger-menu-icon {
     left: 50px;
+    cursor: pointer;
   }
 
   .primary {
