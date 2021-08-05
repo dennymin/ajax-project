@@ -82,8 +82,6 @@ body {
   cursor: default;
 }
 
-/* Modals */
-
 /* Locations Modal */
 .edit-locations-modal-dimensions {
   width: 100vw;
@@ -114,10 +112,6 @@ body {
   background-color: white;
   position: relative;
   bottom: 200px;
-}
-
-.done-button {
-  margin: auto;
 }
 
 .elm-preview-list {
@@ -307,21 +301,6 @@ body {
   justify-content: flex-end;
 }
 
-.justify-content-space-evenly {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.justify-content-space-between {
-  display: flex;
-  justify-content: space-between;
-}
-
-.justify-content-space-around {
-  display: flex;
-  justify-content: space-around;
-}
-
 .flex-basis-15 {
   flex-basis: 15%;
 }
@@ -337,10 +316,6 @@ body {
 /* Tools */
 .text-left-align {
   text-align: left;
-}
-
-.text-center-align {
-  text-align: center;
 }
 
 .mobile-center-to-left {
@@ -376,6 +351,11 @@ body {
 
 .default-button:active {
   transform: translateY(1px);
+}
+
+.new-entry-list-item > span > a {
+  margin: 0;
+  font-size: 1rem;
 }
 
 @media screen and (min-width: 768px) {
