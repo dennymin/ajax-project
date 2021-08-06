@@ -34,6 +34,7 @@ function queryLocation(event) {
   xhr.open('GET', fullLink);
   xhr.responseType = 'json';
   xhr.send();
+  toggleLoading();
   xhr.addEventListener('load', function () {
     if ($searchBar.value !== '' && xhr.status === 200) {
       data.editing = $searchBar.value;
@@ -51,6 +52,7 @@ function queryLocation(event) {
         toggleHidden($invalid);
       }
     }
+    toggleLoading();
   });
 }
 
@@ -103,6 +105,7 @@ function showWeatherDataObject(location) {
   xhr.open('GET', fullLink);
   xhr.responseType = 'json';
   xhr.send();
+  toggleLoading();
   xhr.addEventListener('load', function () {
     var currentTime = new Date().getTime() / 1000;
     $displayTimeLocation.textContent = xhr.response.name + ', ' + xhr.response.sys.country;
@@ -146,6 +149,7 @@ function showWeatherDataObject(location) {
     }
     considerSetting(currentTime, xhr.response.timezone, xhr.response.weather[0].main, xhr.response.sys.sunrise, xhr.response.sys.sunset);
     resetDataTemplate();
+    toggleLoading();
   });
 }
 
@@ -159,6 +163,7 @@ function showPreviewsOfData(location) {
   xhr2.open('GET', fullLink);
   xhr2.responseType = 'json';
   xhr2.send();
+  toggleLoading();
   xhr2.addEventListener('load', function () {
     var $previewName = document.createElement('div');
     var timePreview = ' ' + convertUnixTimeStamp(currentTime, xhr2.response.timezone, false);
@@ -195,6 +200,7 @@ function showPreviewsOfData(location) {
     $previewName.textContent = location.location + timePreview + mainPreview + currentTempPreview + maxPreview + minPreview + windPreview + humidityPreview + sunrisePreview + sunsetPreview;
     $previews.appendChild($previewName);
     $previewName.className = 'text-shadow-small list-choice-2rem-line-height';
+    toggleLoading();
   });
 }
 
@@ -507,3 +513,11 @@ function switchMenu(event) {
 }
 
 $headerLinks.addEventListener('click', clickHeaderLink);
+var $loadingText = document.querySelector('.loading-screen');
+function toggleLoading(event) {
+  if (!$loadingText.className.includes('hidden')) {
+    toggleHidden($loadingText);
+  } else if ($loadingText.className.includes('hidden')) {
+    toggleHidden($loadingText);
+  }
+}

@@ -63,6 +63,13 @@ body {
 .transform-up {
   transform: translateY(-2px);
   text-decoration: underline;
+  color: black;
+}
+
+/* Loading */
+.loading-screen {
+  position: fixed;
+  left: 50vw;
 }
 
 /* Header Menu */
@@ -349,8 +356,12 @@ span,
 }
 
 /* Tools */
-.text-left-align {
+.text-align-left {
   text-align: left;
+}
+
+.text-align-center {
+  text-align: center;
 }
 
 .mobile-center-to-left {
@@ -433,6 +444,11 @@ span,
 
   .header-links > h4 {
     margin-right: 50px;
+    color: rgb(107, 107, 107);
+  }
+
+  .header-links > h4:hover {
+    color: black;
   }
 
   .hamburger-menu-icon {
