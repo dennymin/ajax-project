@@ -301,7 +301,7 @@ span,
 }
 
 .background-box-dimensions {
-  max-width: 60vw;
+  max-width: 80vw;
   margin: auto;
 }
 
@@ -310,9 +310,8 @@ span,
 }
 
 .primary {
+  margin: 0 10px 0 10px;
   box-sizing: border-box;
-  padding: 10px;
-  margin: 10px;
   border: 1px solid white;
   border-radius: 10px;
   background-color: rgba(129, 129, 129, 0.5);
@@ -349,9 +348,9 @@ span,
   bottom: 40px;
 }
 
-.position-relative-mobile-30px-desktop-60px {
+.position-relative-mobile-50px-desktop-60px {
   position: relative;
-  top: 30px;
+  top: 50px;
 }
 
 .justify-content-center {
