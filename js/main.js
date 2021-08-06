@@ -263,11 +263,10 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
   var sunSetUnixConvertedHours = new Date((sunset + (localOffset + timezone)) * 1000);
   var sunSetTotal = sunSetUnixConvertedHours.getHours() + (sunSetUnixConvertedHours.getMinutes() / 60);
   var greetingMessage = null;
-
   if (formattedTime.getHours() < 12 && formattedTime.getHours() >= 5) {
     greetingMessage = data.greetings[0];
   }
-  if (formattedTime.getHours() >= 12 && formattedTime.getHours() < 14 && weather !== 'Rain') {
+  if (formattedTime.getHours() >= 12 && formattedTime.getHours() < 14) {
     greetingMessage = data.greetings[1];
     $recommendation.textContent = data.responses.sunny[getRandomInt(data.responses.sunny.length)];
   }

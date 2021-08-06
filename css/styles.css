@@ -73,7 +73,7 @@ body {
 /* Loading */
 .loading-screen {
   position: fixed;
-  left: 50vw;
+  left: 40vw;
 }
 
 /* Header Menu */
@@ -81,11 +81,13 @@ body {
   color: rgba(182, 182, 182);
   font-size: 2rem;
   position: relative;
-  left: 25px;
+  left: 15px;
+  top: 5px;
+  max-width: 32px;
 }
 
 .header-banner-dimensions {
-  height: 3rem;
+  height: 4rem;
 }
 
 .header-banner-active-background {
@@ -95,12 +97,19 @@ body {
 .header-links > h4 {
   margin-right: 20px;
   cursor: pointer;
+  position: relative;
+  top: 5px;
+}
+
+.full-vw {
+  width: 100vw;
 }
 
 /* Locations Modal */
 .edit-locations-modal-dimensions {
-  width: 100vw;
+  width: 100%;
   height: 100%;
+  position: fixed;
 }
 
 .z-index-1 {
@@ -125,8 +134,6 @@ body {
   border-radius: 10px;
   box-sizing: border-box;
   background-color: white;
-  position: relative;
-  bottom: 200px;
 }
 
 .elm-preview-list {
@@ -309,7 +316,7 @@ span,
   border: 1px solid white;
   border-radius: 10px;
   background-color: rgba(129, 129, 129, 0.5);
-  max-height: 700px;
+  max-height: 1000px;
 }
 
 .greeting {
@@ -335,6 +342,11 @@ span,
 .position-relative-40px-bottom {
   position: relative;
   bottom: 40px;
+}
+
+.position-relative-mobile-30px-desktop-60px {
+  position: relative;
+  top: 30px;
 }
 
 .justify-content-center {
@@ -423,10 +435,10 @@ span,
 
   .time-and-location > h1 {
     font-size: 2rem;
+    position: relative;
+    left: 30px;
   }
-}
 
-@media screen and (min-width: 768px) {
   .background-box-dimensions {
     max-width: 80vw;
     margin: auto;
@@ -434,11 +446,6 @@ span,
 
   .mobile-center-to-left {
     text-align: left;
-  }
-
-  .time-and-location > h1 {
-    position: relative;
-    left: 30px;
   }
 
   .time-and-location > h3 {
@@ -456,12 +463,13 @@ span,
   }
 
   .hamburger-menu-icon {
-    left: 50px;
+    left: 30px;
     cursor: pointer;
   }
 
   .primary {
     margin: 10px 0;
+    max-height: 650px;
   }
 
   .greeting {
@@ -471,5 +479,14 @@ span,
   .time-and-location {
     position: relative;
     right: 10px;
+  }
+
+  .loading-screen {
+    position: fixed;
+    left: 45vw;
+  }
+
+  .position-relative-mobile-30px-desktop-60px {
+    top: 60px;
   }
 }

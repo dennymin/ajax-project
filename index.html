@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="background-image-dimensions background-image-sunny">
-  <header>
+  <header class="position-fixed full-vw z-index-1">
     <div class="header-banner header-banner-dimensions align-items-center">
       <i class="hamburger-menu-icon fas fa-bars flex-basis-15"></i>
       <div class="header-links justify-content-end flex-basis-85 hidden">
@@ -21,19 +21,15 @@
         <h4 class="header-profile-link"><a>Profile</a></h4>
       </div>
     </div>
-  </header>
-
-  <main>
-    <div class="loading-screen white-font text-shadow text-align-center italics hidden">Loading...</div>
-
-    <div class="edit-modal edit-locations-modal-dimensions tint position-fixed z-index-1 hidden">
+    <div class="edit-modal edit-locations-modal-dimensions tint z-index-1 hidden">
       <div class="edit-location-modal-content elm-content-dimensions position-relative-60px-top">
         <ul class="elm-preview-list unordered-list-no-bullets" name="Locations">
           <li class="new-entry-list-item">
             <span>
               <i class="far fa-plus-square"></i>
               <a>New</a>
-            </span></li>
+            </span>
+          </li>
         </ul>
         <form class="profile-edit flex-wrap hidden" name="Profile">
           <label for="name">Name</label>
@@ -48,6 +44,10 @@
         </form>
       </div>
     </div>
+  </header>
+
+  <main class="position-relative-mobile-30px-desktop-60px">
+    <div class="loading-screen white-font text-shadow text-align-center italics hidden">Loading...</div>
 
     <div class="white-font data-modal text-shadow">
       <div class="location-asker transparent-background-color rounded-corners background-box-dimensions">
