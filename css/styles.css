@@ -33,7 +33,7 @@ body {
 }
 
 .red-font {
-  color: red;
+  color: rgb(255, 78, 78);
 }
 
 .text-shadow {
@@ -42,6 +42,10 @@ body {
 
 .text-shadow-small {
   text-shadow: 0 2px 3px black;
+}
+
+.text-shadow-smaller {
+  text-shadow: 0 1px 1px black;
 }
 
 .text-shadow-none {
@@ -56,9 +60,20 @@ body {
   font-size: 2rem;
 }
 
+.font-size-1rem {
+  font-size: 1.5rem;
+}
+
 .transform-up {
   transform: translateY(-2px);
-  text-shadow: 0 1px 1px;
+  text-decoration: underline;
+  color: black;
+}
+
+/* Loading */
+.loading-screen {
+  position: fixed;
+  left: 40vw;
 }
 
 /* Header Menu */
@@ -66,11 +81,13 @@ body {
   color: rgba(182, 182, 182);
   font-size: 2rem;
   position: relative;
-  left: 25px;
+  left: 15px;
+  top: 5px;
+  max-width: 32px;
 }
 
 .header-banner-dimensions {
-  height: 3rem;
+  height: 4rem;
 }
 
 .header-banner-active-background {
@@ -79,13 +96,20 @@ body {
 
 .header-links > h4 {
   margin-right: 20px;
-  cursor: default;
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+}
+
+.full-vw {
+  width: 100vw;
 }
 
 /* Locations Modal */
 .edit-locations-modal-dimensions {
-  width: 100vw;
+  width: 100%;
   height: 100%;
+  position: fixed;
 }
 
 .z-index-1 {
@@ -103,15 +127,13 @@ body {
 
 .elm-content-dimensions {
   padding: 10px;
-  width: 90%;
+  max-width: 90%;
   min-height: 100px;
   margin: auto auto;
   border: 1px solid white;
   border-radius: 10px;
   box-sizing: border-box;
   background-color: white;
-  position: relative;
-  bottom: 200px;
 }
 
 .elm-preview-list {
@@ -119,8 +141,10 @@ body {
   padding-left: 0;
 }
 
-.elm-preview-list:hover {
-  cursor: default;
+button,
+span,
+.list-of-weather-choices > li {
+  cursor: pointer;
 }
 
 .elm-preview-list > li {
@@ -132,6 +156,7 @@ body {
   padding: 5px 15px 5px 10px;
   border: 1px solid black;
   border-radius: 20px;
+  transition: 0.1s ease-in-out;
 }
 
 .elm-preview-list > li > span:hover {
@@ -144,7 +169,7 @@ body {
 
 .profile-edit > label,
 .profile-edit > input {
-  flex-basis: 100%;
+  flex-basis: 95%;
 }
 
 .profile-edit > label {
@@ -203,7 +228,7 @@ body {
   height: 2rem;
   outline-color: white;
   font-size: 1.5rem;
-  width: 70%;
+  max-width: 70%;
 }
 
 .search-bar::placeholder {
@@ -229,7 +254,7 @@ body {
 }
 
 .weather-information-list-choice:hover {
-  cursor: default;
+  cursor: pointer;
 }
 
 .weather-information-list-choice:active {
@@ -254,6 +279,7 @@ body {
   padding: 10px;
   margin: 10px;
   background-color: rgba(129, 129, 129, 0.5);
+  transition: background-color 0.3s;
 }
 
 /* Main Display */
@@ -266,18 +292,41 @@ body {
   margin: 20px auto;
 }
 
+.transparent-background-color {
+  background-color: rgba(129, 129, 129, 0.5);
+}
+
+.rounded-corners {
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.background-box-dimensions {
+  max-width: 80vw;
+  margin: auto;
+}
+
+.padding-bottom-20px {
+  padding-bottom: 20px;
+}
+
 .primary {
+  margin: 0 10px 0 10px;
   box-sizing: border-box;
-  padding: 10px;
-  margin: 10px;
   border: 1px solid white;
   border-radius: 10px;
   background-color: rgba(129, 129, 129, 0.5);
-  max-height: 700px;
+  max-height: 1000px;
+  transition: background-color 0.3s;
 }
 
 .greeting {
   max-width: 10rem;
+}
+
+.primary:hover,
+.previews > div:hover {
+  background-color: rgba(129, 129, 129, 0.8);
 }
 
 /* Flexbox */
@@ -286,9 +335,29 @@ body {
   flex-wrap: wrap;
 }
 
+.flex-wrap-none {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 .align-items-center {
   display: flex;
   align-items: center;
+}
+
+.position-relative-60px-top {
+  position: relative;
+  top: 60px;
+}
+
+.position-relative-40px-bottom {
+  position: relative;
+  bottom: 40px;
+}
+
+.position-relative-mobile-50px-desktop-60px {
+  position: relative;
+  top: 50px;
 }
 
 .justify-content-center {
@@ -314,8 +383,12 @@ body {
 }
 
 /* Tools */
-.text-left-align {
+.text-align-left {
   text-align: left;
+}
+
+.text-align-center {
+  text-align: center;
 }
 
 .mobile-center-to-left {
@@ -360,7 +433,7 @@ body {
 
 @media screen and (min-width: 768px) {
   .search-bar {
-    width: 30%;
+    max-width: 40%;
   }
 
   .text-one-half-rem {
@@ -373,17 +446,17 @@ body {
 
   .time-and-location > h1 {
     font-size: 2rem;
-  }
-}
-
-@media screen and (min-width: 376px) {
-  .mobile-center-to-left {
-    text-align: left;
-  }
-
-  .time-and-location > h1 {
     position: relative;
     left: 30px;
+  }
+
+  .background-box-dimensions {
+    max-width: 80vw;
+    margin: auto;
+  }
+
+  .mobile-center-to-left {
+    text-align: left;
   }
 
   .time-and-location > h3 {
@@ -393,14 +466,21 @@ body {
 
   .header-links > h4 {
     margin-right: 50px;
+    color: rgb(107, 107, 107);
+  }
+
+  .header-links > h4:hover {
+    color: black;
   }
 
   .hamburger-menu-icon {
-    left: 50px;
+    left: 30px;
+    cursor: pointer;
   }
 
   .primary {
     margin: 10px 0;
+    max-height: 650px;
   }
 
   .greeting {
@@ -410,5 +490,14 @@ body {
   .time-and-location {
     position: relative;
     right: 10px;
+  }
+
+  .loading-screen {
+    position: fixed;
+    left: 45vw;
+  }
+
+  .position-relative-mobile-30px-desktop-60px {
+    top: 60px;
   }
 }

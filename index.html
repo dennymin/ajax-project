@@ -13,28 +13,25 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="background-image-dimensions background-image-sunny">
-  <header>
-    <div class="header-banner header-banner-dimensions align-items-center">
+  <header class="position-fixed full-vw z-index-1">
+    <div class="header-banner header-banner-dimensions align-items-center flex-wrap-none">
       <i class="hamburger-menu-icon fas fa-bars flex-basis-15"></i>
-      <div class="header-links justify-content-end flex-basis-85 hidden">
+      <div class="header-links justify-content-end flex-basis-100 hidden">
         <h4 class="header-locations-link"><a class="transform-up active">Locations</a></h4>
         <h4 class="header-profile-link"><a>Profile</a></h4>
       </div>
     </div>
-  </header>
-
-  <main>
-
-    <div class="edit-modal edit-locations-modal-dimensions tint position-fixed justify-content-center z-index-1 hidden">
-      <div class="edit-location-modal-content elm-content-dimensions">
+    <div class="edit-modal edit-locations-modal-dimensions tint z-index-1 hidden">
+      <div class="edit-location-modal-content elm-content-dimensions position-relative-60px-top">
         <ul class="elm-preview-list unordered-list-no-bullets" name="Locations">
           <li class="new-entry-list-item">
             <span>
               <i class="far fa-plus-square"></i>
               <a>New</a>
-            </span></li>
+            </span>
+          </li>
         </ul>
-        <form class="profile-edit flex-wrap hidden" name="Profile">
+        <form class="profile-edit flex-wrap hidden justify-content-center" name="Profile">
           <label for="name">Name</label>
           <input type="text" id="name">
           <label for="birthday">Birthday</label>
@@ -47,21 +44,26 @@
         </form>
       </div>
     </div>
+  </header>
+
+  <main class="position-relative-mobile-50px-desktop-60px">
+    <div class="loading-screen white-font text-shadow text-align-center italics hidden">Loading...</div>
 
     <div class="white-font data-modal text-shadow">
-      <div class="location-asker">
+      <div class="location-asker transparent-background-color rounded-corners background-box-dimensions">
         <h1 class="data-search-question">Where would you like to check today?</h1>
         <form class="location-form">
           <div class="search-area justify-content-center">
             <input class="search-bar white-font" type="text" placeholder="Where to?">
             <button class="submit-search default-button hidden-border white-font text-shadow">Submit</button>
           </div>
+          <div class="invalid red-font text-shadow-smaller position-relative-40px-bottom font-size-1rem italics hidden">Please put an appropriate location</div>
         </form>
       </div>
 
-      <div class="weather-information-choices hidden">
+      <div class="weather-information-choices hidden transparent-background-color rounded-corners background-box-dimensions padding-bottom-20px">
         <h1 class="weather-information-choices-question">Weather in:<h1 class="weather-location-editing italics set-margins font-size-2rem"></h1></h1>
-        <ul class="list-of-weather-choices text-left-align unordered-list-no-bullets">
+        <ul class="list-of-weather-choices text-align-left unordered-list-no-bullets">
           <li class="weather-information-list-choice text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="0">
             <i class="far fa-check-circle"></i>
             Main</li>
@@ -87,30 +89,28 @@
         <button class="submit-choices default-button hidden-border white-font text-shadow">Submit</button>
       </div>
 
-      <div class="weather-display-primary white-font text-left-align hidden mobile-center-to-left flex-wrap">
-        <div class="primary column-half">
-          <div>
-            <div class="time-and-location">
-              <h3 class="greeting"></h3>
-              <h1 class="display-location"></h1>
-              <h1 class="display-time-of-day"></h1>
-              <h1 class="display-date"></h1>
-              <h3 class="recommendation"></h3>
-            </div>
-            <ul class="display-primary-weather unordered-list-no-bullets right-shift-10px">
-              <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="0">Sunny</li>
-              <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="1">Current Temp: </li>
-              <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="2">High Today:</li>
-              <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="3">Low Today:</li>
-              <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="4">Wind:</li>
-              <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="5">Humidity:</li>
-              <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="6">Sunrise:</li>
-              <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="6">Sunrise:</li>
-            </ul>
+      <div class="weather-display-primary white-font text-align-left hidden mobile-center-to-left flex-wrap">
+        <div class="primary column-half transition-fade">
+          <div class="time-and-location">
+            <h3 class="greeting"></h3>
+            <h1 class="display-location"></h1>
+            <h1 class="display-time-of-day"></h1>
+            <h1 class="display-date"></h1>
+            <h3 class="recommendation"></h3>
           </div>
+          <ul class="display-primary-weather unordered-list-no-bullets right-shift-10px">
+            <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="0">Sunny</li>
+            <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="1">Current Temp: </li>
+            <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="2">High Today:</li>
+            <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="3">Low Today:</li>
+            <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="4">Wind:</li>
+            <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="5">Humidity:</li>
+            <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="6">Sunrise:</li>
+            <li class="display-primary-weather-item text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem right-shift-10px" value="6">Sunrise:</li>
+          </ul>
         </div>
         <div class="column-half">
-          <div class="previews"></div>
+          <div class="previews transition-fade"></div>
         </div>
       </div>
     </div>

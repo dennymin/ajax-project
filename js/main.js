@@ -18,6 +18,7 @@ var $headerLinks = document.querySelector('.header-links');
 var $editModal = document.querySelector('.edit-modal');
 var $elmPreviewList = document.querySelector('.elm-preview-list');
 var $editLocationModalContent = document.querySelector('.edit-location-modal-content');
+var $invalid = document.querySelector('.invalid');
 
 $locationForm.addEventListener('submit', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
@@ -33,6 +34,7 @@ function queryLocation(event) {
   xhr.open('GET', fullLink);
   xhr.responseType = 'json';
   xhr.send();
+  toggleLoading();
   xhr.addEventListener('load', function () {
     if ($searchBar.value !== '' && xhr.status === 200) {
       data.editing = $searchBar.value;
@@ -42,13 +44,15 @@ function queryLocation(event) {
       }
       switchView($weatherInformationChoices);
       setWeatherLocation(data.editing);
-    } else {
-      if ($locationAsker.children[2] !== undefined) {
-        $locationAsker.children[2].remove();
+      if (!$invalid.className.includes('hidden')) {
+        toggleHidden($invalid);
       }
-      $locationAsker.appendChild(invalidLocationNotice());
-      $locationForm.reset();
+    } else if (xhr.status !== 200) {
+      if ($invalid.className.includes('hidden')) {
+        toggleHidden($invalid);
+      }
     }
+    toggleLoading();
   });
 }
 
@@ -101,6 +105,7 @@ function showWeatherDataObject(location) {
   xhr.open('GET', fullLink);
   xhr.responseType = 'json';
   xhr.send();
+  toggleLoading();
   xhr.addEventListener('load', function () {
     var currentTime = new Date().getTime() / 1000;
     $displayTimeLocation.textContent = xhr.response.name + ', ' + xhr.response.sys.country;
@@ -144,6 +149,7 @@ function showWeatherDataObject(location) {
     }
     considerSetting(currentTime, xhr.response.timezone, xhr.response.weather[0].main, xhr.response.sys.sunrise, xhr.response.sys.sunset);
     resetDataTemplate();
+    toggleLoading();
   });
 }
 
@@ -157,6 +163,7 @@ function showPreviewsOfData(location) {
   xhr2.open('GET', fullLink);
   xhr2.responseType = 'json';
   xhr2.send();
+  toggleLoading();
   xhr2.addEventListener('load', function () {
     var $previewName = document.createElement('div');
     var timePreview = ' ' + convertUnixTimeStamp(currentTime, xhr2.response.timezone, false);
@@ -193,6 +200,7 @@ function showPreviewsOfData(location) {
     $previewName.textContent = location.location + timePreview + mainPreview + currentTempPreview + maxPreview + minPreview + windPreview + humidityPreview + sunrisePreview + sunsetPreview;
     $previews.appendChild($previewName);
     $previewName.className = 'text-shadow-small list-choice-2rem-line-height';
+    toggleLoading();
   });
 }
 
@@ -255,11 +263,10 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
   var sunSetUnixConvertedHours = new Date((sunset + (localOffset + timezone)) * 1000);
   var sunSetTotal = sunSetUnixConvertedHours.getHours() + (sunSetUnixConvertedHours.getMinutes() / 60);
   var greetingMessage = null;
-
   if (formattedTime.getHours() < 12 && formattedTime.getHours() >= 5) {
     greetingMessage = data.greetings[0];
   }
-  if (formattedTime.getHours() >= 12 && formattedTime.getHours() < 14 && weather !== 'Rain') {
+  if (formattedTime.getHours() >= 12 && formattedTime.getHours() < 14) {
     greetingMessage = data.greetings[1];
     $recommendation.textContent = data.responses.sunny[getRandomInt(data.responses.sunny.length)];
   }
@@ -267,7 +274,7 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
     greetingMessage = data.greetings[2];
     $recommendation.textContent = data.responses.afternoon[getRandomInt(data.responses.afternoon.length)];
   }
-  if (formattedTime.getHours() >= 17 && formattedTime.getHours() > 21) {
+  if (formattedTime.getHours() >= 17 && formattedTime.getHours() < 21) {
     greetingMessage = data.greetings[3];
     $recommendation.textContent = data.responses.night[getRandomInt(data.responses.night.length)];
   }
@@ -288,20 +295,14 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
     changeBackground('background-image-night');
   }
   if (data.profile.name !== null) {
-    $greeting.textContent = greetingMessage + data.profile.name;
+    $greeting.textContent = greetingMessage + ' ' + data.profile.name;
+  } else if (greetingMessage === null) {
+    $greeting.textContent = data.greetings[1] + ' ' + data.profile.name;
   }
 }
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
-}
-
-function invalidLocationNotice() {
-  var invalidText = 'Please put an appropriate location!';
-  var $invalidTextElement = document.createElement('p');
-  $invalidTextElement.textContent = invalidText;
-  $invalidTextElement.className = 'italics red-font text-shadow-none top-bottom-margins-none';
-  return $invalidTextElement;
 }
 
 function toggleHidden(elementClass) {
@@ -319,6 +320,14 @@ function switchView(destinationView) {
     }
   }
 }
+
+function stayOnPrimary(event) {
+  if (data.primary !== null) {
+    switchView($weatherDisplayPrimaryList);
+    showPrimary();
+  }
+}
+document.addEventListener('DOMContentLoaded', stayOnPrimary);
 
 var differentPages = [$weatherDisplayPrimaryList, $weatherInformationChoices, $locationAsker];
 var $newEntryListItem = document.querySelector('.new-entry-list-item');
@@ -367,6 +376,24 @@ function trashClicked(event) {
     for (var j = 0; j < data.locations.length; j++) {
       if (data.locations[j].location === $elmEntry.children[0].textContent) {
         data.locations.splice(j, 1);
+      }
+    }
+    if (data.primary === $elmEntry.children[0].textContent) {
+      data.primary = null;
+      if (data.locations.length > 0) {
+        data.primary = data.locations[0].location;
+        $elmPreviewList.children[0].children[0].children[0].className = 'fas fa-star';
+        for (var previewsIndex4 = 0; previewsIndex4 < $previews.children.length; previewsIndex4++) {
+          if ($previews.children[previewsIndex4].textContent.includes(data.primary)) {
+            $previews.children[previewsIndex4].remove();
+          }
+        }
+        showPrimary();
+        headerToggle();
+      }
+      if (data.locations.length === 0) {
+        switchView($locationAsker);
+        headerToggle();
       }
     }
     for (var previewsIndex3 = 0; previewsIndex3 < $previews.children.length; previewsIndex3++) {
@@ -503,3 +530,11 @@ function switchMenu(event) {
 }
 
 $headerLinks.addEventListener('click', clickHeaderLink);
+var $loadingText = document.querySelector('.loading-screen');
+function toggleLoading(event) {
+  if (!$loadingText.className.includes('hidden')) {
+    toggleHidden($loadingText);
+  } else if ($loadingText.className.includes('hidden')) {
+    toggleHidden($loadingText);
+  }
+}
