@@ -44,6 +44,10 @@ body {
   text-shadow: 0 2px 3px black;
 }
 
+.text-shadow-smaller {
+  text-shadow: 0 1px 1px black;
+}
+
 .text-shadow-none {
   text-shadow: none;
 }
@@ -103,7 +107,7 @@ body {
 
 .elm-content-dimensions {
   padding: 10px;
-  width: 90%;
+  max-width: 90%;
   min-height: 100px;
   margin: auto auto;
   border: 1px solid white;
@@ -204,7 +208,7 @@ li {
   height: 2rem;
   outline-color: white;
   font-size: 1.5rem;
-  width: 70%;
+  max-width: 70%;
 }
 
 .search-bar::placeholder {
@@ -276,6 +280,11 @@ li {
   border-radius: 10px;
 }
 
+.background-box-dimensions {
+  max-width: 60vw;
+  margin: auto;
+}
+
 .padding-bottom-20px {
   padding-bottom: 20px;
 }
@@ -306,7 +315,13 @@ li {
 }
 
 .position-relative-60px-top {
+  position: relative;
   top: 60px;
+}
+
+.position-relative-40px-bottom {
+  position: relative;
+  bottom: 40px;
 }
 
 .justify-content-center {
@@ -378,7 +393,7 @@ li {
 
 @media screen and (min-width: 768px) {
   .search-bar {
-    width: 30%;
+    max-width: 40%;
   }
 
   .text-one-half-rem {
@@ -394,7 +409,12 @@ li {
   }
 }
 
-@media screen and (min-width: 376px) {
+@media screen and (min-width: 768px) {
+  .background-box-dimensions {
+    max-width: 80vw;
+    margin: auto;
+  }
+
   .mobile-center-to-left {
     text-align: left;
   }

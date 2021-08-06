@@ -18,6 +18,7 @@ var $headerLinks = document.querySelector('.header-links');
 var $editModal = document.querySelector('.edit-modal');
 var $elmPreviewList = document.querySelector('.elm-preview-list');
 var $editLocationModalContent = document.querySelector('.edit-location-modal-content');
+var $invalid = document.querySelector('.invalid');
 
 $locationForm.addEventListener('submit', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
@@ -42,12 +43,13 @@ function queryLocation(event) {
       }
       switchView($weatherInformationChoices);
       setWeatherLocation(data.editing);
-    } else {
-      if ($locationAsker.children[2] !== undefined) {
-        $locationAsker.children[2].remove();
+      if (!$invalid.className.includes('hidden')) {
+        toggleHidden($invalid);
       }
-      $locationAsker.appendChild(invalidLocationNotice());
-      $locationForm.reset();
+    } else if (xhr.status === 400) {
+      if ($invalid.className.includes('hidden')) {
+        toggleHidden($invalid);
+      }
     }
   });
 }
@@ -294,14 +296,6 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
-}
-
-function invalidLocationNotice() {
-  var invalidText = 'Please put an appropriate location!';
-  var $invalidTextElement = document.createElement('p');
-  $invalidTextElement.textContent = invalidText;
-  $invalidTextElement.className = 'italics red-font text-shadow-none top-bottom-margins-none';
-  return $invalidTextElement;
 }
 
 function toggleHidden(elementClass) {
