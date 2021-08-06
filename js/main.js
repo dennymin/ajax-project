@@ -379,6 +379,24 @@ function trashClicked(event) {
         data.locations.splice(j, 1);
       }
     }
+    if (data.primary === $elmEntry.children[0].textContent) {
+      data.primary = null;
+      if (data.locations.length > 0) {
+        data.primary = data.locations[0].location;
+        $elmPreviewList.children[0].children[0].children[0].className = 'fas fa-star';
+        for (var previewsIndex4 = 0; previewsIndex4 < $previews.children.length; previewsIndex4++) {
+          if ($previews.children[previewsIndex4].textContent.includes(data.primary)) {
+            $previews.children[previewsIndex4].remove();
+          }
+        }
+        showPrimary();
+        headerToggle();
+      }
+      if (data.locations.length === 0) {
+        switchView($locationAsker);
+        headerToggle();
+      }
+    }
     for (var previewsIndex3 = 0; previewsIndex3 < $previews.children.length; previewsIndex3++) {
       if ($previews.children[previewsIndex3].textContent.includes($elmEntry.children[0].textContent)) {
         $previews.children[previewsIndex3].remove();
