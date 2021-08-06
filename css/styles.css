@@ -169,7 +169,7 @@ span,
 
 .profile-edit > label,
 .profile-edit > input {
-  flex-basis: 100%;
+  flex-basis: 95%;
 }
 
 .profile-edit > label {
@@ -327,6 +327,11 @@ span,
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
+}
+
+.flex-wrap-none {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .align-items-center {
