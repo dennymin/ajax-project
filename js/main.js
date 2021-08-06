@@ -47,7 +47,7 @@ function queryLocation(event) {
       if (!$invalid.className.includes('hidden')) {
         toggleHidden($invalid);
       }
-    } else if (xhr.status === 400) {
+    } else if (xhr.status !== 200) {
       if ($invalid.className.includes('hidden')) {
         toggleHidden($invalid);
       }
