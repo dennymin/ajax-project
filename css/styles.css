@@ -124,7 +124,8 @@ body {
 }
 
 button,
-li {
+span,
+.list-of-weather-choices > li {
   cursor: pointer;
 }
 
@@ -137,6 +138,7 @@ li {
   padding: 5px 15px 5px 10px;
   border: 1px solid black;
   border-radius: 20px;
+  transition: 0.1s ease-in-out;
 }
 
 .elm-preview-list > li > span:hover {

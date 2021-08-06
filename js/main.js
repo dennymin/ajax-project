@@ -316,6 +316,14 @@ function switchView(destinationView) {
   }
 }
 
+function stayOnPrimary(event) {
+  if (data.primary !== null) {
+    switchView($weatherDisplayPrimaryList);
+    showPrimary();
+  }
+}
+document.addEventListener('DOMContentLoaded', stayOnPrimary);
+
 var differentPages = [$weatherDisplayPrimaryList, $weatherInformationChoices, $locationAsker];
 var $newEntryListItem = document.querySelector('.new-entry-list-item');
 function newEntryClicked(event) {
