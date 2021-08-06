@@ -14,7 +14,7 @@ var data = {
     sunsetSunrise: true
   },
   weatherOptions: ['main', 'temperature', 'high', 'low', 'wind', 'humidity', 'sunsetSunrise'],
-  greetings: ['Good Morning ', 'Hello ', 'Good Afternoon ', 'Good Evening ', 'Sleep Tight '],
+  greetings: ['Good Morning', 'Hello', 'Good Afternoon', 'Good Evening', 'Sleep Tight'],
   responses: {
     sunny: ['Great day for a picnic', 'Have fun outside!'],
     rainy: ['Maybe stay indoors today', 'Don\'t forget to bring an umbrella!'],

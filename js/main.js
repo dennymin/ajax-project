@@ -269,7 +269,7 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
     greetingMessage = data.greetings[2];
     $recommendation.textContent = data.responses.afternoon[getRandomInt(data.responses.afternoon.length)];
   }
-  if (formattedTime.getHours() >= 17 && formattedTime.getHours() > 21) {
+  if (formattedTime.getHours() >= 17 && formattedTime.getHours() < 21) {
     greetingMessage = data.greetings[3];
     $recommendation.textContent = data.responses.night[getRandomInt(data.responses.night.length)];
   }
@@ -290,7 +290,9 @@ function considerSetting(unix, timezone, weather, sunrise, sunset) {
     changeBackground('background-image-night');
   }
   if (data.profile.name !== null) {
-    $greeting.textContent = greetingMessage + data.profile.name;
+    $greeting.textContent = greetingMessage + ' ' + data.profile.name;
+  } else if (greetingMessage === null) {
+    $greeting.textContent = data.greetings[1] + ' ' + data.profile.name;
   }
 }
 
