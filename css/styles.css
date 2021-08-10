@@ -222,11 +222,10 @@ span,
 }
 
 .search-bar {
-  border: 1px white solid;
+  border: 2px white solid;
   border-radius: 10px;
   background-color: rgb(0, 0, 0, 0);
   height: 2rem;
-  outline-color: white;
   font-size: 1.5rem;
   max-width: 70%;
 }
@@ -429,6 +428,14 @@ span,
 .new-entry-list-item > span > a {
   margin: 0;
   font-size: 1rem;
+}
+
+.background-color-light {
+  background-color: aliceblue;
+}
+
+.font-dark-gray {
+  color: darkgray;
 }
 
 @media screen and (min-width: 768px) {
