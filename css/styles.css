@@ -266,7 +266,6 @@ span,
 }
 
 .submit-choices {
-  font-style: italic;
   font-size: 1.2rem;
 }
 
@@ -428,6 +427,31 @@ span,
 .new-entry-list-item > span > a {
   margin: 0;
   font-size: 1rem;
+}
+
+.padding-5px-10px {
+  padding: 5px 10px;
+}
+
+.border-white {
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.italics-transition {
+  font-style: normal;
+}
+
+.italics-transition:active {
+  font-style: italic;
+}
+
+.background-color-dark-transparent {
+  background-color: rgb(124, 124, 124, 0.5);
+}
+
+.background-color-dark-transparent:active {
+  background-color: rgb(124, 124, 124, 0.9);
 }
 
 .background-color-light {
