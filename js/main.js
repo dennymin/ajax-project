@@ -61,14 +61,15 @@ function setWeatherLocation(location) {
 }
 
 function alternateIcon(event) {
-  if (event.target && event.target.nodeName === 'SPAN') {
-    if (event.target.children[0].className === 'far fa-circle') {
-      event.target.children[0].className = 'far fa-check-circle';
-      data.template[data.weatherOptions[event.target.parentNode.value]] = true;
-    } else if (event.target.children[0].className === 'far fa-check-circle') {
-      event.target.children[0].className = 'far fa-circle';
-      data.template[data.weatherOptions[event.target.parentNode.value]] = false;
-    }
+  if (event.target && (event.target.nodeName === 'LI' || event.target.nodeName === 'SPAN' || event.target.nodeName === 'I')) {
+    // if (event.target.children[0].children[0].className === 'far fa-circle' || event.target.children[0].className === 'far fa-circle' || event.target.className === 'far fa-circle') {
+    //   event.target.children[0].children[0].className = 'far fa-check-circle';
+    //   data.template[data.weatherOptions[event.target.value]] = true;
+    // } else if (event.target.children[0].children[0].className === 'far fa-check-circle') {
+    //   event.target.children[0].children[0].className = 'far fa-circle';
+    //   data.template[data.weatherOptions[event.target.value]] = false;
+    // }
+    // console.log(event.target.closest('.weather-information-list-choice').children[0].children[0]);
   }
 }
 
