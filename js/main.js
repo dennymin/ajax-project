@@ -61,13 +61,13 @@ function setWeatherLocation(location) {
 }
 
 function alternateIcon(event) {
-  if (event.target && event.target.nodeName === 'LI') {
+  if (event.target && event.target.nodeName === 'SPAN') {
     if (event.target.children[0].className === 'far fa-circle') {
       event.target.children[0].className = 'far fa-check-circle';
-      data.template[data.weatherOptions[event.target.value]] = true;
+      data.template[data.weatherOptions[event.target.parentNode.value]] = true;
     } else if (event.target.children[0].className === 'far fa-check-circle') {
       event.target.children[0].className = 'far fa-circle';
-      data.template[data.weatherOptions[event.target.value]] = false;
+      data.template[data.weatherOptions[event.target.parentNode.value]] = false;
     }
   }
 }
@@ -335,7 +335,7 @@ function newEntryClicked(event) {
   headerToggle();
   $locationForm.reset();
   for (var resetIndex = 0; resetIndex < $weatherChoicesList.children.length; resetIndex++) {
-    $weatherChoicesList.children[resetIndex].children[0].className = 'far fa-check-circle';
+    $weatherChoicesList.children[resetIndex].children[0].children[0].className = 'far fa-check-circle';
   }
   switchView($locationAsker);
 }
@@ -427,9 +427,9 @@ $elmPreviewList.addEventListener('click', editClicked);
 function editingChoices() {
   for (var k = 0; k < data.weatherOptions.length; k++) {
     if (data.template[data.weatherOptions[k]] === true) {
-      $weatherChoicesList.children[k].children[0].className = 'far fa-check-circle';
+      $weatherChoicesList.children[k].children[0].children[0].className = 'far fa-check-circle';
     } else if (data.template[data.weatherOptions[k]] === false) {
-      $weatherChoicesList.children[k].children[0].className = 'far fa-circle';
+      $weatherChoicesList.children[k].children[0].children[0].className = 'far fa-circle';
     }
   }
 }

@@ -141,15 +141,15 @@ body {
   padding-left: 0;
 }
 
-button,
-span,
-.list-of-weather-choices > li {
-  cursor: pointer;
-}
-
 .elm-preview-list > li {
   width: auto;
   margin-top: 20px;
+}
+
+button,
+span,
+.weather-information-list-choice > span {
+  cursor: pointer;
 }
 
 .elm-preview-list > li > span {
@@ -252,15 +252,11 @@ span,
   line-height: 2rem;
 }
 
-.weather-information-list-choice:hover {
-  cursor: pointer;
-}
-
 .weather-information-list-choice:active {
   transform: translateY(1px);
 }
 
-.weather-information-list-choice > i {
+.weather-information-list-choice > span > i {
   font-size: 0.7rem;
   margin-right: 15px;
 }
@@ -471,7 +467,7 @@ span,
     font-size: 1.5rem;
   }
 
-  .weather-information-list-choice > i {
+  .weather-information-list-choice > span > i {
     font-size: 1.2rem;
   }
 
