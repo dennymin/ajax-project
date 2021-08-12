@@ -147,8 +147,7 @@ body {
 }
 
 button,
-span,
-.weather-information-list-choice > span {
+span {
   cursor: pointer;
 }
 
@@ -252,11 +251,7 @@ span,
   line-height: 2rem;
 }
 
-.weather-information-list-choice:active {
-  transform: translateY(1px);
-}
-
-.weather-information-list-choice > span > i {
+.weather-information-list-choice > button > i {
   font-size: 0.7rem;
   margin-right: 15px;
 }
@@ -467,7 +462,7 @@ span,
     font-size: 1.5rem;
   }
 
-  .weather-information-list-choice > span > i {
+  .weather-information-list-choice > button > i {
     font-size: 1.2rem;
   }
 
