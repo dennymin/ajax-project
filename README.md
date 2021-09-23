@@ -15,3 +15,8 @@ In this application, a user can do the following:
 ⋅⋅* Choose to see which weather data they want to see
 ⋅⋅* Save locations that you like to check
 ⋅⋅* Choose a primary location for personal preference
+
+stretch features for the future:
+⋅⋅* Allow users to set backgrounds
+⋅⋅* Users will be greeted with calendar related messages
+⋅⋅* User can have multiple primary locations
