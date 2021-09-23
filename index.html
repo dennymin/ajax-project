@@ -21,8 +21,8 @@
     <div class="header-banner header-banner-dimensions align-items-center flex-wrap-none">
       <i class="hamburger-menu-icon fas fa-bars flex-basis-15"></i>
       <div class="header-links justify-content-end flex-basis-100 hidden">
-        <h4 class="header-locations-link"><a class="transform-up active">Locations</a></h4>
-        <h4 class="header-profile-link"><a>Profile</a></h4>
+        <h4 class="header-locations-link"><a class="actual-link transform-up active">Locations</a></h4>
+        <h4 class="header-profile-link"><a class="actual-link">Profile</a></h4>
       </div>
     </div>
     <div class="edit-modal edit-locations-modal-dimensions tint z-index-1 hidden">
@@ -58,7 +58,7 @@
         <h1 class="data-search-question">Where would you like to check today?</h1>
         <form class="location-form">
           <div class="search-area justify-content-center">
-            <input class="search-bar white-font" type="text" placeholder="Where to?">
+            <input class="search-bar background-color-light font-dark-gray" type="text" placeholder="Where to?">
             <button class="submit-search default-button hidden-border white-font text-shadow">Submit</button>
           </div>
           <div class="invalid red-font text-shadow-smaller position-relative-40px-bottom font-size-1rem italics hidden">Please put an appropriate location</div>
@@ -69,28 +69,28 @@
         <h1 class="weather-information-choices-question">Weather in:<h1 class="weather-location-editing italics set-margins font-size-2rem"></h1></h1>
         <ul class="list-of-weather-choices text-align-left unordered-list-no-bullets">
           <li class="weather-information-list-choice text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="0">
-            <i class="far fa-check-circle"></i>
-            Main</li>
+            <button class="text-decoration-none text-one-half-rem default-button padding-5px-10px hidden-border white-font text-shadow-small"><i class="far fa-check-circle"></i>
+            Main</button></li>
           <li class="weather-information-list-choice text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="1">
-            <i class="far fa-check-circle"></i>
-            Temperature</li>
+            <button class="text-decoration-none text-one-half-rem default-button padding-5px-10px hidden-border white-font text-shadow-small"><i class="far fa-check-circle"></i>
+            Temperature</button></li>
           <li class="weather-information-list-choice text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="2">
-            <i class="far fa-check-circle"></i>
-            High</li>
+            <button class="text-decoration-none text-one-half-rem default-button padding-5px-10px hidden-border white-font text-shadow-small"><i class="far fa-check-circle"></i>
+            High</button></li>
           <li class="weather-information-list-choice text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="3">
-            <i class="far fa-check-circle"></i>
-            Low</li>
+            <button class="text-decoration-none text-one-half-rem default-button padding-5px-10px hidden-border white-font text-shadow-small"><i class="far fa-check-circle"></i>
+            Low</button></li>
           <li class="weather-information-list-choice text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="4">
-            <i class="far fa-check-circle"></i>
-            Wind</li>
+            <button class="text-decoration-none text-one-half-rem default-button padding-5px-10px hidden-border white-font text-shadow-small"><i class="far fa-check-circle"></i>
+            Wind</button></li>
           <li class="weather-information-list-choice text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="5">
-            <i class="far fa-check-circle"></i>
-            Humidity</li>
+            <button class="text-decoration-none text-one-half-rem default-button padding-5px-10px hidden-border white-font text-shadow-small"><i class="far fa-check-circle"></i>
+            Humidity</button></li>
           <li class="weather-information-list-choice text-decoration-none text-shadow-small list-choice-3rem-line-height unordered-list-no-bullets text-one-half-rem" value="6">
-            <i class="far fa-check-circle"></i>
-            Sunset/Sunrise</li>
+            <button class="text-decoration-none text-one-half-rem default-button padding-5px-10px hidden-border white-font text-shadow-small"><i class="far fa-check-circle"></i>
+            Sunrise/Sunset</button></li>
         </ul>
-        <button class="submit-choices default-button hidden-border white-font text-shadow">Submit</button>
+        <button class="submit-choices italics-transition default-button border-white padding-5px-10px background-color-dark-transparent white-font text-shadow-small">Submit</button>
       </div>
 
       <div class="weather-display-primary white-font text-align-left hidden mobile-center-to-left flex-wrap">

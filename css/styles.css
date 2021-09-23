@@ -141,15 +141,14 @@ body {
   padding-left: 0;
 }
 
-button,
-span,
-.list-of-weather-choices > li {
-  cursor: pointer;
-}
-
 .elm-preview-list > li {
   width: auto;
   margin-top: 20px;
+}
+
+button,
+span {
+  cursor: pointer;
 }
 
 .elm-preview-list > li > span {
@@ -222,11 +221,10 @@ span,
 }
 
 .search-bar {
-  border: 1px white solid;
+  border: 2px white solid;
   border-radius: 10px;
   background-color: rgb(0, 0, 0, 0);
   height: 2rem;
-  outline-color: white;
   font-size: 1.5rem;
   max-width: 70%;
 }
@@ -253,21 +251,12 @@ span,
   line-height: 2rem;
 }
 
-.weather-information-list-choice:hover {
-  cursor: pointer;
-}
-
-.weather-information-list-choice:active {
-  transform: translateY(1px);
-}
-
-.weather-information-list-choice > i {
+.weather-information-list-choice > button > i {
   font-size: 0.7rem;
   margin-right: 15px;
 }
 
 .submit-choices {
-  font-style: italic;
   font-size: 1.2rem;
 }
 
@@ -431,6 +420,39 @@ span,
   font-size: 1rem;
 }
 
+.padding-5px-10px {
+  padding: 5px 10px;
+}
+
+.border-white {
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.italics-transition {
+  font-style: normal;
+}
+
+.italics-transition:active {
+  font-style: italic;
+}
+
+.background-color-dark-transparent {
+  background-color: rgb(124, 124, 124, 0.5);
+}
+
+.background-color-dark-transparent:active {
+  background-color: rgb(124, 124, 124, 0.9);
+}
+
+.background-color-light {
+  background-color: aliceblue;
+}
+
+.font-dark-gray {
+  color: rgb(68, 68, 68);
+}
+
 @media screen and (min-width: 768px) {
   .search-bar {
     max-width: 40%;
@@ -440,7 +462,7 @@ span,
     font-size: 1.5rem;
   }
 
-  .weather-information-list-choice > i {
+  .weather-information-list-choice > button > i {
     font-size: 1.2rem;
   }
 
