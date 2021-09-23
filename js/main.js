@@ -346,6 +346,15 @@ function newEntryClicked(event) {
 $newEntryListItem.addEventListener('click', newEntryClicked);
 
 function generateLocationsListItem(locationName) {
+  const locationArrayed = locationName.split(' ');
+  for (let i = 0; i < locationArrayed.length; i++) {
+    locationArrayed[i] = locationArrayed[i].toLowerCase();
+    const capital = locationArrayed[i][0].toUpperCase();
+    const rest = locationArrayed[i].slice(1);
+    const newName = `${capital}${rest}`;
+    locationArrayed[i] = newName;
+  }
+  const newLocationName = locationArrayed.join(' ');
   const $newListItem = document.createElement('li');
   const $newListItemSpan = document.createElement('span');
   const $primaryIcon = document.createElement('i');
@@ -355,7 +364,7 @@ function generateLocationsListItem(locationName) {
     $primaryIcon.className = 'far fa-star';
   }
   $newListItemSpan.appendChild($primaryIcon);
-  const $newListItemSpanTextContent = document.createTextNode(locationName);
+  const $newListItemSpanTextContent = document.createTextNode(newLocationName);
   $newListItemSpan.appendChild($newListItemSpanTextContent);
   const $trashIcon = document.createElement('i');
   $trashIcon.className = 'far fa-trash-alt';
@@ -432,24 +441,25 @@ $elmPreviewList.addEventListener('click', editClicked);
 
 function editingChoices() {
   for (let k = 0; k < data.weatherOptions.length; k++) {
+    const $weatherChoice = $weatherChoicesList.children[k].querySelector('.far');
     if (data.template[data.weatherOptions[k]] === true) {
-      $weatherChoicesList.children[k].querySelector('.far').classList.toggle('fa-check-circle', true);
-      $weatherChoicesList.children[k].querySelector('.far').classList.toggle('fa-circle', false);
+      $weatherChoice.classList.toggle('fa-check-circle', true);
+      $weatherChoice.classList.toggle('fa-circle', false);
     } else if (data.template[data.weatherOptions[k]] === false) {
-      $weatherChoicesList.children[k].querySelector('.far').classList.toggle('fa-check-circle', false);
-      $weatherChoicesList.children[k].querySelector('.far').classList.toggle('fa-circle', true);
+      $weatherChoice.classList.toggle('fa-check-circle', false);
+      $weatherChoice.classList.toggle('fa-circle', true);
     }
   }
 }
 
 function primaryClicked(event) {
+  const $stars = $elmPreviewList.querySelectorAll('.fa-star');
   if (event.target && event.target.nodeName === 'I' && event.target.classList.contains('fa-star')) {
     const $elmEntry = event.target.closest('li');
     if (event.target.className === 'far fa-star') {
-      for (let priLoop = 0; priLoop < $elmPreviewList.children.length - 1; priLoop++) {
-        const $elmListing = $elmPreviewList.children[priLoop].querySelector('.fa-star');
-        $elmListing.classList.toggle('far', true);
-        $elmListing.classList.toggle('fas', false);
+      for (let i = 0; i < $stars.length; i++) {
+        $stars[i].classList.toggle('far', true);
+        $stars[i].classList.toggle('fas', false);
       }
       event.target.className = 'fas fa-star';
     }
