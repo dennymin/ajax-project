@@ -22,3 +22,22 @@ HTML, CSS, JavaScript
 ⋅⋅* User can have multiple primary locations
 
 ## Preview
+![Look up a location](demonstration-gifs/Demonstration-view-location.gif)
+![Look up multiple locations](demonstration-gifs/Demonstration-multiple-locations.gif)
+
+### Getting Started
+
+1. Clone the repository.
+
+    ```shell
+    git clone https://github.com/dennymin/quick-weather.git
+    cd quick-weather
+    ```
+
+1. Install all dependencies with NPM.
+
+    ```shell
+    npm install
+    ```
+
+1. Start the project. Once started you can view the application by opening the index.html file in your browser.
