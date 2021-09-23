@@ -1,24 +1,24 @@
-var $searchBar = document.querySelector('.search-bar');
-var $locationForm = document.querySelector('.location-form');
-var $weatherInformationChoices = document.querySelector('.weather-information-choices');
-var $locationAsker = document.querySelector('.location-asker');
-var $weatherChoicesList = document.querySelector('.list-of-weather-choices');
-var $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
-var $weatherDisplayPrimaryList = document.querySelector('.weather-display-primary');
-var $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
-var $displayTimeLocation = document.querySelector('.display-location');
-var $backgroundImage = document.querySelector('.background-image-dimensions');
-var $weatherChoicesLocation = document.querySelector('.weather-location-editing');
-var $previews = document.querySelector('.previews');
-var $greeting = document.querySelector('.greeting');
-var $recommendation = document.querySelector('.recommendation');
-var $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
-var $headerBanner = document.querySelector('.header-banner');
-var $headerLinks = document.querySelector('.header-links');
-var $editModal = document.querySelector('.edit-modal');
-var $elmPreviewList = document.querySelector('.elm-preview-list');
-var $editLocationModalContent = document.querySelector('.edit-location-modal-content');
-var $invalid = document.querySelector('.invalid');
+const $searchBar = document.querySelector('.search-bar');
+const $locationForm = document.querySelector('.location-form');
+const $weatherInformationChoices = document.querySelector('.weather-information-choices');
+const $locationAsker = document.querySelector('.location-asker');
+const $weatherChoicesList = document.querySelector('.list-of-weather-choices');
+const $weatherOptionsSubmitButton = document.querySelector('.submit-choices');
+const $weatherDisplayPrimaryList = document.querySelector('.weather-display-primary');
+const $displayPrimaryWeatherItemList = document.querySelectorAll('.display-primary-weather-item');
+const $displayTimeLocation = document.querySelector('.display-location');
+const $backgroundImage = document.querySelector('.background-image-dimensions');
+const $weatherChoicesLocation = document.querySelector('.weather-location-editing');
+const $previews = document.querySelector('.previews');
+const $greeting = document.querySelector('.greeting');
+const $recommendation = document.querySelector('.recommendation');
+const $headerHamburgerMenuIcon = document.querySelector('.hamburger-menu-icon');
+const $headerBanner = document.querySelector('.header-banner');
+const $headerLinks = document.querySelector('.header-links');
+const $editModal = document.querySelector('.edit-modal');
+const $elmPreviewList = document.querySelector('.elm-preview-list');
+const $editLocationModalContent = document.querySelector('.edit-location-modal-content');
+const $invalid = document.querySelector('.invalid');
 
 $locationForm.addEventListener('submit', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
@@ -26,11 +26,11 @@ $weatherOptionsSubmitButton.addEventListener('click', submitClicked);
 
 function queryLocation(event) {
   event.preventDefault();
-  var xhr = new XMLHttpRequest();
-  var firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
-  var locationURL = $searchBar.value;
-  var latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
-  var fullLink = firstPartLink + locationURL + latterPartLink;
+  const xhr = new XMLHttpRequest();
+  const firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  const locationURL = $searchBar.value;
+  const latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
+  const fullLink = firstPartLink + locationURL + latterPartLink;
   xhr.open('GET', fullLink);
   xhr.responseType = 'json';
   xhr.send();
@@ -61,21 +61,25 @@ function setWeatherLocation(location) {
 }
 
 function alternateIcon(event) {
+  const $listChoice = event.target.closest('.weather-information-list-choice');
+  const $circle = $listChoice.querySelector('.far');
   if (event.target && (event.target.nodeName === 'BUTTON' || event.target.nodeName === 'I')) {
-    if (event.target.closest('.weather-information-list-choice').children[0].children[0].className === 'far fa-circle') {
-      event.target.closest('.weather-information-list-choice').children[0].children[0].className = 'far fa-check-circle';
-      data.template[data.weatherOptions[event.target.closest('.weather-information-list-choice').value]] = true;
-    } else if (event.target.closest('.weather-information-list-choice').children[0].children[0].className === 'far fa-check-circle') {
-      event.target.closest('.weather-information-list-choice').children[0].children[0].className = 'far fa-circle';
-      data.template[data.weatherOptions[event.target.closest('.weather-information-list-choice').value]] = false;
+    if ($circle.classList.contains('fa-circle')) {
+      $circle.classList.toggle('fa-check-circle');
+      $circle.classList.toggle('fa-circle');
+      data.template[data.weatherOptions[$listChoice.value]] = true;
+    } else if ($circle.classList.contains('fa-check-circle')) {
+      $circle.classList.toggle('fa-check-circle');
+      $circle.classList.toggle('fa-circle');
+      data.template[data.weatherOptions[$listChoice.value]] = false;
     }
   }
 }
 
 function appendLocationsList() {
-  var dataWeatherEntryObject = Object.assign({}, data.template);
-  var locationAlreadySaved = [false, null];
-  for (var dataLocationsIndex = 0; dataLocationsIndex < data.locations.length; dataLocationsIndex++) {
+  const dataWeatherEntryObject = Object.assign({}, data.template);
+  let locationAlreadySaved = [false, null];
+  for (let dataLocationsIndex = 0; dataLocationsIndex < data.locations.length; dataLocationsIndex++) {
     if (data.locations[dataLocationsIndex].location.toUpperCase() === dataWeatherEntryObject.location.toUpperCase()) {
       locationAlreadySaved = [true, dataLocationsIndex];
     }
@@ -89,7 +93,7 @@ function appendLocationsList() {
 }
 
 function resetDataTemplate() {
-  for (var optionIndex = 0; optionIndex < data.weatherOptions.length; optionIndex++) {
+  for (let optionIndex = 0; optionIndex < data.weatherOptions.length; optionIndex++) {
     data.template[data.weatherOptions[optionIndex]] = true;
   }
   data.template.location = null;
@@ -97,21 +101,21 @@ function resetDataTemplate() {
 }
 
 function showWeatherDataObject(location) {
-  var xhr = new XMLHttpRequest();
-  var firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
-  var locationURL = location.location;
-  var latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
-  var fullLink = firstPartLink + locationURL + latterPartLink;
+  const xhr = new XMLHttpRequest();
+  const firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  const locationURL = location.location;
+  const latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
+  const fullLink = firstPartLink + locationURL + latterPartLink;
   xhr.open('GET', fullLink);
   xhr.responseType = 'json';
   xhr.send();
   toggleLoading();
   xhr.addEventListener('load', function () {
-    var currentTime = new Date().getTime() / 1000;
+    const currentTime = new Date().getTime() / 1000;
     $displayTimeLocation.textContent = xhr.response.name + ', ' + xhr.response.sys.country;
-    var $timeDisplay = document.querySelector('.display-time-of-day');
+    const $timeDisplay = document.querySelector('.display-time-of-day');
     $timeDisplay.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, false);
-    var $dateDisplay = document.querySelector('.display-date');
+    const $dateDisplay = document.querySelector('.display-date');
     $dateDisplay.textContent = convertUnixTimeStamp(currentTime, xhr.response.timezone, true);
     if (location.main === true) {
       $displayPrimaryWeatherItemList[0].textContent = 'Weather: ' + xhr.response.weather[0].main;
@@ -135,7 +139,7 @@ function showWeatherDataObject(location) {
       $displayPrimaryWeatherItemList[6].textContent = 'Sunrise: ' + convertUnixTimeStamp(xhr.response.sys.sunrise, xhr.response.timezone, false);
       $displayPrimaryWeatherItemList[7].textContent = 'Sunset: ' + convertUnixTimeStamp(xhr.response.sys.sunset, xhr.response.timezone, false);
     }
-    for (var displayIndex = 0; displayIndex < $displayPrimaryWeatherItemList.length; displayIndex++) {
+    for (let displayIndex = 0; displayIndex < $displayPrimaryWeatherItemList.length; displayIndex++) {
       if (location[data.weatherOptions[displayIndex]] === false && !($displayPrimaryWeatherItemList[displayIndex].className.includes('hidden'))) {
         toggleHidden($displayPrimaryWeatherItemList[displayIndex]);
       } else if (location[data.weatherOptions[displayIndex]] === true && $displayPrimaryWeatherItemList[displayIndex].className.includes('hidden')) {
@@ -154,27 +158,27 @@ function showWeatherDataObject(location) {
 }
 
 function showPreviewsOfData(location) {
-  var xhr2 = new XMLHttpRequest();
-  var firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
-  var locationURL = location.location;
-  var latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
-  var fullLink = firstPartLink + locationURL + latterPartLink;
-  var currentTime = new Date().getTime() / 1000;
+  const xhr2 = new XMLHttpRequest();
+  const firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  const locationURL = location.location;
+  const latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
+  const fullLink = firstPartLink + locationURL + latterPartLink;
+  const currentTime = new Date().getTime() / 1000;
   xhr2.open('GET', fullLink);
   xhr2.responseType = 'json';
   xhr2.send();
   toggleLoading();
   xhr2.addEventListener('load', function () {
-    var $previewName = document.createElement('div');
-    var timePreview = ' ' + convertUnixTimeStamp(currentTime, xhr2.response.timezone, false);
-    var mainPreview = ' ' + xhr2.response.weather[0].main;
-    var currentTempPreview = ' | ' + 'Now: ' + xhr2.response.main.temp + '° F';
-    var maxPreview = ' | ' + 'High: ' + xhr2.response.main.temp_max + '° F';
-    var minPreview = ' | ' + 'Low: ' + xhr2.response.main.temp_min + '° F';
-    var windPreview = ' | ' + xhr2.response.wind.speed + ' mph';
-    var humidityPreview = ' | ' + 'Humidity: ' + xhr2.response.main.humidity + '%';
-    var sunrisePreview = ' | ' + 'Sunrise: ' + convertUnixTimeStamp(xhr2.response.sys.sunrise, xhr2.response.timezone, false);
-    var sunsetPreview = ' | ' + 'Sunset: ' + convertUnixTimeStamp(xhr2.response.sys.sunset, xhr2.response.timezone, false);
+    const $previewName = document.createElement('div');
+    const timePreview = ' ' + convertUnixTimeStamp(currentTime, xhr2.response.timezone, false);
+    let mainPreview = ' ' + xhr2.response.weather[0].main;
+    let currentTempPreview = ' | ' + 'Now: ' + xhr2.response.main.temp + '° F';
+    let maxPreview = ' | ' + 'High: ' + xhr2.response.main.temp_max + '° F';
+    let minPreview = ' | ' + 'Low: ' + xhr2.response.main.temp_min + '° F';
+    let windPreview = ' | ' + xhr2.response.wind.speed + ' mph';
+    let humidityPreview = ' | ' + 'Humidity: ' + xhr2.response.main.humidity + '%';
+    let sunrisePreview = ' | ' + 'Sunrise: ' + convertUnixTimeStamp(xhr2.response.sys.sunrise, xhr2.response.timezone, false);
+    let sunsetPreview = ' | ' + 'Sunset: ' + convertUnixTimeStamp(xhr2.response.sys.sunset, xhr2.response.timezone, false);
     if (location.main === false) {
       mainPreview = '';
     }
@@ -207,12 +211,12 @@ function showPreviewsOfData(location) {
 function submitClicked(event) {
   switchView($weatherDisplayPrimaryList);
   appendLocationsList();
-  for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
+  for (let dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
     if (data.locations[dataLIndex].location === data.primary) {
       showWeatherDataObject(data.locations[dataLIndex]);
     } else if (data.locations[dataLIndex].location !== data.primary) {
       showPreviewsOfData(data.locations[dataLIndex]);
-      for (var previewsIndex = 0; previewsIndex < $previews.children.length; previewsIndex++) {
+      for (let previewsIndex = 0; previewsIndex < $previews.children.length; previewsIndex++) {
         if ($previews.children[previewsIndex].textContent.includes(data.locations[dataLIndex].location)) {
           $previews.children[previewsIndex].remove();
         }
@@ -223,12 +227,12 @@ function submitClicked(event) {
 
 function showPrimary(event) {
   switchView($weatherDisplayPrimaryList);
-  for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
+  for (let dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
     if (data.locations[dataLIndex].location === data.primary) {
       showWeatherDataObject(data.locations[dataLIndex]);
     } else if (data.locations[dataLIndex].location !== data.primary) {
       showPreviewsOfData(data.locations[dataLIndex]);
-      for (var previewsIndex = 0; previewsIndex < $previews.children.length; previewsIndex++) {
+      for (let previewsIndex = 0; previewsIndex < $previews.children.length; previewsIndex++) {
         if ($previews.children[previewsIndex].textContent.includes(data.locations[dataLIndex].location)) {
           $previews.children[previewsIndex].remove();
         }
@@ -238,9 +242,9 @@ function showPrimary(event) {
 }
 
 function convertUnixTimeStamp(unix, timezone, date) {
-  var localOffset = new Date().getTimezoneOffset() * 60;
-  var stamp = (unix + (localOffset + timezone)) * 1000;
-  var formattedTime = new Date(stamp);
+  const localOffset = new Date().getTimezoneOffset() * 60;
+  const stamp = (unix + (localOffset + timezone)) * 1000;
+  const formattedTime = new Date(stamp);
   if (date === false) {
     return formattedTime.toLocaleTimeString().substr(0, formattedTime.toLocaleTimeString().lastIndexOf(':')) + ' ' + formattedTime.toLocaleTimeString().substr(-2);
   } else if (date === true) {
@@ -249,20 +253,20 @@ function convertUnixTimeStamp(unix, timezone, date) {
 }
 
 function changeBackground(image) {
-  var dimensions = 'background-image-dimensions ';
+  const dimensions = 'background-image-dimensions ';
   $backgroundImage.className = dimensions + image;
 }
 
 function considerSetting(unix, timezone, weather, sunrise, sunset) {
-  var localOffset = new Date().getTimezoneOffset() * 60;
-  var stamp = (unix + (localOffset + timezone)) * 1000;
-  var formattedTime = new Date(stamp);
-  var sunTime = formattedTime.getHours() + (formattedTime.getMinutes() / 60);
-  var sunRiseUnixConvertedHours = new Date((sunrise + (localOffset + timezone)) * 1000);
-  var sunRiseTotal = sunRiseUnixConvertedHours.getHours() + (sunRiseUnixConvertedHours.getMinutes() / 60);
-  var sunSetUnixConvertedHours = new Date((sunset + (localOffset + timezone)) * 1000);
-  var sunSetTotal = sunSetUnixConvertedHours.getHours() + (sunSetUnixConvertedHours.getMinutes() / 60);
-  var greetingMessage = null;
+  const localOffset = new Date().getTimezoneOffset() * 60;
+  const stamp = (unix + (localOffset + timezone)) * 1000;
+  const formattedTime = new Date(stamp);
+  const sunTime = formattedTime.getHours() + (formattedTime.getMinutes() / 60);
+  const sunRiseUnixConvertedHours = new Date((sunrise + (localOffset + timezone)) * 1000);
+  const sunRiseTotal = sunRiseUnixConvertedHours.getHours() + (sunRiseUnixConvertedHours.getMinutes() / 60);
+  const sunSetUnixConvertedHours = new Date((sunset + (localOffset + timezone)) * 1000);
+  const sunSetTotal = sunSetUnixConvertedHours.getHours() + (sunSetUnixConvertedHours.getMinutes() / 60);
+  let greetingMessage = null;
   if (formattedTime.getHours() < 12 && formattedTime.getHours() >= 5) {
     greetingMessage = data.greetings[0];
   }
@@ -310,8 +314,8 @@ function toggleHidden(elementClass) {
 }
 
 function switchView(destinationView) {
-  for (var pageIndex = 0; pageIndex < differentPages.length; pageIndex++) {
-    var currentPageClass = differentPages[pageIndex].className;
+  for (let pageIndex = 0; pageIndex < differentPages.length; pageIndex++) {
+    const currentPageClass = differentPages[pageIndex].className;
     if (differentPages[pageIndex] !== destinationView && !currentPageClass.includes('hidden')) {
       toggleHidden(differentPages[pageIndex]);
     }
@@ -329,12 +333,12 @@ function stayOnPrimary(event) {
 }
 document.addEventListener('DOMContentLoaded', stayOnPrimary);
 
-var differentPages = [$weatherDisplayPrimaryList, $weatherInformationChoices, $locationAsker];
-var $newEntryListItem = document.querySelector('.new-entry-list-item');
+const differentPages = [$weatherDisplayPrimaryList, $weatherInformationChoices, $locationAsker];
+const $newEntryListItem = document.querySelector('.new-entry-list-item');
 function newEntryClicked(event) {
   headerToggle();
   $locationForm.reset();
-  for (var resetIndex = 0; resetIndex < $weatherChoicesList.children.length; resetIndex++) {
+  for (let resetIndex = 0; resetIndex < $weatherChoicesList.children.length; resetIndex++) {
     $weatherChoicesList.children[resetIndex].children[0].children[0].className = 'far fa-check-circle';
   }
   switchView($locationAsker);
@@ -342,21 +346,21 @@ function newEntryClicked(event) {
 $newEntryListItem.addEventListener('click', newEntryClicked);
 
 function generateLocationsListItem(locationName) {
-  var $newListItem = document.createElement('li');
-  var $newListItemSpan = document.createElement('span');
-  var $primaryIcon = document.createElement('i');
+  const $newListItem = document.createElement('li');
+  const $newListItemSpan = document.createElement('span');
+  const $primaryIcon = document.createElement('i');
   if (data.primary === locationName) {
     $primaryIcon.className = 'fas fa-star';
   } else {
     $primaryIcon.className = 'far fa-star';
   }
   $newListItemSpan.appendChild($primaryIcon);
-  var $newListItemSpanTextContent = document.createTextNode(locationName);
+  const $newListItemSpanTextContent = document.createTextNode(locationName);
   $newListItemSpan.appendChild($newListItemSpanTextContent);
-  var $trashIcon = document.createElement('i');
+  const $trashIcon = document.createElement('i');
   $trashIcon.className = 'far fa-trash-alt';
   $newListItemSpan.appendChild($trashIcon);
-  var $editIcon = document.createElement('i');
+  const $editIcon = document.createElement('i');
   $editIcon.className = 'fas fa-pencil-alt';
   $newListItemSpan.appendChild($editIcon);
   $newListItem.appendChild($newListItemSpan);
@@ -364,7 +368,7 @@ function generateLocationsListItem(locationName) {
 }
 
 function generateLocationsTree(event) {
-  for (var DOMmenuIndex = 0; DOMmenuIndex < data.locations.length; DOMmenuIndex++) {
+  for (let DOMmenuIndex = 0; DOMmenuIndex < data.locations.length; DOMmenuIndex++) {
     $elmPreviewList.insertBefore(generateLocationsListItem(data.locations[DOMmenuIndex].location), $newEntryListItem);
   }
 }
@@ -372,8 +376,8 @@ document.addEventListener('DOMContentLoaded', generateLocationsTree);
 
 function trashClicked(event) {
   if (event.target && event.target.nodeName === 'I' && event.target.className === 'far fa-trash-alt') {
-    var $elmEntry = event.target.closest('li');
-    for (var j = 0; j < data.locations.length; j++) {
+    const $elmEntry = event.target.closest('li');
+    for (let j = 0; j < data.locations.length; j++) {
       if (data.locations[j].location === $elmEntry.children[0].textContent) {
         data.locations.splice(j, 1);
       }
@@ -383,7 +387,7 @@ function trashClicked(event) {
       if (data.locations.length > 0) {
         data.primary = data.locations[0].location;
         $elmPreviewList.children[0].children[0].children[0].className = 'fas fa-star';
-        for (var previewsIndex4 = 0; previewsIndex4 < $previews.children.length; previewsIndex4++) {
+        for (let previewsIndex4 = 0; previewsIndex4 < $previews.children.length; previewsIndex4++) {
           if ($previews.children[previewsIndex4].textContent.includes(data.primary)) {
             $previews.children[previewsIndex4].remove();
           }
@@ -397,7 +401,7 @@ function trashClicked(event) {
         headerToggle();
       }
     }
-    for (var previewsIndex3 = 0; previewsIndex3 < $previews.children.length; previewsIndex3++) {
+    for (let previewsIndex3 = 0; previewsIndex3 < $previews.children.length; previewsIndex3++) {
       if ($previews.children[previewsIndex3].textContent.includes($elmEntry.children[0].textContent)) {
         $previews.children[previewsIndex3].remove();
       }
@@ -410,12 +414,12 @@ $elmPreviewList.addEventListener('click', trashClicked);
 
 function editClicked(event) {
   if (event.target && event.target.nodeName === 'I' && event.target.className === 'fas fa-pencil-alt') {
-    var $elmEntry = event.target.closest('li');
+    const $elmEntry = event.target.closest('li');
     headerToggle();
     switchView($weatherInformationChoices);
     data.editing = $elmEntry.children[0].textContent;
     setWeatherLocation(data.editing);
-    for (var x = 0; x < data.locations.length; x++) {
+    for (let x = 0; x < data.locations.length; x++) {
       if ($elmEntry.children[0].textContent === data.locations[x].location) {
         data.template = data.locations[x];
       }
@@ -426,7 +430,7 @@ function editClicked(event) {
 $elmPreviewList.addEventListener('click', editClicked);
 
 function editingChoices() {
-  for (var k = 0; k < data.weatherOptions.length; k++) {
+  for (let k = 0; k < data.weatherOptions.length; k++) {
     if (data.template[data.weatherOptions[k]] === true) {
       $weatherChoicesList.children[k].children[0].children[0].className = 'far fa-check-circle';
     } else if (data.template[data.weatherOptions[k]] === false) {
@@ -437,28 +441,28 @@ function editingChoices() {
 
 function primaryClicked(event) {
   if (event.target && event.target.nodeName === 'I' && (event.target.className === 'fas fa-star' || event.target.className === 'far fa-star')) {
-    var $elmEntry = event.target.closest('li');
+    const $elmEntry = event.target.closest('li');
     if (event.target.className === 'far fa-star') {
-      for (var priLoop = 0; priLoop < $elmPreviewList.children.length - 1; priLoop++) {
+      for (let priLoop = 0; priLoop < $elmPreviewList.children.length - 1; priLoop++) {
         $elmPreviewList.children[priLoop].children[0].children[0].className = 'far fa-star';
       }
       event.target.className = 'fas fa-star';
     }
     data.primary = $elmEntry.children[0].textContent;
     switchView($weatherDisplayPrimaryList);
-    for (var dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
+    for (let dataLIndex = 0; dataLIndex < data.locations.length; dataLIndex++) {
       if (data.locations[dataLIndex].location === data.primary) {
         showWeatherDataObject(data.locations[dataLIndex]);
       } else if (data.locations[dataLIndex].location !== data.primary) {
         showPreviewsOfData(data.locations[dataLIndex]);
-        for (var previewsIndex = 0; previewsIndex < $previews.children.length; previewsIndex++) {
+        for (let previewsIndex = 0; previewsIndex < $previews.children.length; previewsIndex++) {
           if ($previews.children[previewsIndex].textContent.includes(data.locations[dataLIndex].location)) {
             $previews.children[previewsIndex].remove();
           }
         }
       }
     }
-    for (var previewsIndex2 = 0; previewsIndex2 < $previews.children.length; previewsIndex2++) {
+    for (let previewsIndex2 = 0; previewsIndex2 < $previews.children.length; previewsIndex2++) {
       if ($previews.children[previewsIndex2].textContent.includes(data.primary)) {
         $previews.children[previewsIndex2].remove();
       }
@@ -469,7 +473,7 @@ function primaryClicked(event) {
 
 $elmPreviewList.addEventListener('click', primaryClicked);
 
-var $profileEdit = document.querySelector('.profile-edit');
+const $profileEdit = document.querySelector('.profile-edit');
 function saveProfile(event) {
   event.preventDefault();
   data.profile.name = $profileEdit.elements.name.value;
@@ -491,7 +495,7 @@ function headerToggle(event) {
 }
 
 function showLocations(event) {
-  for (var i = 0; i < $elmPreviewList.children.length - 1; i++) {
+  for (let i = 0; i < $elmPreviewList.children.length - 1; i++) {
     if (data.primary === $elmPreviewList.children[i].children[0].textContent) {
       $elmPreviewList.children[i].children[0].children[0].className = 'fas fa-star';
     } else {
@@ -502,7 +506,7 @@ function showLocations(event) {
 
 function clickHeaderLink(event) {
   if (event.target.nodeName === 'A' && !event.target.className.includes('active')) {
-    for (var menuIndex = 0; menuIndex < $headerLinks.children.length; menuIndex++) {
+    for (let menuIndex = 0; menuIndex < $headerLinks.children.length; menuIndex++) {
       if ($headerLinks.children[menuIndex].children[0].className.includes('transform-up')) {
         $headerLinks.children[menuIndex].children[0].classList.toggle('transform-up');
       }
@@ -517,9 +521,9 @@ function clickHeaderLink(event) {
 }
 
 function switchMenu(event) {
-  for (var headerIndex = 0; headerIndex < $headerLinks.children.length; headerIndex++) {
+  for (let headerIndex = 0; headerIndex < $headerLinks.children.length; headerIndex++) {
     if ($headerLinks.children[headerIndex].children[0].className.includes('active')) {
-      for (var modalIndex = 0; modalIndex < $editLocationModalContent.children.length; modalIndex++) {
+      for (let modalIndex = 0; modalIndex < $editLocationModalContent.children.length; modalIndex++) {
         if ($headerLinks.children[headerIndex].children[0].textContent === $editLocationModalContent.children[modalIndex].getAttribute('name') && $editLocationModalContent.children[modalIndex].className.includes('hidden')) {
           toggleHidden($editLocationModalContent.children[modalIndex]);
         } else if (!$editLocationModalContent.children[modalIndex].className.includes('hidden')) {
@@ -531,7 +535,7 @@ function switchMenu(event) {
 }
 
 $headerLinks.addEventListener('click', clickHeaderLink);
-var $loadingText = document.querySelector('.loading-screen');
+const $loadingText = document.querySelector('.loading-screen');
 function toggleLoading(event) {
   if (!$loadingText.className.includes('hidden')) {
     toggleHidden($loadingText);
