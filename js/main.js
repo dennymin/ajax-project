@@ -339,7 +339,7 @@ function newEntryClicked(event) {
   headerToggle();
   $locationForm.reset();
   for (let resetIndex = 0; resetIndex < $weatherChoicesList.children.length; resetIndex++) {
-    $weatherChoicesList.children[resetIndex].children[0].children[0].className = 'far fa-check-circle';
+    $weatherChoicesList.children[resetIndex].querySelector('.far').classList.toggle('fa-check-circle', true);
   }
   switchView($locationAsker);
 }
@@ -386,7 +386,8 @@ function trashClicked(event) {
       data.primary = null;
       if (data.locations.length > 0) {
         data.primary = data.locations[0].location;
-        $elmPreviewList.children[0].children[0].children[0].className = 'fas fa-star';
+        const $star = $elmPreviewList.querySelector('.fa-star');
+        $star.className = 'fas fa-star';
         for (let previewsIndex4 = 0; previewsIndex4 < $previews.children.length; previewsIndex4++) {
           if ($previews.children[previewsIndex4].textContent.includes(data.primary)) {
             $previews.children[previewsIndex4].remove();
@@ -432,19 +433,23 @@ $elmPreviewList.addEventListener('click', editClicked);
 function editingChoices() {
   for (let k = 0; k < data.weatherOptions.length; k++) {
     if (data.template[data.weatherOptions[k]] === true) {
-      $weatherChoicesList.children[k].children[0].children[0].className = 'far fa-check-circle';
+      $weatherChoicesList.children[k].querySelector('.far').classList.toggle('fa-check-circle', true);
+      $weatherChoicesList.children[k].querySelector('.far').classList.toggle('fa-circle', false);
     } else if (data.template[data.weatherOptions[k]] === false) {
-      $weatherChoicesList.children[k].children[0].children[0].className = 'far fa-circle';
+      $weatherChoicesList.children[k].querySelector('.far').classList.toggle('fa-check-circle', false);
+      $weatherChoicesList.children[k].querySelector('.far').classList.toggle('fa-circle', true);
     }
   }
 }
 
 function primaryClicked(event) {
-  if (event.target && event.target.nodeName === 'I' && (event.target.className === 'fas fa-star' || event.target.className === 'far fa-star')) {
+  if (event.target && event.target.nodeName === 'I' && event.target.classList.contains('fa-star')) {
     const $elmEntry = event.target.closest('li');
     if (event.target.className === 'far fa-star') {
       for (let priLoop = 0; priLoop < $elmPreviewList.children.length - 1; priLoop++) {
-        $elmPreviewList.children[priLoop].children[0].children[0].className = 'far fa-star';
+        const $elmListing = $elmPreviewList.children[priLoop].querySelector('.fa-star');
+        $elmListing.classList.toggle('far', true);
+        $elmListing.classList.toggle('fas', false);
       }
       event.target.className = 'fas fa-star';
     }
@@ -496,10 +501,13 @@ function headerToggle(event) {
 
 function showLocations(event) {
   for (let i = 0; i < $elmPreviewList.children.length - 1; i++) {
+    const $starFilling = $elmPreviewList.children[i].querySelector('.fa-star');
     if (data.primary === $elmPreviewList.children[i].children[0].textContent) {
-      $elmPreviewList.children[i].children[0].children[0].className = 'fas fa-star';
+      $starFilling.classList.toggle('fas', true);
+      $starFilling.classList.toggle('far', false);
     } else {
-      $elmPreviewList.children[i].children[0].children[0].className = 'far fa-star';
+      $starFilling.classList.toggle('fas', false);
+      $starFilling.classList.toggle('far', true);
     }
   }
 }
@@ -507,11 +515,12 @@ function showLocations(event) {
 function clickHeaderLink(event) {
   if (event.target.nodeName === 'A' && !event.target.className.includes('active')) {
     for (let menuIndex = 0; menuIndex < $headerLinks.children.length; menuIndex++) {
-      if ($headerLinks.children[menuIndex].children[0].className.includes('transform-up')) {
-        $headerLinks.children[menuIndex].children[0].classList.toggle('transform-up');
+      const $link = $headerLinks.children[menuIndex].querySelector('.actual-link');
+      if ($link.classList.contains('transform-up')) {
+        $link.classList.toggle('transform-up');
       }
-      if ($headerLinks.children[menuIndex].children[0].className.includes('active')) {
-        $headerLinks.children[menuIndex].children[0].classList.toggle('active');
+      if ($link.classList.contains('active')) {
+        $link.classList.toggle('active');
       }
     }
     event.target.classList.toggle('transform-up');
@@ -522,11 +531,11 @@ function clickHeaderLink(event) {
 
 function switchMenu(event) {
   for (let headerIndex = 0; headerIndex < $headerLinks.children.length; headerIndex++) {
-    if ($headerLinks.children[headerIndex].children[0].className.includes('active')) {
+    if ($headerLinks.children[headerIndex].querySelector('.active')) {
       for (let modalIndex = 0; modalIndex < $editLocationModalContent.children.length; modalIndex++) {
-        if ($headerLinks.children[headerIndex].children[0].textContent === $editLocationModalContent.children[modalIndex].getAttribute('name') && $editLocationModalContent.children[modalIndex].className.includes('hidden')) {
+        if ($headerLinks.children[headerIndex].children[0].textContent === $editLocationModalContent.children[modalIndex].getAttribute('name') && $editLocationModalContent.children[modalIndex].querySelector('.hidden')) {
           toggleHidden($editLocationModalContent.children[modalIndex]);
-        } else if (!$editLocationModalContent.children[modalIndex].className.includes('hidden')) {
+        } else if (!$editLocationModalContent.children[modalIndex].querySelector('.hidden')) {
           toggleHidden($editLocationModalContent.children[modalIndex]);
         }
       }
