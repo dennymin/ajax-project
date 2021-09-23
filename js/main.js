@@ -27,8 +27,16 @@ $weatherOptionsSubmitButton.addEventListener('click', submitClicked);
 function queryLocation(event) {
   event.preventDefault();
   const xhr = new XMLHttpRequest();
+  const locationArrayed = $searchBar.value.split(' ');
+  for (let i = 0; i < locationArrayed.length; i++) {
+    locationArrayed[i] = locationArrayed[i].toLowerCase();
+    const capital = locationArrayed[i][0].toUpperCase();
+    const rest = locationArrayed[i].slice(1);
+    const newName = `${capital}${rest}`;
+    locationArrayed[i] = newName;
+  }
+  const locationURL = locationArrayed.join(' ');
   const firstPartLink = 'https://api.openweathermap.org/data/2.5/weather?q=';
-  const locationURL = $searchBar.value;
   const latterPartLink = '&units=imperial&appid=ea53d3f85461dc36f6f6ec5c9722353e';
   const fullLink = firstPartLink + locationURL + latterPartLink;
   xhr.open('GET', fullLink);
@@ -37,7 +45,7 @@ function queryLocation(event) {
   toggleLoading();
   xhr.addEventListener('load', function () {
     if ($searchBar.value !== '' && xhr.status === 200) {
-      data.editing = $searchBar.value;
+      data.editing = locationURL;
       data.template.location = data.editing;
       if (data.locations.length === 0) {
         data.primary = data.editing;
@@ -346,15 +354,6 @@ function newEntryClicked(event) {
 $newEntryListItem.addEventListener('click', newEntryClicked);
 
 function generateLocationsListItem(locationName) {
-  const locationArrayed = locationName.split(' ');
-  for (let i = 0; i < locationArrayed.length; i++) {
-    locationArrayed[i] = locationArrayed[i].toLowerCase();
-    const capital = locationArrayed[i][0].toUpperCase();
-    const rest = locationArrayed[i].slice(1);
-    const newName = `${capital}${rest}`;
-    locationArrayed[i] = newName;
-  }
-  const newLocationName = locationArrayed.join(' ');
   const $newListItem = document.createElement('li');
   const $newListItemSpan = document.createElement('span');
   const $primaryIcon = document.createElement('i');
@@ -364,7 +363,7 @@ function generateLocationsListItem(locationName) {
     $primaryIcon.className = 'far fa-star';
   }
   $newListItemSpan.appendChild($primaryIcon);
-  const $newListItemSpanTextContent = document.createTextNode(newLocationName);
+  const $newListItemSpanTextContent = document.createTextNode(locationName);
   $newListItemSpan.appendChild($newListItemSpanTextContent);
   const $trashIcon = document.createElement('i');
   $trashIcon.className = 'far fa-trash-alt';
