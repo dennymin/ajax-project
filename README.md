@@ -11,15 +11,15 @@ Try the application at: [dennymin.github.io/quick-weather/](dennymin.github.io/q
 HTML, CSS, JavaScript
 
 ## Features
-⋅⋅* User can look up the weather in a specified location
-⋅⋅* User can choose to see which weather data they want to see
-⋅⋅* User can save locations that they like to check
-⋅⋅* User can choose a primary location for personal preference
+1. User can look up the weather in a specified location
+1. User can choose to see which weather data they want to see
+1. User can save locations that they like to check
+1. User can choose a primary location for personal preference
 
 ## Stretch Features for the Future
-⋅⋅* Allow users to set backgrounds
-⋅⋅* Users will be greeted with calendar related messages
-⋅⋅* User can have multiple primary locations
+1. Allow users to set backgrounds
+1. Users will be greeted with calendar related messages
+1. User can have multiple primary locations
 
 ## Preview
 ![Look up a location](demonstration-gifs/Demonstration-view-location.gif)
