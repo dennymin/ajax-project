@@ -347,7 +347,9 @@ function newEntryClicked(event) {
   headerToggle();
   $locationForm.reset();
   for (let resetIndex = 0; resetIndex < $weatherChoicesList.children.length; resetIndex++) {
+    // $weatherChoicesList.children[resetIndex].querySelector('.far').className = 'far fa-check-circle';
     $weatherChoicesList.children[resetIndex].querySelector('.far').classList.toggle('fa-check-circle', true);
+    $weatherChoicesList.children[resetIndex].querySelector('.far').classList.toggle('fa-circle', false);
   }
   switchView($locationAsker);
 }
