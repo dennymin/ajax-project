@@ -182,7 +182,7 @@ span {
   padding: 3px;
   left: 1px;
   border-radius: 10px;
-  border: 2px solid (75, 75, 75);
+  border: 2px solid rgb(75, 75, 75);
   outline-color: black;
   color: rgba(75, 75, 75);
 }
@@ -190,7 +190,6 @@ span {
 .profile-edit > input:active,
 .profile-edit > input:focus {
   color: black;
-  font-weight: bold;
   border-color: black;
 }
 
@@ -315,10 +314,6 @@ span {
   transition: background-color 0.3s;
 }
 
-/* .greeting {
-  max-width: 10rem;
-} */
-
 .primary:hover,
 .previews > div:hover {
   background-color: rgba(129, 129, 129, 0.8);
@@ -385,10 +380,6 @@ span {
 .text-align-center {
   text-align: center;
 }
-
-/* .mobile-center-to-left {
-  text-align: center;
-} */
 
 .hidden {
   display: none;
