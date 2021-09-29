@@ -22,7 +22,7 @@ var data = {
     afternoon: ['Hope your day was good!', 'How are you?']
   },
   profile: {
-    name: null,
+    name: '',
     birthday: null,
     email: null
   }
