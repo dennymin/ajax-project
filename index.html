@@ -38,10 +38,6 @@
         <form class="profile-edit flex-wrap hidden justify-content-center" name="Profile">
           <label for="name">Name</label>
           <input type="text" id="name">
-          <label for="birthday">Birthday</label>
-          <input type="text" id="birthday">
-          <label for="email">Email</label>
-          <input type="text" id="email">
           <div class="justify-content-center list-choice-1and7rem-line-height flex-basis-100">
             <button class="default-button profile-submit-button">Done</button>
           </div>
@@ -51,11 +47,28 @@
   </header>
 
   <main class="position-relative-mobile-50px-desktop-60px">
-    <div class="loading-screen white-font text-shadow text-align-center italics hidden">Loading...</div>
+    <div class="loading-screen white-font text-shadow text-align-center italics flex-wrap justify-content-center align-items-center hidden">
+      <h3>LOADING</h3>
+      <div class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
 
     <div class="white-font data-modal text-shadow">
       <div class="location-asker transparent-background-color rounded-corners background-box-dimensions">
         <h1 class="data-search-question">Where would you like to check today?</h1>
+        <h3 class="italics">Please only input a city name!</h3>
         <form class="location-form">
           <div class="search-area justify-content-center">
             <input class="search-bar background-color-light font-dark-gray" type="text" placeholder="Where to?">
@@ -93,7 +106,7 @@
         <button class="submit-choices italics-transition default-button border-white padding-5px-10px background-color-dark-transparent white-font text-shadow-small">Submit</button>
       </div>
 
-      <div class="weather-display-primary white-font text-align-left hidden mobile-center-to-left flex-wrap">
+      <div class="weather-display-primary white-font text-align-left hidden flex-wrap">
         <div class="primary column-half transition-fade">
           <div class="time-and-location">
             <h3 class="greeting"></h3>

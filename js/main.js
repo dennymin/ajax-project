@@ -19,6 +19,8 @@ const $editModal = document.querySelector('.edit-modal');
 const $elmPreviewList = document.querySelector('.elm-preview-list');
 const $editLocationModalContent = document.querySelector('.edit-location-modal-content');
 const $invalid = document.querySelector('.invalid');
+const $currentName = document.querySelector('#name');
+$currentName.setAttribute('value', data.profile.name);
 
 $locationForm.addEventListener('submit', queryLocation);
 $weatherChoicesList.addEventListener('click', alternateIcon);
@@ -347,7 +349,9 @@ function newEntryClicked(event) {
   headerToggle();
   $locationForm.reset();
   for (let resetIndex = 0; resetIndex < $weatherChoicesList.children.length; resetIndex++) {
+    // $weatherChoicesList.children[resetIndex].querySelector('.far').className = 'far fa-check-circle';
     $weatherChoicesList.children[resetIndex].querySelector('.far').classList.toggle('fa-check-circle', true);
+    $weatherChoicesList.children[resetIndex].querySelector('.far').classList.toggle('fa-circle', false);
   }
   switchView($locationAsker);
 }
@@ -487,12 +491,18 @@ function primaryClicked(event) {
 
 $elmPreviewList.addEventListener('click', primaryClicked);
 
+function locationNameClicked(event) {
+  if (!(event.target.classList.contains('fas') && event.target.classList.contains('far')) && event.target.nodeName === 'SPAN') {
+    headerToggle();
+  }
+}
+
+$elmPreviewList.addEventListener('click', locationNameClicked);
+
 const $profileEdit = document.querySelector('.profile-edit');
 function saveProfile(event) {
   event.preventDefault();
   data.profile.name = $profileEdit.elements.name.value;
-  data.profile.birthday = $profileEdit.elements.birthday.value;
-  data.profile.email = $profileEdit.elements.email.value;
   $profileEdit.reset();
   showPrimary();
   headerToggle();
